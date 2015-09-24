@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.gusedu.model.TerapiaPar" table="terapia_par" catalog="gusedu_dbsv" optimistic-lock="version">
+        <id name="txpCodigo" type="java.lang.Integer">
+            <column name="txp_codigo" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="par" class="com.gusedu.model.Par" fetch="select">
+            <column name="par_codigo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="terapia" class="com.gusedu.model.Terapia" fetch="select">
+            <column name="ter_codigo" not-null="true" />
+        </many-to-one>
+        <property name="txpActivo" type="java.lang.Boolean">
+            <column name="txp_activo" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.gusedu.model.Persona" table="persona" catalog="gusedu_dbsv" lazy="false" optimistic-lock="version"   >
+        <id name="perCodigo" type="java.lang.Integer">
+            <column name="per_codigo" />
+            <generator class="identity" />
+        </id>
+        <property name="perApellidoM" type="string">
+            <column name="per_apellido_m" length="100" not-null="true" />
+        </property>
+        <property name="perApellidoP" type="string">
+            <column name="per_apellido_p" length="100" not-null="true" />
+        </property>
+        <property name="perEnteroGusedu" type="string">
+            <column name="per_entero_gusedu" />
+        </property>
+        <property name="perCorreo" type="string">
+            <column name="per_correo" length="100" />
+        </property>
+        <property name="perDni" type="string">
+            <column name="per_dni" length="15" />
+        </property>
+        <property name="perCliPotencial" type="java.lang.Boolean">
+            <column name="per_cli_potencial" />
+        </property>
+        <property name="perEstadoCivil" type="string">
+            <column name="per_estado_civil" length="15" />
+        </property>
+        <property name="perFecCreacion" type="timestamp">
+            <column name="per_fec_creacion" length="19" />
+        </property>
+        <property name="perFecNacimiento" type="timestamp">
+            <column name="per_fec_nacimiento" length="19" />
+        </property>
+        <property name="perNit" type="java.lang.Integer">
+            <column name="per_nit" />
+        </property>
+        <property name="perNombres" type="string">
+            <column name="per_nombres" length="100" not-null="true" />
+        </property>
+        <property name="perSexo" type="string">
+            <column name="per_sexo" length="1" />
+        </property>
+        <property name="perSignoZodiacal" type="string">
+            <column name="per_signo_zodiacal" />
+        </property>
+        <property name="perTelFijo" type="string">
+            <column name="per_tel_fijo" length="20" />
+        </property>
+        <property name="perTelMovil" type="string">
+            <column name="per_tel_movil" length="20" />
+        </property>
+        <property name="perUsuCreacion" type="string">
+            <column name="per_usu_creacion" length="100" />
+        </property>
+        <property name="perFacebook" type="string">
+            <column name="per_facebook" length="50" />
+        </property>
+        <property name="perEdad" type="int">
+            <column name="per_edad" not-null="true" />
+        </property>
+        <property name="perDireccion" type="string">
+            <column name="per_direccion" length="225" />
+        </property>
+        <set name="llamadas" table="llamada" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="per_codigo" not-null="true" />
+            </key>
+            <one-to-many class="com.gusedu.model.Llamada" />
+        </set>
+        <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="per_codigo" />
+            </key>
+            <one-to-many class="com.gusedu.model.Usuario" />
+        </set>
+        <set name="clientes" table="cliente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="per_codigo" />
+            </key>
+            <one-to-many class="com.gusedu.model.Cliente" />
+        </set>
+    </class>
+</hibernate-mapping>

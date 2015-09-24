@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.gusedu.model.Mensaje" table="mensaje" catalog="gusedu_dbsv" optimistic-lock="version">
+        <id name="menCodigo" type="java.lang.Integer">
+            <column name="men_codigo" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="usuarioByUsuCodigoReceptor" class="com.gusedu.model.Usuario" fetch="select">
+            <column name="usu_codigo_receptor" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuarioByUsuCodigoEmisor" class="com.gusedu.model.Usuario" fetch="select">
+            <column name="usu_codigo_emisor" not-null="true" />
+        </many-to-one>
+        <property name="menLeido" type="java.lang.Boolean">
+            <column name="men_leido" />
+        </property>
+        <property name="menFecEnviado" type="timestamp">
+            <column name="men_fec_enviado" length="19" />
+        </property>
+        <property name="menTexto" type="string">
+            <column name="men_texto" />
+        </property>
+        <property name="menTitulo" type="string">
+            <column name="men_titulo" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

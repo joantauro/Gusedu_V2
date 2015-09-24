@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.gusedu.model.Llamada" table="llamada" catalog="gusedu_dbsv" optimistic-lock="version">
+        <id name="llaCodigo" type="java.lang.Integer">
+            <column name="lla_codigo" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="persona" class="com.gusedu.model.Persona" fetch="select">
+            <column name="per_codigo" not-null="true" />
+        </many-to-one>
+        <property name="llaDetalle" type="string">
+            <column name="lla_detalle" />
+        </property>
+        <property name="llaContestada" type="java.lang.Boolean">
+            <column name="lla_contestada" />
+        </property>
+        <property name="llaFecRealizada" type="timestamp">
+            <column name="lla_fec_realizada" length="19" />
+        </property>
+        <property name="llaUsuCreacion" type="string">
+            <column name="lla_usu_creacion" length="100" />
+        </property>
+    </class>
+</hibernate-mapping>

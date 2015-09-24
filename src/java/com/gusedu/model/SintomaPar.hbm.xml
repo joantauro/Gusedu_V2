@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.gusedu.model.SintomaPar" table="sintoma_par" catalog="gusedu_dbsv" optimistic-lock="version">
+        <id name="sxpCodigo" type="java.lang.Integer">
+            <column name="sxp_codigo" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="par" class="com.gusedu.model.Par" fetch="select">
+            <column name="par_codigo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="sintoma" class="com.gusedu.model.Sintoma" fetch="select">
+            <column name="sin_codigo" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.gusedu.model.Enfermedad" table="enfermedad" catalog="gusedu_dbsv" optimistic-lock="version">
+        <id name="enfCodigo" type="java.lang.Integer">
+            <column name="enf_codigo" />
+            <generator class="identity" />
+        </id>
+        <property name="enfNombre" type="string">
+            <column name="enf_nombre" />
+        </property>
+        <set name="enfermedadPars" table="enfermedad_par" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="enf_codigo" not-null="true" />
+            </key>
+            <one-to-many class="com.gusedu.model.EnfermedadPar" />
+        </set>
+        <set name="enfermedadTerapias" table="enfermedad_terapia" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="enf_codigo" not-null="true" />
+            </key>
+            <one-to-many class="com.gusedu.model.EnfermedadTerapia" />
+        </set>
+        <set name="enfermedadVisitas" table="enfermedad_visita" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="enf_codigo" not-null="true" />
+            </key>
+            <one-to-many class="com.gusedu.model.EnfermedadVisita" />
+        </set>
+    </class>
+</hibernate-mapping>

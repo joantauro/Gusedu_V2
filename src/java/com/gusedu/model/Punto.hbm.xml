@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.gusedu.model.Punto" table="punto" catalog="gusedu_dbsv" optimistic-lock="version">
+        <id name="punCodigo" type="java.lang.Integer">
+            <column name="pun_codigo" />
+            <generator class="identity" />
+        </id>
+        <property name="punNombre" type="string">
+            <column name="pun_nombre" length="30" />
+        </property>
+        <property name="punOrdenFisico" type="java.lang.Integer">
+            <column name="pun_orden_fisico" />
+        </property>
+        <property name="punUbicacionC" type="string">
+            <column name="pun_ubicacion_c" length="50" />
+        </property>
+        <property name="punUbicacionM" type="string">
+            <column name="pun_ubicacion_m" length="100" />
+        </property>
+        <set name="parsForPunCodigoP2" table="par" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pun_codigo_p2" />
+            </key>
+            <one-to-many class="com.gusedu.model.Par" />
+        </set>
+        <set name="parsForPunCodigoP1" table="par" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pun_codigo_p1" />
+            </key>
+            <one-to-many class="com.gusedu.model.Par" />
+        </set>
+    </class>
+</hibernate-mapping>

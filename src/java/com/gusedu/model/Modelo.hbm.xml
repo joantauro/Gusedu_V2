@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.gusedu.model.Modelo" table="modelo" catalog="gusedu_dbsv" optimistic-lock="version">
+        <id name="modCodigo" type="java.lang.Integer">
+            <column name="mod_codigo" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="marca" class="com.gusedu.model.Marca" fetch="select">
+            <column name="mar_codigo" not-null="true" />
+        </many-to-one>
+        <property name="modYearFab" type="string">
+            <column name="mod_year_fab" length="100" />
+        </property>
+        <property name="modColor" type="string">
+            <column name="mod_color" length="100" />
+        </property>
+        <property name="modNombre" type="string">
+            <column name="mod_nombre" length="40" />
+        </property>
+        <property name="modSize" type="string">
+            <column name="mod_size" length="100" />
+        </property>
+        <set name="productos" table="producto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="mod_codigo" />
+            </key>
+            <one-to-many class="com.gusedu.model.Producto" />
+        </set>
+    </class>
+</hibernate-mapping>

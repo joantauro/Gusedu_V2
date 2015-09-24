@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.gusedu.model.TipoProducto" table="tipo_producto" catalog="gusedu_dbsv" optimistic-lock="version">
+        <id name="tprCodigo" type="java.lang.Integer">
+            <column name="tpr_codigo" />
+            <generator class="identity" />
+        </id>
+        <property name="tprFecModificacion" type="timestamp">
+            <column name="tpr_fec_modificacion" length="19" />
+        </property>
+        <property name="tprNombre" type="string">
+            <column name="tpr_nombre" length="20" />
+        </property>
+        <property name="tprUsuModificacion" type="string">
+            <column name="tpr_usu_modificacion" />
+        </property>
+        <set name="productos" table="producto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="tpr_codigo" not-null="true" />
+            </key>
+            <one-to-many class="com.gusedu.model.Producto" />
+        </set>
+    </class>
+</hibernate-mapping>

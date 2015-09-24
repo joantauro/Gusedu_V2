@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition>
+	<h:form id="menu">
+            <p:menubar>
+                <p:menuitem value="Inicio" url="/web/Principal.jsf" rendered="#{auth.userLogged.tipoUsuario.home}" ></p:menuitem>
+                <p:submenu label="Reportes" icon="ui-icon-document">
+                    <p:menuitem value="Productos"  url="#" rendered="#{auth.userLogged.tipoUsuario.reporteProducto}" />
+                    <p:menuitem value="Puntos por Par" url="#" rendered="#{auth.userLogged.tipoUsuario.reportePar}" />
+                </p:submenu>
+
+                <p:submenu label="Consultas" icon="ui-icon-pencil" >
+                    <p:menuitem value="Historial de visitas"  url="/web/HistorialVisita.jsf" rendered="#{auth.userLogged.tipoUsuario.historialVisita}" />
+                    <p:menuitem value="Puntos" url="#" icon="ui-icon-arrowreturnthick-1-w" rendered="#{auth.userLogged.tipoUsuario.consultaPuntos}" />
+                    <p:menuitem value="Pares" onclick="PF('dlgHT').show();" icon="ui-icon-arrowreturnthick-1-e" rendered="#{auth.userLogged.tipoUsuario.consultaPares}" />
+                    <p:menuitem value="Pares por Enfermedad"  icon="ui-icon-arrowreturnthick-1-e" rendered="#{auth.userLogged.tipoUsuario.consultaParesPorEnfermedad}" />
+                    <p:menuitem value="Pares por Sintoma"  icon="ui-icon-arrowreturnthick-1-e" rendered="#{auth.userLogged.tipoUsuario.consultaParesPorSintoma}" />
+                    <p:menuitem value="Estado Diario"  action="#{reporteEstBean.listarEstadoDiario()}"  />
+                </p:submenu>
+
+                <p:submenu label="Gestion" icon="ui-icon-pencil" >
+                    <p:menuitem value="Puntos"  icon="ui-icon-arrowreturnthick-1-w" rendered="#{auth.userLogged.tipoUsuario.gestionPuntos}" />
+                    <p:menuitem value="Pares"  icon="ui-icon-arrowreturnthick-1-e"  rendered="#{auth.userLogged.tipoUsuario.gestionPares}" />
+                </p:submenu>
+
+                <p:submenu label="Opciones Adicionales" icon="ui-icon-help" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 3}" >
+                    <p:menuitem value="Gestionar Enfermedades"   rendered="#{auth.userLogged.tipoUsuario.gestionEnfermedades}" />
+                    <p:menuitem value="Gestionar Sintomas"   rendered="#{auth.userLogged.tipoUsuario.gestionSintomas}" />
+                </p:submenu>
+
+                <p:submenu label="Opciones de administrador" icon="ui-icon-pencil" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 3}" >
+                    <p:menuitem value="Gestionar usuarios" url="/web/seguridad/gestionUsuario.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionUsuarios}" />
+                    <p:menuitem value="Gestionar Tipo de usuarios" url="/web/seguridad/gestionTipoUsuario.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionTipoUsuarios}" />
+                    <p:menuitem value="Estadistica" url="/web/estadistica/gestionEstadistica.xhtml" />
+                </p:submenu>
+
+
+
+                <p:submenu label="Cuenta" >
+                    <p:menuitem value="Cambiar Contraseña" oncomplete="PF('dlgpass').show();"  ></p:menuitem>
+                </p:submenu>
+                <f:facet name="options">
+                    <!--  <p:inputText style="margin-right:10px" placeholder="Search" />-->
+                    <p:commandLink  value="Cerrar Sesión" action="#{auth.logout}" />
+                </f:facet>
+            </p:menubar>
+		
+		
+	</h:form>
+	
+    <p:dialog id="dialogPass" header="Cambiar Contraseña"
+				widgetVar="dlgpass" showEffect="pop" modal="true">
+				<h:form  id="formpass" >
+					<p:panelGrid columns="2" id="panel"  >
+						<p:outputLabel for="idca"  value="Contraseña Actual">
+						</p:outputLabel>
+                                            <p:password id="idca" value="#{auth.passactual}" required="true" ></p:password>
+						<p:outputLabel  for="nc" value="Nueva Contraseña">
+						</p:outputLabel>
+						<p:password id="nc" value="#{auth.passnueva}" required="true" ></p:password>
+						<p:outputLabel for="rnc" value="Repita la nueva Contraseña">
+						</p:outputLabel>
+						<p:password id="rnc" value="#{auth.passrepeat}" required="true" ></p:password>
+
+						<p:commandButton value="Cambiar" action="#{auth.cambio}"  ></p:commandButton>
+					</p:panelGrid>
+				</h:form>
+			</p:dialog>
+	 
+    <p:dialog header="Ventas del Día" widgetVar="dlgVentas" showEffect="pop" id="dialogV"
+	width="30%"   >  
+ 
+		<p:dataTable id="tablaVntas" var="pac"
+					value="#{reporteEstBean.listaTerapiasByterapeutas}" 
+					emptyMessage="No hay visitas por el momento" >
+					  <f:facet name="header">
+           				Terapias
+        			  </f:facet>
+					<p:column headerText="Cant." width="3%">
+						<h:outputText value="#{pac.cantidad}" />
+					</p:column>
+					
+					<p:column headerText="Terapeuta" width="20%">
+						<h:outputText value="#{pac.nombre}" />
+					</p:column>
+					
+					<p:column headerText="Costo" width="10%">
+						<h:outputText value="S/. #{pac.costo}" />
+					</p:column>
+					<f:facet name="footer">
+						<p:outputLabel
+							value="Total : S/. #{reporteEstBean.costoT}"
+							style="margin-right: -70%;" />
+					</f:facet>
+		</p:dataTable>
+		<br/>
+		<p:dataTable id="tablaVntasProd" var="pro"
+					value="#{reporteEstBean.listarProductos}" 
+					emptyMessage="No hay visitas por el momento" >
+					  <f:facet name="header">
+           				Productos
+        			  </f:facet>
+					<p:column headerText="Cant." width="3%">
+						<h:outputText value="#{pro.cantidad}" />
+					</p:column>
+					
+					<p:column headerText="producto" width="20%">
+						<h:outputText value="#{pro.nombre}" />
+					</p:column>
+					
+					<p:column headerText="Costo" width="10%">
+						<h:outputText value="S/. #{pro.costo}" />
+					</p:column>
+					<f:facet name="footer">
+						<p:outputLabel
+							value="Total  : S/. #{reporteEstBean.costoP}"
+							style="margin-right: -70%;" />
+					</f:facet>
+		</p:dataTable>
+		<p:spacer width="255" height="20" ></p:spacer>
+		<p:outputLabel value="TOTAL : S/. #{reporteEstBean.costoTotal}"  />
+	</p:dialog>
+    
+    
+	<p:dialog id="dialogHT" widgetVar="dlgHT" showEffect="pop" modal="true"
+		width="1230px" height="550px">
+		<h:form>
+			<ui:include src="/web/BMPar.xhtml" />
+		</h:form>
+	</p:dialog>
+</ui:composition>
+</html>

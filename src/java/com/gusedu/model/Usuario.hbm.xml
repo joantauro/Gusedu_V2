@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.gusedu.model.Usuario" table="usuario" catalog="gusedu_dbsv" lazy="false" optimistic-lock="version"  >
+        <id name="usuCodigo" type="java.lang.Integer">
+            <column name="usu_codigo" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="persona" class="com.gusedu.model.Persona" fetch="select">
+            <column name="per_codigo" />
+        </many-to-one>
+        <many-to-one name="tipoUsuario" class="com.gusedu.model.TipoUsuario" fetch="select">
+            <column name="tus_codigo" not-null="true" />
+        </many-to-one>
+        <property name="usuActivo" type="java.lang.Boolean">
+            <column name="usu_activo" />
+        </property>
+        <property name="usuFecCreacion" type="timestamp">
+            <column name="usu_fec_creacion" length="19" />
+        </property>
+        <property name="usuPassword" type="string">
+            <column name="usu_password" length="50" not-null="true" />
+        </property>
+        <property name="usuUsuario" type="string">
+            <column name="usu_usuario" length="50" not-null="true" />
+        </property>
+        <property name="usuEmpresa" type="string">
+            <column name="usu_empresa" />
+        </property>
+        <property name="usuFecFinm" type="timestamp">
+            <column name="usu_fec_finm" length="19" />
+        </property>
+        <set name="mensajesForUsuCodigoReceptor" table="mensaje" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="usu_codigo_receptor" not-null="true" />
+            </key>
+            <one-to-many class="com.gusedu.model.Mensaje" />
+        </set>
+        <set name="mensajesForUsuCodigoEmisor" table="mensaje" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="usu_codigo_emisor" not-null="true" />
+            </key>
+            <one-to-many class="com.gusedu.model.Mensaje" />
+        </set>
+    </class>
+</hibernate-mapping>

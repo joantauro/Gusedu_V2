@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../plantillas/PlantillaPrincipal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="titulo">
+            Inicio
+    </ui:define>
+
+    <ui:define name="top">
+      
+    </ui:define>
+
+    <ui:define name="content">
+        
+        <script type="text/javascript">
+		function changeEvent(element) {
+			
+		    var val = $(element).find('option:selected').text();
+		  /*  if(val === 'Datos médicos') {
+		       PF('dlgHEA').show();
+		    }*/
+		    /*if(val === 'Registro de terapia') {
+			       PF('dlgT').show();
+			}*/
+		/*    if(val === 'Venta de productos') {
+			       PF('dlgP').show();
+			}*/
+		    if(val === 'Confirma visita')
+		    {
+		    	PF('dlgCVi').show();
+		    	//document.getElementById('formNuevo:btnAct').click();
+		    }
+			/*if(val === 'Registro de T')
+			 {
+				PF('dlgTerapeutas').show();
+			 }*/
+		   /* if(val == 'Caja')
+		    	{
+		    	PF('dlgpago').show();
+		    	}*/
+		   /** if(val === 'Historial de visitas') {
+			       PF('dlgHV').show();
+			}**///Historial Terapias
+		/**	if(val === 'Datos Personales') {
+				  
+				   
+			       PF('dlgDP').show(); 
+			} **/
+		}
+		</script>
+        
+   <h:form id="formulario">
+        <p:growl id="growl" showDetail="true" sticky="true" /> 
+				<p:dataTable id="tablaPac" var="pac"
+					value="#{pacienteBean.clientes}" paginator="true" rows="10"
+                                        rowKey="#{pac.cliCodigo}" widgetVar="tablaPacientes"
+					emptyMessage="No hay historial de visitas por el momento" >
+					
+					 
+					
+					
+					<p:column headerText="DNI" width="60px;">
+                                            <h:outputText value="#{pac.persona.perDni}" />
+					</p:column>
+
+					<p:column headerText="Ap. paterno"   >
+                                            <h:outputText value="#{pac.persona.perApellidoP}" />
+					</p:column>
+
+					<p:column headerText="Ap. materno"   >
+                                            <h:outputText value="#{pac.persona.perApellidoM}" />
+					</p:column>
+
+					<p:column headerText="Nombre"  >
+                                            <h:outputText value="#{pac.persona.perNombres}" />
+					</p:column>
+
+					<p:column headerText="Edad" width="25px;" >
+						<h:outputText value="#{pac.persona.perEdad}" rendered="#{pac.persona.perEdad ne 0}"  />
+						<h:outputText value="" rendered="#{pac.persona.perEdad eq 0}"  />
+					</p:column>
+					
+					<p:column headerText="Teléfono fijo" width="60px;" >
+                                            <h:outputText value="#{pac.persona.perTelFijo}"></h:outputText>
+					</p:column>
+					<p:column headerText="Teléfono móvil" width="70px;">
+                                            <h:outputText value="#{pac.persona.perTelMovil}"></h:outputText>
+					</p:column>
+
+					
+					<p:column headerText="Opciones"> 
+                                            <p:selectOneMenu id="sselectoption" value="#{visitaBean.opciones}" onchange="changeEvent(this)"  >
+						<f:selectItem itemLabel="Seleccione" itemValue="S" />
+						<f:selectItem itemLabel="Crear visita" itemValue="CV"  />
+						<f:selectItem itemLabel="Datos médicos" itemValue="DM"  />
+						<f:selectItem itemLabel="Registro de terapia" itemValue="T"  />
+						<f:selectItem itemLabel="Registro de T" itemValue="RGT"  />
+						<f:selectItem itemLabel="Registro de P" itemValue="RGPT" />
+						<f:selectItem itemLabel="Venta de productos" itemValue="P" />
+						<!-- <f:selectItem itemLabel="Editar Datos Clinicos" itemValue="DC" />-->
+						<f:selectItem itemLabel="Historial de terapias" itemValue="HT"   />
+						<f:selectItem itemLabel="Historial de visitas" itemValue="HV" />
+						<f:selectItem itemLabel="Datos Personales" itemValue="DP" />
+						<f:selectItem itemLabel="Caja" itemValue="DCaja"   /> 
+				<!--		<f:selectItem itemLabel="Confirma visita" itemValue="CVi" /> -->
+			                        <p:ajax event="change"
+                                                     listener="#{pacienteBean.prueba(pac)}" /> 
+					</p:selectOneMenu>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+    </ui:define>
+
+    <ui:define name="bottom">
+     
+    </ui:define>
+
+</ui:composition>

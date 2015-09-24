@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.gusedu.model.Producto" table="producto" catalog="gusedu_dbsv" optimistic-lock="version">
+        <id name="proCodigo" type="java.lang.Integer">
+            <column name="pro_codigo" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="modelo" class="com.gusedu.model.Modelo" fetch="select">
+            <column name="mod_codigo" />
+        </many-to-one>
+        <many-to-one name="tipoProducto" class="com.gusedu.model.TipoProducto" fetch="select">
+            <column name="tpr_codigo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="unidadMedida" class="com.gusedu.model.UnidadMedida" fetch="select">
+            <column name="ume_codigo" />
+        </many-to-one>
+        <property name="proCostoUnitario" type="java.lang.Double">
+            <column name="pro_costo_unitario" precision="22" scale="0" />
+        </property>
+        <property name="proCurrencySymbol" type="string">
+            <column name="pro_currency_symbol" />
+        </property>
+        <property name="proDescripcionC" type="string">
+            <column name="pro_descripcion_c" length="30" />
+        </property>
+        <property name="proDescripcionL" type="string">
+            <column name="pro_descripcion_l" />
+        </property>
+        <property name="proDescripcionM" type="string">
+            <column name="pro_descripcion_m" length="70" />
+        </property>
+        <property name="proExistencias" type="java.lang.Double">
+            <column name="pro_existencias" precision="22" scale="0" />
+        </property>
+        <property name="proSku" type="string">
+            <column name="pro_sku" length="10" />
+        </property>
+        <property name="proUrlImagen" type="string">
+            <column name="pro_url_imagen" />
+        </property>
+        <set name="productoVisitas" table="producto_visita" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pro_codigo" not-null="true" />
+            </key>
+            <one-to-many class="com.gusedu.model.ProductoVisita" />
+        </set>
+    </class>
+</hibernate-mapping>
