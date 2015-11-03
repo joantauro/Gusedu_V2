@@ -9,7 +9,7 @@
     <property name="hibernate.connection.password">Gus3du</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.format_sql">true</property>
-    <!--  c3p0   
+ <!--  c3p0   
 <property name="hibernate.c3p0.validate">true</property>
 <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
 <property name="hibernate.c3p0.min_size">0</property>
