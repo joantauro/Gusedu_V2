@@ -29,4 +29,6 @@ public interface VisitaService {
 	public List<Visita> getVisitabyFechas(String username,Date fec_inicial,Date fec_final);
 
 	public List<Visita> getVisitas();
+        
+        public List<Visita> getVisitasByEmpresa();
 }

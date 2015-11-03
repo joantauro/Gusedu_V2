@@ -32,6 +32,9 @@
         <property name="visDescripcion" type="string">
             <column name="vis_descripcion" />
         </property>
+          <property name="visFecFin" type="timestamp">
+            <column name="vis_fec_fin" length="19" />
+        </property>
         <set name="enfermedadVisitas" table="enfermedad_visita" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="vis_codigo" not-null="true" />

@@ -132,7 +132,7 @@ public class UsuarioServiceImpl implements UsuarioService,Serializable{
             tx =sesion.beginTransaction();
             System.out.println("Ya va ha buscar");
             usuario = (Usuario) sesion.load(Usuario.class, idUsuario);
-            System.out.println("USUARIO : "+usuario.getUsuUsuario());
+            System.out.println("USUARIO : "+usuario.getTipoUsuario().getTusDescripcion());
             System.out.println("Lo encontro");
             tx.commit();
         } catch (Exception e) {

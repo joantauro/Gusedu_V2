@@ -21,6 +21,7 @@ public class Visita  implements java.io.Serializable {
      private Integer visPrioridad;
      private String visUsuCreacion;
      private String visDescripcion;
+     private Date visFecFin;
      private Set enfermedadVisitas = new HashSet(0);
      private Set terapias = new HashSet(0);
      private Set productoVisitas = new HashSet(0);
@@ -34,7 +35,7 @@ public class Visita  implements java.io.Serializable {
     public Visita(Cliente cliente) {
         this.cliente = cliente;
     }
-    public Visita(Cliente cliente, Double visCostoTotal, Boolean visPresencial, Integer visEstado, Date visFecCreacion, Integer visPrioridad, String visUsuCreacion, String visDescripcion, Set enfermedadVisitas, Set terapias, Set productoVisitas, Set sintomaVisitas, Set historiaClinicas) {
+    public Visita(Cliente cliente, Double visCostoTotal, Boolean visPresencial, Integer visEstado, Date visFecCreacion, Integer visPrioridad, String visUsuCreacion, String visDescripcion, Date visFecFin,Set enfermedadVisitas, Set terapias, Set productoVisitas, Set sintomaVisitas, Set historiaClinicas) {
        this.cliente = cliente;
        this.visCostoTotal = visCostoTotal;
        this.visPresencial = visPresencial;
@@ -48,6 +49,7 @@ public class Visita  implements java.io.Serializable {
        this.productoVisitas = productoVisitas;
        this.sintomaVisitas = sintomaVisitas;
        this.historiaClinicas = historiaClinicas;
+       this.visFecFin=visFecFin;
     }
    
     public Integer getVisCodigo() {
@@ -149,7 +151,15 @@ public class Visita  implements java.io.Serializable {
         this.historiaClinicas = historiaClinicas;
     }
 
+    public Date getVisFecFin() {
+        return visFecFin;
+    }
 
+    public void setVisFecFin(Date visFecFin) {
+        this.visFecFin = visFecFin;
+    }
+
+    
 
 
 }

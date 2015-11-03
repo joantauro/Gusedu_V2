@@ -132,10 +132,22 @@ public class Auth {
 				request.getSession().setAttribute("userLogged", usuario);				
 				setUserLogged(usuario);	
                                // usuario.getTipoUsuario().getTusCodigo()==2 || usuario.getTipoUsuario().getTusCodigo()==3
-				 if(usuario.getTipoUsuario().getTusCodigo()!=1  )
+				 if(usuario.getTipoUsuario().getTusCodigo()==2  ) // Terapeuta
 				 {
 					return "/web/Principal?faces-redirect=true";
 				 }
+                                 if(usuario.getTipoUsuario().getTusCodigo()==3  ) // Administrador
+				 {
+					return "/web/Principal?faces-redirect=true";
+				 }
+                                 if(usuario.getTipoUsuario().getTusCodigo()==5  ) // Terapeuta Ext
+				 {
+					return "/web/Principal?faces-redirect=true";
+				 }
+                                 if(usuario.getTipoUsuario().getTusCodigo()==4)//Recepcionista
+                                 {
+                                        return "/web/Citas?faces-redirect=true";
+                                 }
 				/*if(usuario.getUsuTipoUsuario().getIdTipoUsuario()==3){
 					return "/mobile/index.jsf";
 				}*/

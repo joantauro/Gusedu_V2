@@ -9,12 +9,14 @@ import com.gusedu.dao.VisitaService;
 import com.gusedu.model.Cliente;
 import com.gusedu.model.Visita;
 import com.gusedu.util.HibernateUtil;
+import com.gusedu.util.StaticUtil;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.transaction.Transactional;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -245,7 +247,52 @@ Session sesion = HibernateUtil.getSessionFactory().openSession();
             }
 
             public List<Visita> getVisitas() {
-/* 217*/        List<Visita> result = new ArrayList();
-/* 224*/        return result;
+         List<Visita> result = new ArrayList();
+         Session sesion = HibernateUtil.getSessionFactory().openSession();
+ 
+        try {
+ 
+             String sql = "SELECT v FROM Visita v ORDER BY v.visFecCreacion DESC";
+             Query q = sesion.createQuery(sql);
+             result = q.list();          
+        } catch (Exception e) {
+         
+                System.out.println("ERROR   : " + e.getMessage());
+
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+         return result;
             }
+
+    @Transactional
+    @Override
+    public List<Visita> getVisitasByEmpresa() {
+       List<Visita> result = new ArrayList();
+         Session sesion = HibernateUtil.getSessionFactory().openSession();
+ 
+        try {
+            String username =StaticUtil.userLogged();
+             String sql = "SELECT v FROM Visita v where v.visUsuCreacion=:usuario and v.visFecCreacion >= CURDATE() ORDER BY v.visFecCreacion DESC";
+             Query q = sesion.createQuery(sql);
+             q.setParameter("usuario", username);
+             result = q.list(); 
+            
+for(int i=0;i<result.size();i++){
+                     System.out.println("PROBANDO:::"+result.get(i).getCliente().getPersona().getPerNombres()+" "
+                                                 +result.get(i).getCliente().getPersona().getPerApellidoP()+" "
+                                                 +result.get(i).getCliente().getPersona().getPerApellidoM());
+}
+          
+        } catch (Exception e) {
+         
+                System.out.println("ERROR   : " + e.getMessage());
+
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+         return result;
+    }
 }

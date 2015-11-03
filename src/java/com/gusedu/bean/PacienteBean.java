@@ -49,7 +49,8 @@ public class PacienteBean {
             }
 
             public void prueba(Cliente cli) {
-/*  61*/        setCliente(cli);
+/*  61*/        cliente=cli;
+                System.out.println(cli.getPersona().getPerNombres());
 /*  62*/        FacesContext fc = FacesContext.getCurrentInstance();
 /*  63*/        fc.getExternalContext().getSessionMap().put("cliente", getCliente());
 /*  65*/        VisitaBean objetoBean = (VisitaBean)fc.getExternalContext().getSessionMap().get("visitaBean");

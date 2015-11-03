@@ -12,9 +12,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public class PuntoServiceImpl
     implements PuntoService, Serializable {
@@ -23,6 +23,7 @@ public class PuntoServiceImpl
             EntityManager em;
 
 
+            @Override
             public List<Punto> getAllPuntos() {
          List<Punto> result = new ArrayList();
                 Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -59,22 +60,95 @@ public class PuntoServiceImpl
             }
 
             public Punto puntoById(Integer id) {
-/*  47*/        return (Punto)em.find(Punto.class, id);
+                
+                 Session sesion = HibernateUtil.getSessionFactory().openSession();
+                 Punto pun=null;
+        try {
+                    pun= (Punto) sesion.load(Punto.class, id);
+                    if(pun!=null){
+                        System.out.println(pun.getPunNombre());
+                    }
+        } catch (Exception e) {
+         
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+/*  47*/        return pun;
             }
 
             public Boolean savePunto(Punto punto) {
-/*  52*/        boolean resultado = false;
-/*  60*/        return Boolean.valueOf(resultado);
+/*  52*/    boolean resultado = false;
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+            sesion.save(punto);
+            tx.commit();
+            resultado = true;
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+                System.out.println("ERROR de saveHistoriaClinica : " + e.getMessage());
+            }
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+
+/*  53*/        return resultado;
             }
 
             public Boolean updatePunto(Punto punto) {
-/*  65*/        boolean resultado = false;
-/*  73*/        return Boolean.valueOf(resultado);
+/*  65*/         boolean resultado = false;
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+            sesion.merge(punto);
+            tx.commit();
+            resultado = true;
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+                System.out.println("ERROR de saveHistoriaClinica : " + e.getMessage());
+            }
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+
+/*  53*/        return resultado;
+ 
             }
 
             public Boolean deletePunto(Punto punto) {
-/*  78*/        boolean resultado = false;
-/*  86*/        return Boolean.valueOf(resultado);
+/*  78*/      boolean resultado = false;
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+            sesion.delete(punto);
+            tx.commit();
+            resultado = true;
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+                System.out.println("ERROR de saveHistoriaClinica : " + e.getMessage());
+            }
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+
+/*  53*/        return resultado;
             }
 
             public Punto puntoByNombre(String nombrePunto) {
@@ -152,16 +226,84 @@ public class PuntoServiceImpl
 
             public List<Punto> getAllOrdenAlfabeticoDesc() {
 /* 125*/        List<Punto> result = new ArrayList();
+
+                Session sesion = HibernateUtil.getSessionFactory().openSession();
+        //Transaction tx = null;
+        try {
+             //tx = sesion.beginTransaction();
+              String sql = "SELECT p FROM Punto p WHERE (p.punOrdenFisico>0) order by p.punNombre desc";
+           Query q = sesion.createQuery(sql);
+           result = q.list();
+            for(int i=0;i<result.size();i++)
+            {
+                System.out.println(result.get(i).getPunCodigo());
+            }
+             // tx.commit();
+         
+        } catch (Exception e) {
+            /*if (tx != null) {
+                tx.rollback();
+            }   */
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
 /* 132*/        return result;
             }
 
             public List<Punto> getAllOrdenGoiz() {
-/* 138*/        List<Punto> result = new ArrayList();
+/* 138*/          List<Punto> result = new ArrayList();
+
+                Session sesion = HibernateUtil.getSessionFactory().openSession();
+        //Transaction tx = null;
+        try {
+             //tx = sesion.beginTransaction();
+              String sql = "SELECT p FROM Punto p WHERE (p.punOrdenFisico>0) order by p.punOrdenFisico asc";
+           Query q = sesion.createQuery(sql);
+           result = q.list();
+            for(int i=0;i<result.size();i++)
+            {
+                System.out.println(result.get(i).getPunCodigo());
+            }
+             // tx.commit();
+         
+        } catch (Exception e) {
+            /*if (tx != null) {
+                tx.rollback();
+            }   */
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
 /* 145*/        return result;
             }
 
             public List<Punto> getAllPuntosRastreables() {
-/* 151*/        List<Punto> result = new ArrayList();
-/* 158*/        return result;
+                
+        List<Punto> result = new ArrayList();
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+
+        try {
+
+           String sql = "SELECT p FROM Punto p WHERE (p.punOrdenFisico>0)";
+           Query q = sesion.createQuery(sql);
+           result = q.list();
+           if(result.size()>0)
+           {
+                System.out.println(result.get(0).getPunCodigo());
+           }
+         
+        } catch (Exception e) {
+            /*if (tx != null) {
+                tx.rollback();
+            }   */
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return result;
             }
 }

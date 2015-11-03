@@ -9,6 +9,7 @@
 	<h:form id="menu">
             <p:menubar>
                 <p:menuitem value="Inicio" url="/web/Principal.jsf" rendered="#{auth.userLogged.tipoUsuario.home}" ></p:menuitem>
+                <p:menuitem icon="ui-icon-document" value="Calendario de Citas" url="/web/Citas.jsf" rendered="#{auth.userLogged.tipoUsuario.calendarioCitas}" />
                 <p:submenu label="Reportes" icon="ui-icon-document">
                     <p:menuitem value="Productos"  url="#" rendered="#{auth.userLogged.tipoUsuario.reporteProducto}" />
                     <p:menuitem value="Puntos por Par" url="#" rendered="#{auth.userLogged.tipoUsuario.reportePar}" />
@@ -24,8 +25,8 @@
                 </p:submenu>
 
                 <p:submenu label="Gestion" icon="ui-icon-pencil" >
-                    <p:menuitem value="Puntos"  icon="ui-icon-arrowreturnthick-1-w" rendered="#{auth.userLogged.tipoUsuario.gestionPuntos}" />
-                    <p:menuitem value="Pares"  icon="ui-icon-arrowreturnthick-1-e"  rendered="#{auth.userLogged.tipoUsuario.gestionPares}" />
+                    <p:menuitem value="Puntos" onclick="PF('dlgPuntos').show();" icon="ui-icon-arrowreturnthick-1-w" rendered="#{auth.userLogged.tipoUsuario.gestionPuntos}" />
+                    <p:menuitem value="Pares" onclick="PF('dlgPares').show();" icon="ui-icon-arrowreturnthick-1-e"  rendered="#{auth.userLogged.tipoUsuario.gestionPares}" />
                 </p:submenu>
 
                 <p:submenu label="Opciones Adicionales" icon="ui-icon-help" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 3}" >
@@ -37,6 +38,7 @@
                     <p:menuitem value="Gestionar usuarios" url="/web/seguridad/gestionUsuario.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionUsuarios}" />
                     <p:menuitem value="Gestionar Tipo de usuarios" url="/web/seguridad/gestionTipoUsuario.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionTipoUsuarios}" />
                     <p:menuitem value="Estadistica" url="/web/estadistica/gestionEstadistica.xhtml" />
+                    <p:menuitem value="Citas" url="/web/Citas.xhtml" />
                 </p:submenu>
 
 
@@ -132,6 +134,16 @@
 		<h:form>
 			<ui:include src="/web/BMPar.xhtml" />
 		</h:form>
+	</p:dialog>
+    
+    	<p:dialog id="dialogPuntos" header="Gestionar Puntos" widgetVar="dlgPuntos"
+					  showEffect="pop"  width="850px" height="500px" >
+					  <ui:include src="/web/GestionPuntos.xhtml" /> 
+			</p:dialog>
+    
+    <p:dialog id="dialogPares" widgetVar="dlgPares" showEffect="pop"  
+		width="80%" height="70%">	 
+			<ui:include src="/web/GestionPar.xhtml" />
 	</p:dialog>
 </ui:composition>
 </html>

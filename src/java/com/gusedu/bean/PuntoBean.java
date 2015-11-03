@@ -11,12 +11,14 @@ import com.gusedu.dao.impl.ParServiceImpl;
 import com.gusedu.dao.impl.PuntoServiceImpl;
 import com.gusedu.model.Par;
 import com.gusedu.model.Punto;
+import com.gusedu.util.StaticUtil;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 // Referenced classes of package com.gusedu.bean:
 //            classPar, classPunto
@@ -33,66 +35,187 @@ public class PuntoBean {
             private int filaPunto;
             private int filaPar;
 
+            private String query;
+            private Punto puntoU;
+            private List<Punto> puntos;
+            
+            	int asc;
+	int desc;
+	int goiz;
+        
+        private String puntonombre;
+        
             public PuntoBean() {
-/*  46*/        parService = new ParServiceImpl();
-/*  47*/        puntoService = new PuntoServiceImpl();
-/*  48*/        punto = new Punto();
-/*  50*/        filaPar = 0;
+        parService = new ParServiceImpl();
+        puntoService = new PuntoServiceImpl();
+        punto = new Punto();
+        puntoU = new Punto();
+        filaPar = 0;
             }
 
             @PostConstruct
             public void post() {
-/*  57*/        listapar = new ArrayList();
-/*  58*/       List<Par> pares = new ArrayList<>();
-/*  59*/        pares = parService.getAllParesOrderGoiz();
-/*  60*/        System.out.println(pares.size());
-/*  63*/        double p = pares.size();
-/*  64*/        int leng = pares.size() / 4;
-/*  65*/        double t = p / 4D;
-/*  66*/        if ((double)leng < t) {
-/*  68*/            leng++;
+        listapar = new ArrayList();
+       List<Par> pares = new ArrayList<>();
+        pares = parService.getAllParesOrderGoiz();
+        System.out.println(pares.size());
+        double p = pares.size();
+        int leng = pares.size() / 4;
+        double t = p / 4D;
+        if ((double)leng < t) {
+            leng++;
                 }
-/*  70*/        filaPar = leng;
-/*  71*/        int f = leng * 4 - (int)p;
-/*  72*/        for (int j = 0; j < leng; j++) {
-/*  74*/            if (j >= leng - f) {
-/*  76*/                pares.add(new Par());
+        filaPar = leng;
+        int f = leng * 4 - (int)p;
+        for (int j = 0; j < leng; j++) {
+            if (j >= leng - f) {
+                pares.add(new Par());
                     }
-/*  79*/            listapar.add(new classPar((Par)pares.get(j), (Par)pares.get(j + leng * 1), (Par)pares.get(leng * 2 + j), (Par)pares.get(j + leng * 3)));
+            listapar.add(new classPar((Par)pares.get(j), (Par)pares.get(j + leng * 1), (Par)pares.get(leng * 2 + j), (Par)pares.get(j + leng * 3)));
                 }
 
-/*  81*/        listarpuntos();
+        listarpuntos();
             }
 
             public void buscar(int p1) {
-/*  86*/        punto.setPunCodigo(Integer.valueOf(p1));
-/*  87*/        parcito = parService.paresByPunto(punto);
-/*  88*/        System.out.println((new StringBuilder()).append("Lista : ").append(parcito.size()).toString());
-/*  89*/        FacesContext fc = FacesContext.getCurrentInstance();
-/*  90*/        fc.getExternalContext().getSessionMap().put("punto", punto);
+        punto.setPunCodigo(Integer.valueOf(p1));
+        parcito = parService.paresByPunto(punto);
+        System.out.println((new StringBuilder()).append("Lista : ").append(parcito.size()).toString());
+        FacesContext fc = FacesContext.getCurrentInstance();
+        fc.getExternalContext().getSessionMap().put("punto", punto);
             }
 
             public void listarpuntos() {
-/*  95*/        lista = new ArrayList();
-/*  96*/        List<Punto>  ptos = new ArrayList();
-/*  98*/        ptos = puntoService.getAllOrdenAlfabeticoAsc();
-/* 100*/        double p = ptos.size();
-/* 101*/        int len = ptos.size() / 4;
-/* 102*/        double t = p / 4D;
-/* 103*/        if ((double)len < t) {
-/* 105*/            len++;
+        lista = new ArrayList();
+        List<Punto>  ptos = new ArrayList();
+        ptos = puntoService.getAllOrdenAlfabeticoAsc();
+        double p = ptos.size();
+        int len = ptos.size() / 4;
+        double t = p / 4D;
+        if ((double)len < t) {
+            len++;
                 }
-/* 107*/        filaPunto = len;
-/* 108*/        int f = len * 4 - (int)p;
-/* 110*/        for (int i = 0; i < len; i++) {
-/* 112*/            if (i >= len - f) {
-/* 114*/                ptos.add(new Punto());
+        filaPunto = len;
+        int f = len * 4 - (int)p;
+        for (int i = 0; i < len; i++) {
+            if (i >= len - f) {
+                ptos.add(new Punto());
                     }
-/* 116*/            lista.add(new classPunto((Punto)ptos.get(i), (Punto)ptos.get(i + len * 1), (Punto)ptos.get(i + len * 2), (Punto)ptos.get(i + len * 3)));
+            lista.add(new classPunto((Punto)ptos.get(i), (Punto)ptos.get(i + len * 1), (Punto)ptos.get(i + len * 2), (Punto)ptos.get(i + len * 3)));
                 }
 
             }
 
+            
+            public void cancelar() {
+		punto = new Punto();
+	}
+            
+            public void orderAsc() {
+		asc = 1;
+		desc = 0;
+		goiz = 0;
+		puntos = puntoService.getAllOrdenAlfabeticoAsc();
+	}
+
+	public void orderDesc() {
+		desc = 1;
+		asc = 0;
+		goiz = 0;
+		puntos = puntoService.getAllOrdenAlfabeticoDesc();
+	}
+
+	public void orderGoiz() {
+		desc = 0;
+		asc = 0;
+		goiz = 1;
+		puntos = puntoService.getAllOrdenGoiz();
+	}
+        
+        public void filtrarBusqueda() {
+		puntos = puntoService.getAllPuntos();
+		List<Punto> filtrados = new ArrayList<>();
+		for (Punto p : puntos) {
+			if (p.getPunNombre().toLowerCase().contains(query.toLowerCase())) {
+				filtrados.add(p);
+			}
+		}
+		puntos = filtrados;
+	}
+           
+        
+        	public void añadirPuntoWeb()
+	{
+		if (esRepetido()) {
+			StaticUtil.errorMessage("Error", "El nombre del punto ya existe");
+			//return null;
+		}
+		if (puntoService.savePunto(punto)) {
+			punto = new Punto();
+			StaticUtil.correctMesage("Éxito", "Se ha añadido correctamente el punto");
+			listarpuntos();
+			//StaticUtil.keepMessages();			
+			//return "pm:consultarPuntos?transition=flip";
+		} else {
+			StaticUtil.errorMessage("Error", "Hubo un error al añadir el punto");
+			//return null;
+		}
+	}
+                
+                public void detallePuntoWeb(Integer id)
+	{
+		punto = puntoService.puntoById(id);
+	 
+	}
+              	public void detallePuntoUpdateWeb(Punto p) {
+		//punto = p;
+		puntoU=p;
+		puntonombre=p.getPunNombre();
+		//System.out.println("Punto : "+punto.getNombre());
+		
+	}
+                public void cargarPunto(Integer id) {
+		punto = puntoService.puntoById(id);
+	}
+                
+                	public void eliminarPunto() {
+		puntoService.deletePunto(punto);
+		punto = new Punto();
+	}
+                        	public void actualizarPuntoWeb(){
+		System.out.println("Descripcion : "+puntoU);
+		//puntoU.setNombre(puntonombre);
+		
+		if(puntoU.getPunNombre().isEmpty())
+		{
+			StaticUtil.errorMessage("Error", "El campo descripcion no puede ser vacío");
+			return;
+		}
+		
+		if (puntoService.updatePunto(puntoU)) {
+			puntoU = new Punto();
+			StaticUtil.correctMesage("Éxito", "Se ha actualizado correctamente el punto");
+			RequestContext.getCurrentInstance().execute("PF('dlgEditarPunto').hide();");
+			 //StaticUtil.keepMessages();
+		} else {
+			StaticUtil.errorMessage("Error", "Hubo un error al actualizar los datos del punto");
+			// StaticUtil.keepMessages();
+		}
+	}
+                                
+        public void nuevoPuntoWeb()
+	{
+		punto = new Punto();
+	}
+        public boolean esRepetido() {
+		List<Punto> allPuntos = puntoService.getAllPuntos();
+		for (Punto p : allPuntos) {
+			if (p.getPunNombre().toLowerCase().equals(punto.getPunNombre())) {
+				return true;
+			}
+		}
+		return false;
+	}	
     public Punto getPunto() {
         return punto;
     }
@@ -141,5 +264,45 @@ public class PuntoBean {
         this.filaPar = filaPar;
     }
 
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public Punto getPuntoU() {
+        return puntoU;
+    }
+
+    public void setPuntoU(Punto puntoU) {
+        this.puntoU = puntoU;
+    }
+
+    public List<Punto> getPuntos() {
+        if (query != null) {
+			if (!query.isEmpty()) {
+				return puntos;
+			}
+		}
+		if (asc != 0 || desc != 0 || goiz != 0) {
+			return puntos;
+		}
+	return puntoService.getAllPuntosRastreables();
+    }
+
+    public void setPuntos(List<Punto> puntos) {
+        this.puntos = puntos;
+    }
+
+    public String getPuntonombre() {
+        return puntonombre;
+    }
+
+    public void setPuntonombre(String puntonombre) {
+        this.puntonombre = puntonombre;
+    }
+    
       
 }

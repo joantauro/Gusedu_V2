@@ -5,8 +5,10 @@
 
 package com.gusedu.bean;
 
+import com.gusedu.dao.GrupoService;
 import com.gusedu.dao.ParService;
 import com.gusedu.dao.PuntoService;
+import com.gusedu.dao.impl.GrupoServiceImpl;
 import com.gusedu.dao.impl.ParServiceImpl;
 import com.gusedu.dao.impl.PuntoServiceImpl;
 import com.gusedu.model.*;
@@ -30,10 +32,10 @@ import org.primefaces.model.UploadedFile;
 public class ParBean {
 
             private Par par;
-            private List pares;
+            private List<Par> pares;
             private List parcito;
             private List npar;
-            private List grupos;
+            private List<Grupo> grupos;
             List result;
             private Punto punto1;
             private Punto punto2;
@@ -55,6 +57,7 @@ public class ParBean {
             private List allPuntos;
             PuntoService puntoService;
             ParService parService;
+            GrupoService grupoService;
 
             public ParBean() {
 /*  40*/        result = new ArrayList();
@@ -62,12 +65,13 @@ public class ParBean {
 /*  73*/        punto2 = new Punto();
 /*  74*/        puntoService = new PuntoServiceImpl();
 /*  75*/        parService = new ParServiceImpl();
+                    grupoService = new GrupoServiceImpl();
 /*  76*/        clean();
             }
 
             @PostConstruct
             public void post() {
-/*  80*/        listarptos();
+         listarptos();
             }
 
             public void clean() {
@@ -82,7 +86,7 @@ public class ParBean {
             }
 
             public void listarptos() {
-/*  97*/        allPuntos = puntoService.getAllPuntos();
+                allPuntos = puntoService.getAllPuntos();
             }
 
             public List autoCompletar(String query) {
@@ -132,6 +136,135 @@ public class ParBean {
                 }
             }
 
+        public void filtrarBusqueda() {
+		pares = parService.getAllPares();
+		List<Par> filtrados = new ArrayList<>();
+		for (Par p : pares) {
+			if (p.getPuntoByPunCodigoP1().getPunNombre().toLowerCase().contains(query)
+					|| p.getPuntoByPunCodigoP2().getPunNombre().toLowerCase()
+							.contains(query)) {
+				filtrados.add(p);
+			}
+		}
+		pares = filtrados;
+	}
+            
+        public void orderAscP1() {
+		ascP1 = 1;
+		ascP2 = 0;
+		goiz = 0;
+		pares = parService.getAllParesOrderByP1();
+	}
+
+	public void orderAscP2() {
+		ascP1 = 0;
+		ascP2 = 1;
+		goiz = 0;
+		pares = parService.getAllParesOrderByP2();
+	}
+
+	public void orderGoiz() {
+		ascP1 = 0;
+		ascP2 = 0;
+		goiz = 1;
+		pares = parService.getAllParesOrderGoiz();
+	}    
+        
+        public void toRegistrarWeb()
+	{
+		par = new Par();
+		punto1 = new Punto();
+		punto2 = new Punto();
+		par = new Par();
+		par.setPuntoByPunCodigoP1(punto1);
+		par.setPuntoByPunCodigoP2(punto2);
+		par.setGrupo(grupoSeleccionado);
+	}
+        public void cancelarPar() {
+		parSeleccionado = new Par();
+	}
+        public void mergeParWeb()
+	{
+		//par.setParPunto1(punto1);
+		//par.setParPunto2(punto2);
+		//par.setParGrupo(grupoSeleccionado);
+		parService.updatePar(par);
+		StaticUtil.correctMesage("Exito", "Se modifico los datos del par");
+		clean();
+		
+	}
+        
+        public void cargarRemovePar(int id) {
+		parSeleccionado = parService.parById(id);
+	}
+        	public void cargarUpdateParWeb(int id) {
+		par = parService.parById(id);
+		/*punto1 = par.getParPunto1();
+		punto2 = par.getParPunto2();
+		grupoSeleccionado = par.getParGrupo();*/
+	}
+                
+        public String toFileUpload(int idPar) {
+		par = parService.parById(idPar);
+		return "pm:uploadImage?transition=flip";
+	}
+        
+        public void agregarParWeb() {
+		System.out.println(grupoSeleccionado);
+		/*if(grupoSeleccionado.getIdGrupo()==0 )
+		{
+			StaticUtil.errorMessage("Error", "Seleccione un grupo para los pares");
+			return;
+		}*/
+		
+		par.setGrupo(grupoSeleccionado);
+		par.setPuntoByPunCodigoP1(punto1);
+		par.setPuntoByPunCodigoP2(punto2);
+		Par newPar = parService.parByPuntos(punto1, punto2, grupoSeleccionado);
+		if (newPar != null) {
+			StaticUtil.errorMessage("Error", "El par ya existe");
+			ExternalContext context = FacesContext.getCurrentInstance()
+					.getExternalContext();
+			context.getFlash().setKeepMessages(true);
+		
+		clean();
+		return;
+		}
+		if (parService.savePar(par)) {
+			grupoSeleccionado = new Grupo();
+			StaticUtil.correctMesage("Éxito",
+					"Se ha añadido correctamente el par");
+			ExternalContext context = FacesContext.getCurrentInstance()
+					.getExternalContext();
+			context.getFlash().setKeepMessages(true);
+			//RequestContext.getCurrentInstance().execute("PF('dlgAddPar').hide();");
+			clean();
+		} else {
+			StaticUtil.errorMessage("Error", "Hubo un error al añadir el par");
+	 
+		}
+	}
+        
+        	public void backToConsultar() {
+		par = new Par();
+		punto1 = new Punto();
+		punto2 = new Punto();
+		grupoSeleccionado = new Grupo();
+		par = new Par();
+		par.setPuntoByPunCodigoP1(punto1);
+		par.setPuntoByPunCodigoP2(punto2);
+		par.setGrupo(grupoSeleccionado);
+		//return "pm:consultarPares?transition=flip";
+	}
+                
+                public void cargarParWeb(int id)
+	{
+		parSeleccionado = parService.parById(id); 
+	}
+       	public void removePar() {
+		parService.deletePar(parSeleccionado);
+		parSeleccionado = new Par();
+	}
             public Par getPar() {
 /* 167*/        return par;
             }
@@ -140,11 +273,19 @@ public class ParBean {
 /* 171*/        this.par = par;
             }
 
-            public List getPares() {
-/* 175*/        return pares;
-            }
+            public List<Par> getPares() {
+	if (query != null) {
+			if (!query.isEmpty()) {
+				return pares;
+			}
+		}
+		if (ascP1 != 0 || ascP2 != 0 || goiz != 0) {
+			return pares;
+		}
+		return parService.getAllPares();
+	}
 
-            public void setPares(List pares) {
+            public void setPares(List<Par>  pares) {
 /* 179*/        this.pares = pares;
             }
 
@@ -164,7 +305,8 @@ public class ParBean {
 /* 195*/        this.npar = npar;
             }
 
-            public List getGrupos() {
+            public List<Grupo> getGrupos() {
+		grupos = grupoService.getAllGrupos();
 /* 199*/        return grupos;
             }
 
@@ -330,4 +472,5 @@ public class ParBean {
 		parSeleccionado = parService.parById(id);
               
 	}
+            
 }

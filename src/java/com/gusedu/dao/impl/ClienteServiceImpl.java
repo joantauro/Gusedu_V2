@@ -133,7 +133,29 @@ public class ClienteServiceImpl
     }
 
             public Cliente getClienteById(Integer idCliente) {
-/* 136*/        return (Cliente)em.find(Cliente.class, idCliente);
+                Cliente cliente=null;
+                Session sesion = HibernateUtil.getSessionFactory().openSession();
+                //Transaction tx = null;
+                try {
+                    //tx = sesion.beginTransaction();
+                    cliente = (Cliente) sesion.load(Cliente.class, idCliente);
+                    if(cliente!=null)
+                    {
+                        cliente.getPersona().getPerNombres();
+                        cliente.getTipoCliente().getTclCodigo();
+                    }
+                    //System.out.println(cliente.getPersona().getPerNombres());
+                    //tx.commit();
+                 } catch (Exception e) {
+                   /* if (tx != null) {
+                        tx.rollback();
+                    }*/
+                    throw new RuntimeException(e);
+                } finally {
+                    sesion.flush();
+                    sesion.close();
+                }
+                return cliente;
             }
 
             public Cliente getClienteByIdPersona(Integer idPersona) {

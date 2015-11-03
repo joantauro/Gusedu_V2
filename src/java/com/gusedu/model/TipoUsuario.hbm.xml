@@ -83,6 +83,9 @@
         <property name="registroTerapiaPares" type="java.lang.Boolean">
             <column name="registro_terapia_pares" />
         </property>
+        <property name="calendarioCitas" type="java.lang.Boolean">
+            <column name="calendario_citas" />
+        </property>
         <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="tus_codigo" not-null="true" />

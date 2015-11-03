@@ -34,6 +34,7 @@
 			}*/
 		    if(val === 'Confirma visita')
 		    {
+                        
 		    	PF('dlgCVi').show();
 		    	//document.getElementById('formNuevo:btnAct').click();
 		    }
@@ -104,15 +105,13 @@
 					<p:column headerText="Teléfono móvil" width="70px;">
                                             <h:outputText value="#{pac.persona.perTelMovil}"></h:outputText>
 					</p:column>
-
-					
 					<p:column headerText="Opciones"> 
                                             <p:selectOneMenu id="sselectoption" value="#{visitaBean.opciones}" onchange="changeEvent(this)"  >
 						<f:selectItem itemLabel="Seleccione" itemValue="S" />
-						<f:selectItem itemLabel="Crear visita" itemValue="CV"  />
-						<f:selectItem itemLabel="Datos médicos" itemValue="DM"  />
+					<!-- <f:selectItem itemLabel="Crear visita" itemValue="CV"  /> -->
+						<f:selectItem itemLabel="Datos médicos" itemValue="DM" itemDisabled="#{auth.userLogged.tipoUsuario.registroTerapiaPares eq false}" />
 						<f:selectItem itemLabel="Registro de Terapia" itemValue="RGT"  />
-						<f:selectItem itemLabel="Registro de Pares" itemValue="RGPT" />
+                                                <f:selectItem itemLabel="Registro de Pares" itemValue="RGPT" itemDisabled="#{auth.userLogged.tipoUsuario.registroTerapiaPares eq false}" />
                                                 <f:selectItem itemLabel="Venta de productos" itemValue="P" itemDisabled="#{auth.userLogged.tipoUsuario.ventaProductos eq false}" />
 						<!-- <f:selectItem itemLabel="Editar Datos Clinicos" itemValue="DC" />-->
 						<f:selectItem itemLabel="Historial de terapias" itemValue="HT"   />

@@ -37,12 +37,13 @@ public class TipoUsuario  implements java.io.Serializable {
      private Boolean reportePar;
      private Boolean ventaProductos;
      private Boolean registroTerapiaPares;
+     private Boolean calendarioCitas;
      private Set usuarios = new HashSet(0);
 
     public TipoUsuario() {
     }
 
-    public TipoUsuario(String tusDescripcion, Boolean caja, Boolean datosPersonales, Boolean historialTerapias, Boolean historialVisitas, Boolean consultaPares, Boolean consultaParesPorEnfermedad, Boolean consultaParesPorSintoma, Boolean consultaPuntos, Boolean crearVisita, Boolean datosMedicos, Boolean gestionCajaDiaria, Boolean gestionEnfermedades, Boolean gestionPares, Boolean gestionPuntos, Boolean gestionSintomas, Boolean gestionTipoUsuarios, Boolean gestionUsuarios, Boolean historialVisita, Boolean home, Boolean registroTerapias, Boolean reporteProducto, Boolean reportePar, Boolean ventaProductos, Boolean registroTerapiaPares, Set usuarios) {
+    public TipoUsuario(String tusDescripcion, Boolean caja, Boolean datosPersonales, Boolean historialTerapias, Boolean historialVisitas, Boolean consultaPares, Boolean consultaParesPorEnfermedad, Boolean consultaParesPorSintoma, Boolean consultaPuntos, Boolean crearVisita, Boolean datosMedicos, Boolean gestionCajaDiaria, Boolean gestionEnfermedades, Boolean gestionPares, Boolean gestionPuntos, Boolean gestionSintomas, Boolean gestionTipoUsuarios, Boolean gestionUsuarios, Boolean historialVisita, Boolean home, Boolean registroTerapias, Boolean reporteProducto, Boolean reportePar, Boolean ventaProductos, Boolean registroTerapiaPares, Boolean calendarioCitas, Set usuarios) {
        this.tusDescripcion = tusDescripcion;
        this.caja = caja;
        this.datosPersonales = datosPersonales;
@@ -68,6 +69,7 @@ public class TipoUsuario  implements java.io.Serializable {
        this.reportePar = reportePar;
        this.ventaProductos = ventaProductos;
        this.registroTerapiaPares = registroTerapiaPares;
+       this.calendarioCitas=calendarioCitas;
        this.usuarios = usuarios;
     }
    
@@ -259,6 +261,14 @@ public class TipoUsuario  implements java.io.Serializable {
     
     public void setUsuarios(Set usuarios) {
         this.usuarios = usuarios;
+    }
+
+    public Boolean getCalendarioCitas() {
+        return calendarioCitas;
+    }
+
+    public void setCalendarioCitas(Boolean calendarioCitas) {
+        this.calendarioCitas = calendarioCitas;
     }
 
 

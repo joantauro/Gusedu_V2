@@ -24,8 +24,31 @@ public class ParServiceImpl
 
 
             public List<Par> getAllPares() {
-/*  42*/        List<Par> result = new ArrayList();
-/*  49*/        return result;
+        List<Par> result = new ArrayList();
+          Session sesion = HibernateUtil.getSessionFactory().openSession();
+        //Transaction tx = null;
+        try {
+             //tx = sesion.beginTransaction();
+              String sql = "SELECT p FROM Par p";
+           Query q = sesion.createQuery(sql);
+            result = q.list();
+       
+           
+                 for (int i = 0; i < result.size(); i++) {
+                    System.out.println(result.get(i).getPuntoByPunCodigoP1().getPunNombre()+"-"+
+                                  result.get(i).getPuntoByPunCodigoP2().getPunNombre()+ 
+                                  result.get(i).getGrupo().getGruNombre()  );
+                            }
+             // tx.commit();
+         
+        } catch (Exception e) {
+  
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return result;
             }
 
             public Par parById(Integer id) {
@@ -74,21 +97,47 @@ public class ParServiceImpl
     }
 
             public Boolean updatePar(Par par) {
-/*  83*/        boolean resultado = false;
-/*  85*/        try {
-/*  85*/            em.merge(par);
-/*  86*/            resultado = true;
-                }
-/*  87*/        catch (Exception e) {
-/*  88*/            System.out.println((new StringBuilder()).append("ERROR: ").append(e.getMessage()).toString());
-/*  89*/            resultado = false;
-                }
-/*  91*/        return Boolean.valueOf(resultado);
+       boolean resultado = false;
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+            sesion.merge(par);
+            tx.commit();
+            resultado = true;
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+                System.out.println("ERROR   : " + e.getMessage());
+            }
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return resultado;
             }
 
             public Boolean deletePar(Par par) {
-/*  96*/        boolean resultado = false;
-/* 104*/        return Boolean.valueOf(resultado);
+/*  96*/         boolean resultado = false;
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+            sesion.delete(par);
+            tx.commit();
+            resultado = true;
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+                System.out.println("ERROR   : " + e.getMessage());
+            }
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return resultado;
             }
 
             public List<Enfermedad>  getEnfermedades(Par par) {
@@ -142,17 +191,49 @@ public class ParServiceImpl
             }
 
             public List<Par> getAllParesOrderByP1() {
-/* 157*/        List<Par> result = new ArrayList();
-/* 164*/        return result;
+        List<Par> result = new ArrayList();
+                 Session sesion = HibernateUtil.getSessionFactory().openSession();
+             
+                try {
+          String sql="SELECT p FROM Par p ORDER BY p.puntoByPunCodigoP1.punNombre ASC";
+
+                    Query q = sesion.createQuery(sql);
+                   result = q.list();
+                         for (int i = 0; i < result.size(); i++) {
+                        System.out.println(result.get(i).getPuntoByPunCodigoP1().getPunNombre()+"|"+result.get(i).getPuntoByPunCodigoP2().getPunNombre() +"|"+result.get(i).getGrupo().getGruNombre());
+                    }
+                
+                } catch (Exception e) {
+                } finally {
+                    sesion.flush();
+                    sesion.close();
+                }
+                   return result;
             }
 
             public List<Par> getAllParesOrderByP2() {
-/* 170*/        List<Par> result = new ArrayList();
-/* 177*/        return result;
+       List<Par> result = new ArrayList();
+                 Session sesion = HibernateUtil.getSessionFactory().openSession();
+             
+                try {
+          String sql="SELECT p FROM Par p ORDER BY p.puntoByPunCodigoP2.punNombre ASC";
+
+                    Query q = sesion.createQuery(sql);
+                   result = q.list();
+                          for (int i = 0; i < result.size(); i++) {
+                        System.out.println(result.get(i).getPuntoByPunCodigoP1().getPunNombre()+"|"+result.get(i).getPuntoByPunCodigoP2().getPunNombre()+"|"+result.get(i).getGrupo().getGruNombre());
+                    }
+                
+                } catch (Exception e) {
+                } finally {
+                    sesion.flush();
+                    sesion.close();
+                }
+                   return result;
             }
 
             public List<Par> getAllParesOrderGoiz() {
-/* 184*/        List<Par> result = new ArrayList();
+                 List<Par> result = new ArrayList();
                  Session sesion = HibernateUtil.getSessionFactory().openSession();
              
                 try {
@@ -160,14 +241,11 @@ public class ParServiceImpl
 
                     Query q = sesion.createQuery(sql);
                    result = q.list();
-                    for (int i = 0; i < result.size(); i++) {
-                        System.out.println(result.get(i).getPuntoByPunCodigoP1().getPunNombre()+"|"+result.get(i).getPuntoByPunCodigoP2().getPunNombre());
+                            for (int i = 0; i < result.size(); i++) {
+                        System.out.println(result.get(i).getPuntoByPunCodigoP1().getPunNombre()+"|"+result.get(i).getPuntoByPunCodigoP2().getPunNombre()+"|"+result.get(i).getGrupo().getGruNombre());
                     }
+                
                 } catch (Exception e) {
-                    /*if (tx != null) {
-                        tx.rollback();
-                    }
-                    throw new RuntimeException(e);*/
                 } finally {
                     sesion.flush();
                     sesion.close();

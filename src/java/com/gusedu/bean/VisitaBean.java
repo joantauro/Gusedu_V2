@@ -218,6 +218,7 @@ public class VisitaBean {
 /* 281*/                RequestContext.getCurrentInstance().update("frame2");
                     }
 /* 285*/            if (opciones.equals("RGT")) {
+                        RequestContext.getCurrentInstance().update("iddlgTerapeutas");
 /* 287*/                RequestContext context = RequestContext.getCurrentInstance();
 /* 288*/                context.execute("PF('dlgTerapeutas').show();");
 /* 289*/                Visita ultimavisita = new Visita();
