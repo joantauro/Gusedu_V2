@@ -26,19 +26,19 @@ function get() {
 
 			<p:outputLabel for="perNombre" value="Nombre: " />
                         <p:inputText value="#{personaBean.persona.perNombres}" id="perNombre" required="true" >
-				<pe:keyFilter regEx="/[a-z_ ñ]/i" />  
+
 			</p:inputText>
 
 			<p:outputLabel for="perApePaterno" value="Apellido paterno: " />
                         <p:inputText value="#{personaBean.persona.perApellidoP}" required="true"
 				id="perApePaterno" >
-				<pe:keyFilter regEx="/[a-z_ ñ]/i"/>  
+	
 			</p:inputText>
 
 			<p:outputLabel for="perApeMaterno" value="Apellido materno: " />
 			<p:inputText value="#{personaBean.persona.perApellidoM}" 
 				id="perApeMaterno" >
-				<pe:keyFilter regEx="/[a-z_ ñ]/i"/>  
+			
 			</p:inputText>
 
 			<p:outputLabel for="perEdad" value="Edad : " />
@@ -52,23 +52,24 @@ function get() {
 				id="perFecNac" pattern="dd/MM/yyyy" navigator="true" />
 
 			<p:outputLabel for="perTelFijo" value="Teléfono fijo: " />
-                        <p:inputText type="tel" value="#{personaBean.persona.perTelFijo}" maxlength="8"
-				id="perTelFijo">
-				<pe:keyFilter mask="num" />  
-			</p:inputText>
+                        <p:inputMask 	id="perTelFijo"  value="#{personaBean.persona.perTelFijo}#{maskView.perTelFijo}" mask="(999) 999-9999"/>
 			
-			<p:outputLabel for="perDireccion" value="Dirección: " />
-                        <p:inputText value="#{personaBean.persona.perDireccion}" id="perDireccion"   />
 			
-
-			<p:outputLabel for="perTelMovil" value="Teléfono móvil: " />
+			
+                        <p:outputLabel for="perTelMovil" value="Teléfono móvil: " />
 			<p:inputText type="tel" 
                                      value="#{personaBean.persona.perTelMovil}" id="perTelMovil" maxlength="12" >
 				<pe:keyFilter mask="num" />  
 			</p:inputText>
+                        
+			<p:outputLabel for="perDireccion" value="Dirección: " />
+                        <p:inputText value="#{personaBean.persona.perDireccion}" id="perDireccion" style="width: 310px"   />
+			
+
+			
 
 			<p:outputLabel for="perCorreo" value="Correo: " />
-                        <p:inputText value="#{personaBean.persona.perCorreo}" id="perCorreo">
+                        <p:inputText value="#{personaBean.persona.perCorreo}" id="perCorreo" style="width: 310px" maxlength="12"   >
 				<f:validateRegex
 					pattern="^((?:(?:(?:[a-zA-Z0-9][\.\-\+_]?)*)[a-zA-Z0-9])+)\@((?:(?:(?:[a-zA-Z0-9][\.\-_]?){0,62})[a-zA-Z0-9])+)\.([a-zA-Z0-9]{2,6})$" />
 			</p:inputText>
