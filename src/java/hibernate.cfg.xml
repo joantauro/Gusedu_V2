@@ -6,7 +6,7 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://127.0.0.1:3306/gusedu_dbsv</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">Gus3du</property>
+    <property name="hibernate.connection.password">1234</property>
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.format_sql">true</property>
  <!--  c3p0   

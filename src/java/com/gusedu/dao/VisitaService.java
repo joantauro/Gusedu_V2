@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.gusedu.model.Cliente;
+import com.gusedu.model.Terapia;
 import com.gusedu.model.Visita;
 
 public interface VisitaService {
@@ -31,4 +32,6 @@ public interface VisitaService {
 	public List<Visita> getVisitas();
         
         public List<Visita> getVisitasByEmpresa();
+        
+        public boolean SPsaveVisitaxTerapia(Visita vis,Terapia ter); 
 }

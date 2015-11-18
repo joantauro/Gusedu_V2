@@ -64,10 +64,27 @@
             <p:outputLabel for="to" value="Hasta :" />
             <p:calendar id="to" value="#{scheduleView.visita.visFecFin}" timeZone="GMT-5" pattern="dd/MM/yyyy HH:mm"/>
  
+            <p:outputLabel value="Tipo de Terapia : " />
+            <p:selectOneMenu id="iTipoTerapia2"
+                             value="#{scheduleView.terapia.tipoTerapia.tteCodigo}"  >
+                <f:selectItem itemLabel="Seleccione un tipo" itemValue="0" />
+                <f:selectItems value="#{terapiaBean.tipoTerapias}" var="tt"
+                               itemValue="#{tt.tteCodigo}" itemLabel="#{tt.tteNombre}" />
+            </p:selectOneMenu>
+            
+            <p:outputLabel value="Terapeuta : " />
+            <p:selectOneMenu id="prueba" value="#{scheduleView.terapia.terUsuCreacion}" >
+                <f:selectItem itemLabel="Seleccione Terapeuta" itemValue="0" />
+                <f:selectItems value="#{personaBean.listaTerapeutas}" var="tte"
+                               itemValue="#{tte.perNombres} #{tte.perApellidoP} #{tte.perApellidoM}"
+                               itemLabel="#{tte.perNombres} #{tte.perApellidoP} #{tte.perApellidoM}" />
+            </p:selectOneMenu>
+            
+            <p:outputLabel value="Descripción : " />
+            <p:inputTextarea value="#{scheduleView.visita.visDescripcion}" />
 
- 
-            <p:commandButton type="reset" value="Reset" />
-            <p:commandButton id="addButton" value="Save" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+            <p:commandButton id="addButton" value="Guardar" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+            <p:commandButton type="reset" value="Cancelar"  />
         </h:panelGrid>
     </p:dialog>   
            </h:form> 
