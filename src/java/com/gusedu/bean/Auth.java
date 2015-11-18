@@ -4,7 +4,7 @@
 // Source File Name:   Auth.java
 
 package com.gusedu.bean;
-
+ 
 import com.gusedu.dao.AuthService;
 import com.gusedu.dao.UsuarioService;
 import com.gusedu.dao.impl.AuthServiceImpl;
