@@ -34,6 +34,7 @@ public class PacienteBean {
             private Cliente cliente;
             private List<Cliente> clientes;
             private String query;
+            
 
             public PacienteBean() {
                 clienteService= new ClienteServiceImpl();
@@ -41,6 +42,7 @@ public class PacienteBean {
 /*  43*/        cliente.setPersona(new Persona());
 /*  44*/        cliente.setTipoCliente(new TipoCliente());
 /*  46*/        query = "";
+     
             }
             
             @PostConstruct

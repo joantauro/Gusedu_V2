@@ -31,6 +31,7 @@ public class PersonaBean {
 
             public PersonaBean() {
 /*  36*/        persona = new Persona();
+                persona.setPerTelFijo("051");
             }
 
             @PostConstruct
@@ -64,6 +65,7 @@ public class PersonaBean {
                 } else {
 /*  77*/            System.out.println("Error Fatal");
 /*  78*/            persona = new Persona();
+persona.setPerTelFijo("051");
                 }
          objetoBean.listado();
             }

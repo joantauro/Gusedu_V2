@@ -20,24 +20,24 @@
                     <p:menuitem value="Puntos" url="#" icon="ui-icon-arrowreturnthick-1-w" rendered="#{auth.userLogged.tipoUsuario.consultaPuntos}" />
                     <p:menuitem value="Pares" onclick="PF('dlgHT').show();" icon="ui-icon-arrowreturnthick-1-e" rendered="#{auth.userLogged.tipoUsuario.consultaPares}" />
                     <p:menuitem value="Pares por Enfermedad"  icon="ui-icon-arrowreturnthick-1-e" rendered="#{auth.userLogged.tipoUsuario.consultaParesPorEnfermedad}" />
-                    <p:menuitem value="Pares por Sintoma"  icon="ui-icon-arrowreturnthick-1-e" rendered="#{auth.userLogged.tipoUsuario.consultaParesPorSintoma}" />
+                    <p:menuitem value="Pares por Síntoma"  icon="ui-icon-arrowreturnthick-1-e" rendered="#{auth.userLogged.tipoUsuario.consultaParesPorSintoma}" />
                     <p:menuitem value="Estado Diario"  action="#{reporteEstBean.listarEstadoDiario()}"  />
                 </p:submenu>
 
-                <p:submenu label="Gestion" icon="ui-icon-pencil" >
+                <p:submenu label="Gestión" icon="ui-icon-pencil" >
                     <p:menuitem value="Puntos" onclick="PF('dlgPuntos').show();" icon="ui-icon-arrowreturnthick-1-w" rendered="#{auth.userLogged.tipoUsuario.gestionPuntos}" />
                     <p:menuitem value="Pares" onclick="PF('dlgPares').show();" icon="ui-icon-arrowreturnthick-1-e"  rendered="#{auth.userLogged.tipoUsuario.gestionPares}" />
                 </p:submenu>
 
                 <p:submenu label="Opciones Adicionales" icon="ui-icon-help" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 3}" >
                     <p:menuitem value="Gestionar Enfermedades"   rendered="#{auth.userLogged.tipoUsuario.gestionEnfermedades}" />
-                    <p:menuitem value="Gestionar Sintomas"   rendered="#{auth.userLogged.tipoUsuario.gestionSintomas}" />
+                    <p:menuitem value="Gestionar Síntomas"   rendered="#{auth.userLogged.tipoUsuario.gestionSintomas}" />
                 </p:submenu>
 
                 <p:submenu label="Opciones de administrador" icon="ui-icon-pencil" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 3}" >
                     <p:menuitem value="Gestionar usuarios" url="/web/seguridad/gestionUsuario.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionUsuarios}" />
                     <p:menuitem value="Gestionar Tipo de usuarios" url="/web/seguridad/gestionTipoUsuario.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionTipoUsuarios}" />
-                    <p:menuitem value="Estadistica" url="/web/estadistica/gestionEstadistica.xhtml" />
+                    <p:menuitem value="Estadística" url="/web/estadística/gestionEstadistica.xhtml" />
                     <p:menuitem value="Citas" url="/web/Citas.xhtml" />
                 </p:submenu>
 

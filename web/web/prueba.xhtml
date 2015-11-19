@@ -52,7 +52,7 @@ function get() {
 				id="perFecNac" pattern="dd/MM/yyyy" navigator="true" />
 
 			<p:outputLabel for="perTelFijo" value="Teléfono fijo: " />
-                        <p:inputMask 	id="perTelFijo"  value="#{personaBean.persona.perTelFijo}#{maskView.perTelFijo}" mask="(999) 999-9999"/>
+                        <p:inputMask 	id="perTelFijo"  value="#{personaBean.persona.perTelFijo}" mask="(?999) 999-9999"/>
 			
 			
 			
