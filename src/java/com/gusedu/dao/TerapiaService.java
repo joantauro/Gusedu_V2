@@ -69,4 +69,5 @@ public interface TerapiaService {
         
         public boolean lastTerapiabyVisita(Visita vis);
 	
+        public Terapia terapiaByVisita(Visita visita);
 }

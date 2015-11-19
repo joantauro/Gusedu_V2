@@ -297,18 +297,19 @@ for(int i=0;i<result.size();i++){
          return result;
     }
 
-    @Override
+    @Override 
     public boolean SPsaveVisitaxTerapia(Visita vis,Terapia ter) {
        boolean resultado = false;
          Session session = HibernateUtil.getSessionFactory().openSession();
          try {
-             Query q = session.createSQLQuery("{ CALL CrearVisitaxTerapia(:vis_fec_creacion,:vis_usu_creacion,:cli_codigo,:vis_descripcion,:vis_fec_fin,:USU_CREACION,:TTE_CODIGO,:TER_COSTO) }");
+             Query q = session.createSQLQuery("{ CALL CrearVisitaxTerapia(:vis_fec_creacion,:vis_usu_creacion,:cli_codigo,:vis_descripcion,:vis_fec_fin,:USU_CREACION,:TER_DESCRIPCION,:TTE_CODIGO,:TER_COSTO) }");
              q.setParameter("vis_fec_creacion", vis.getVisFecCreacion());
              q.setParameter("vis_usu_creacion", vis.getVisUsuCreacion());
              q.setParameter("cli_codigo", vis.getCliente().getCliCodigo());
              q.setParameter("vis_descripcion", vis.getVisDescripcion());
              q.setParameter("vis_fec_fin", vis.getVisFecFin());
              q.setParameter("USU_CREACION", ter.getTerUsuCreacion());
+             q.setParameter("TER_DESCRIPCION", ter.getTerDescripcion());
              q.setParameter("TTE_CODIGO", ter.getTipoTerapia().getTteCodigo());
              q.setParameter("TER_COSTO", ter.getTerCosto());
              q.executeUpdate();

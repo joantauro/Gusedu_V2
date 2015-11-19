@@ -6,8 +6,10 @@
 package com.gusedu.bean;
 
 import com.gusedu.dao.ClienteService;
+import com.gusedu.dao.TerapiaService;
 import com.gusedu.dao.VisitaService;
 import com.gusedu.dao.impl.ClienteServiceImpl;
+import com.gusedu.dao.impl.TerapiaServiceImpl;
 import com.gusedu.dao.impl.VisitaServiceImpl;
 import com.gusedu.model.Cliente;
 import com.gusedu.model.Persona;
@@ -50,6 +52,7 @@ public class ScheduleView {
     private ScheduleEvent event = new DefaultScheduleEvent();
     
     VisitaService visitaService;
+    TerapiaService terapiaService;
     private List<Visita> listaVisita;
     
     private Cliente cli;
@@ -63,6 +66,7 @@ public class ScheduleView {
     
     public ScheduleView() {
         visitaService = new VisitaServiceImpl();
+        terapiaService = new TerapiaServiceImpl();
         clienteService= new ClienteServiceImpl();
         cli = new Cliente();
         cli.setPersona(new Persona());
@@ -78,6 +82,20 @@ public class ScheduleView {
    
     }
     
+    public void cleaner()
+    {
+         cli = new Cliente();
+        cli.setPersona(new Persona());
+        cli.setTipoCliente(new TipoCliente());
+        
+        visita = new Visita();
+        visita.setCliente(new Cliente());
+        
+        terapia = new Terapia();
+        terapia.setTipoTerapia(new TipoTerapia());
+        terapia.setVisita(new Visita());
+    }
+    
      @PostConstruct
     public void init() {
         eventModel = new DefaultScheduleModel();
@@ -91,8 +109,8 @@ public class ScheduleView {
              String pac=listaVisita.get(i).getCliente().getPersona().getPerNombres()+" "+
                         listaVisita.get(i).getCliente().getPersona().getPerApellidoP()+" "+
                         listaVisita.get(i).getCliente().getPersona().getPerApellidoM(); 
-             eventModel.addEvent(new DefaultScheduleEvent(pac,fecE,fecF,listaVisita.get(i).getCliente()));
-             
+             //eventModel.addEvent(new DefaultScheduleEvent(pac,fecE,fecF,listaVisita.get(i).getCliente()));
+             eventModel.addEvent(new DefaultScheduleEvent(pac,fecE,fecF,listaVisita.get(i)));
              /*
              DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	     String convertido = fechaHora.format(fecE);
@@ -131,7 +149,7 @@ public class ScheduleView {
              String pac=listaVisita.get(i).getCliente().getPersona().getPerNombres()+" "+
                         listaVisita.get(i).getCliente().getPersona().getPerApellidoP()+" "+
                         listaVisita.get(i).getCliente().getPersona().getPerApellidoM(); 
-             eventModel.addEvent(new DefaultScheduleEvent(pac,fecE,fecF,listaVisita.get(i).getCliente()));
+             eventModel.addEvent(new DefaultScheduleEvent(pac,fecE,fecF,listaVisita.get(i)));
         }
     }
     public void paciente()
@@ -239,11 +257,19 @@ public class ScheduleView {
      
     public void onEventSelect(SelectEvent selectEvent) {
         event = (ScheduleEvent) selectEvent.getObject();
-         cli= ((Cliente)event.getData()); 
-     
+        
+        visita =(Visita)event.getData();
+         cli= visita.getCliente(); 
+       // visita
         visita.setVisFecCreacion(event.getStartDate());
         visita.setVisFecFin(event.getEndDate());
-        
+       
+        //------- Terapia ---------//
+        System.out.println("ID VISITA : "+visita.getVisCodigo()); 
+        terapia = terapiaService.terapiaByVisita(visita);
+        System.out.println("TERAPIA  : "+ terapia.getTerUsuCreacion()); 
+        System.out.println("DESCRIPCION : "+visita.getVisDescripcion());
+        System.out.println("TIPO TERAPIA  : "+ terapia.getTipoTerapia().getTteNombre()); 
     }
      
     public void onDateSelect(SelectEvent selectEvent) {
@@ -270,6 +296,19 @@ public class ScheduleView {
         visita= new Visita();
     }
     
+    public String cortar(String cadena,int n)
+    {
+        String salida="";
+        String [] arreglo = cadena.split("\\|");
+           for (int i = 0; i < arreglo.length; i++) {
+            if(i==n)
+            {
+                salida=arreglo[i];
+            }
+        }
+          return salida;
+    }
+    
     public void saveVisitaSP()
     {
         visita.setVisPresencial(true);
@@ -279,14 +318,21 @@ public class ScheduleView {
         String usuarioCreacion = StaticUtil.userLogged();
         visita.setVisUsuCreacion(usuarioCreacion);
         visita.setVisCostoTotal(0.0);
+        terapia.setTerCosto(0.0);
+        
+        String ust=terapia.getTerUsuCreacion();
+        terapia.setTerUsuCreacion(cortar(ust, 0));
+        terapia.setTerDescripcion(cortar(ust, 1));
+        
         System.out.println("vis_fec_creacion : " +visita.getVisFecCreacion()+"\n"+
                 "vis_usu_creacion : " +visita.getVisUsuCreacion()+"\n"+
                 "cli_codigo : " +visita.getCliente().getCliCodigo()+"\n"+
                 "vis_descripcion : " +visita.getVisDescripcion()+"\n"+
                 "vis_fec_fin : " +visita.getVisFecFin()+"\n"+
                 "USU_CREACION : " +terapia.getTerUsuCreacion()+"\n"+
-                "TTE_CODIGO : " +visita.getVisFecCreacion()+"\n"+
-                "TER_COSTO : " +visita.getVisFecCreacion()+"\n");
+                "TER_DESCRIPCION : " +terapia.getTerDescripcion()+"\n"+
+                "TTE_CODIGO : " +terapia.getTipoTerapia().getTteCodigo()+"\n"+
+                "TER_COSTO : " +terapia.getTerCosto()+"\n");
         visitaService.SPsaveVisitaxTerapia(visita, terapia);
     }
             

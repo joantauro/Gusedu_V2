@@ -30,7 +30,7 @@
                     widgetVar="myschedule" timeZone="GMT-5" locale="es"   >
 
             <p:ajax  event="dateSelect" listener="#{scheduleView.onDateSelect}" update=":#{p:component('eventDetails')}" oncomplete="PF('eventDialog').show();" />
-            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update=":#{p:component('eventDetails')}" oncomplete="PF('eventDialog').show();" />
+            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update=":#{p:component('eventDetails2')}" oncomplete="PF('eventDialog2').show();" />
             <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update=":#{p:component('messages')}" />
             <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update=":#{p:component('messages')}" />
  
@@ -53,40 +53,78 @@
          
           
            <h:form>
-                <p:dialog widgetVar="eventDialog" header="Detalle de Cita" showEffect="clip" hideEffect="clip">
-        <h:panelGrid id="eventDetails" columns="2">
-            <p:outputLabel for="title" value="Paciente : " />
-            <p:outputLabel id="title" value="#{scheduleView.cli.persona.perNombres} #{scheduleView.cli.persona.perApellidoP} #{scheduleView.cli.persona.perApellidoM}"  />
- 
-            <p:outputLabel for="from" value="Desde :" />
-            <p:calendar id="from" value="#{scheduleView.visita.visFecCreacion}" timeZone="GMT-5" pattern="dd/MM/yyyy HH:mm"/>
- 
-            <p:outputLabel for="to" value="Hasta :" />
-            <p:calendar id="to" value="#{scheduleView.visita.visFecFin}" timeZone="GMT-5" pattern="dd/MM/yyyy HH:mm"/>
- 
-            <p:outputLabel value="Tipo de Terapia : " />
-            <p:selectOneMenu id="iTipoTerapia2"
-                             value="#{scheduleView.terapia.tipoTerapia.tteCodigo}"  >
-                <f:selectItem itemLabel="Seleccione un tipo" itemValue="0" />
-                <f:selectItems value="#{terapiaBean.tipoTerapias}" var="tt"
-                               itemValue="#{tt.tteCodigo}" itemLabel="#{tt.tteNombre}" />
-            </p:selectOneMenu>
-            
-            <p:outputLabel value="Terapeuta : " />
-            <p:selectOneMenu id="prueba" value="#{scheduleView.terapia.terUsuCreacion}" >
-                <f:selectItem itemLabel="Seleccione Terapeuta" itemValue="0" />
-                <f:selectItems value="#{personaBean.listaTerapeutas}" var="tte"
-                               itemValue="#{tte.perNombres} #{tte.perApellidoP} #{tte.perApellidoM}"
-                               itemLabel="#{tte.perNombres} #{tte.perApellidoP} #{tte.perApellidoM}" />
-            </p:selectOneMenu>
-            
-            <p:outputLabel value="Descripción : " />
-            <p:inputTextarea value="#{scheduleView.visita.visDescripcion}" />
+               <p:dialog widgetVar="eventDialog" header="Detalle de Cita" showEffect="clip" hideEffect="clip">
+                   <h:panelGrid id="eventDetails" columns="2">
+                       <p:outputLabel for="title" value="Paciente : " />
+                       <p:outputLabel id="title" value="#{scheduleView.cli.persona.perNombres} #{scheduleView.cli.persona.perApellidoP} #{scheduleView.cli.persona.perApellidoM}"  />
 
-            <p:commandButton id="addButton" value="Guardar" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
-            <p:commandButton type="reset" value="Cancelar"  />
-        </h:panelGrid>
-    </p:dialog>   
+                       <p:outputLabel for="from" value="Desde :" />
+                       <p:calendar id="from" value="#{scheduleView.visita.visFecCreacion}" timeZone="GMT-5" pattern="dd/MM/yyyy HH:mm"/>
+
+                       <p:outputLabel for="to" value="Hasta :" />
+                       <p:calendar id="to" value="#{scheduleView.visita.visFecFin}" timeZone="GMT-5" pattern="dd/MM/yyyy HH:mm"/>
+
+                       <p:outputLabel value="Tipo de Terapia : " />
+                       <p:selectOneMenu id="iTipoTerapia2"
+                                        value="#{scheduleView.terapia.tipoTerapia.tteCodigo}"  >
+                           <f:selectItem itemLabel="Seleccione un tipo" itemValue="0" />
+                           <f:selectItems value="#{terapiaBean.tipoTerapias}" var="tt"
+                                          itemValue="#{tt.tteCodigo}" itemLabel="#{tt.tteNombre}" />
+                       </p:selectOneMenu>
+
+                       <p:outputLabel value="Terapeuta : " />
+                       <p:selectOneMenu id="prueba" value="#{scheduleView.terapia.terUsuCreacion}" >
+                           <f:selectItem itemLabel="Seleccione Terapeuta" itemValue="0" />
+                           <f:selectItems value="#{personaBean.listaTerapeutas}" var="tte"
+                                          itemValue="#{tte.perNombres} #{tte.perApellidoP} #{tte.perApellidoM}|#{tte.perCodigo}"
+                                          itemLabel="#{tte.perNombres} #{tte.perApellidoP} #{tte.perApellidoM}" />
+                       </p:selectOneMenu>
+
+                       <p:outputLabel value="Observación : " />
+                       <p:inputTextarea value="#{scheduleView.visita.visDescripcion}" />
+
+                       <p:commandButton id="addButton" value="Guardar" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                       <p:commandButton type="reset" value="Cancelar"  />
+                   </h:panelGrid>
+               </p:dialog>  
+               
+               <p:dialog widgetVar="eventDialog2" header="Detalle de Cita" showEffect="clip" hideEffect="clip">
+                   <h:panelGrid id="eventDetails2" columns="2"  cellspacing="10"  >
+                       <p:outputLabel for="title2" value="Paciente : " />
+                       <p:outputLabel id="title2" value="#{scheduleView.cli.persona.perNombres} #{scheduleView.cli.persona.perApellidoP} #{scheduleView.cli.persona.perApellidoM}"  />
+
+                       <p:outputLabel for="from2" value="Fecha :" />
+                       <p:outputLabel id="from2" value="#{scheduleView.visita.visFecCreacion}" >
+                           <f:convertDateTime pattern="dd/MM/yyyy " />
+                       </p:outputLabel>
+                       
+                       
+                       <p:outputLabel  value="Hora :" />
+                       <p:panelGrid    >
+                           <p:outputLabel value="#{scheduleView.visita.visFecCreacion}" >
+                               <f:convertDateTime pattern="hh:mm a" />
+                           </p:outputLabel>
+                           <p:outputLabel value=" - " />
+                           <p:outputLabel  value="#{scheduleView.visita.visFecFin}"  >
+                               <f:convertDateTime pattern="hh:mm a"  />
+                           </p:outputLabel>
+                       </p:panelGrid>
+                       
+                       
+                       
+                       <p:outputLabel value="Tipo de Terapia : " />
+                       <p:outputLabel value="#{scheduleView.terapia.tipoTerapia.tteNombre}" />
+
+                       <p:outputLabel value="Terapeuta : " />
+                       <p:outputLabel value="#{scheduleView.terapia.terUsuCreacion}" />
+
+                       <p:outputLabel value="Descripción : " />
+                       <h:outputLabel value="#{scheduleView.visita.visDescripcion}" />
+
+                       <p:commandButton id="addButton2" value="Cerrar" action="#{scheduleView.cleaner()}" oncomplete="PF('myschedule').update();PF('eventDialog2').hide();" />
+
+                   </h:panelGrid>
+               </p:dialog>   
            </h:form> 
           
            <script type="text/javascript">

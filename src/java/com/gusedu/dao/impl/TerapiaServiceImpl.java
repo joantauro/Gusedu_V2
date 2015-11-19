@@ -479,4 +479,27 @@ public class TerapiaServiceImpl
                 }*/
         return result;
     }
+
+    @Override
+    public Terapia terapiaByVisita(Visita visita) {
+        Terapia result= null;
+      Session sesion = HibernateUtil.getSessionFactory().openSession();
+        try {
+             //tx = sesion.beginTransaction();
+              String sql = "SELECT t FROM Terapia t WHERE t.visita.visCodigo=:visita";
+            Query q = sesion.createQuery(sql);
+           q.setParameter("visita", visita.getVisCodigo());
+           result = (Terapia) q.uniqueResult();
+        //   result = q.list();
+           
+                System.out.println(result.getTipoTerapia().getTteNombre());
+         
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return result;
+    }
 }

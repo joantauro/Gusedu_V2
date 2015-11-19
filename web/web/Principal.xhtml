@@ -144,7 +144,7 @@
 					<p:selectOneMenu id="prueba" value="#{terapiaBean.idterapeuta}" >
 						<f:selectItem itemLabel="Seleccione Terapeuta" itemValue="0" />
 						<f:selectItems value="#{personaBean.listaTerapeutas}" var="tte"
-                                                               itemValue="#{tte.perNombres} #{tte.perApellidoP} #{tte.perApellidoM}"
+                                                               itemValue="#{tte.perNombres} #{tte.perApellidoP} #{tte.perApellidoM}|#{tte.perCodigo}"
 							itemLabel="#{tte.perNombres} #{tte.perApellidoP} #{tte.perApellidoM}" />
 					</p:selectOneMenu>
 					
