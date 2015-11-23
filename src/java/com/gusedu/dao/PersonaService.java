@@ -25,5 +25,10 @@ public interface PersonaService {
 	public Cliente buscarPorDni(String dni);
 	
 	public List<Persona> getTerapeutas();
+        
+        public boolean validarDni (String dni);
+        
+        
+                
 	
 }
