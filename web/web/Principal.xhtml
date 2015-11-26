@@ -110,14 +110,14 @@
 						<f:selectItem itemLabel="Seleccione" itemValue="S" />
 					<!-- <f:selectItem itemLabel="Crear visita" itemValue="CV"  /> -->
 						<f:selectItem itemLabel="Datos médicos" itemValue="DM" itemDisabled="#{auth.userLogged.tipoUsuario.registroTerapiaPares eq false}" />
-						<f:selectItem itemLabel="Registro de Terapia" itemValue="RGT"  />
+					<!--	<f:selectItem itemLabel="Registro de Terapia" itemValue="RGT"  /> -->
                                                 <f:selectItem itemLabel="Registro de Pares" itemValue="RGPT" itemDisabled="#{auth.userLogged.tipoUsuario.registroTerapiaPares eq false}" />
                                                 <f:selectItem itemLabel="Venta de productos" itemValue="P" itemDisabled="#{auth.userLogged.tipoUsuario.ventaProductos eq false}" />
 						<!-- <f:selectItem itemLabel="Editar Datos Clinicos" itemValue="DC" />-->
 						<f:selectItem itemLabel="Historial de terapias" itemValue="HT"   />
 						<f:selectItem itemLabel="Historial de visitas" itemValue="HV" />
 						<f:selectItem itemLabel="Datos Personales" itemValue="DP" />
-                                                <f:selectItem itemLabel="Pago de Terapia" itemValue="DCaja" />
+                                                <f:selectItem itemLabel="Detalle de Pago " itemValue="DCaja" />
 						 
 				<!--		<f:selectItem itemLabel="Confirma visita" itemValue="CVi" /> -->
                                 <p:ajax event="change" update=":#{p:component('frame')},:#{p:component('growl')}"
@@ -222,7 +222,7 @@
 			</p:dialog>
 		</h:form>
                 <h:form id="formCaja" >
-                <p:dialog id="dlgCajita" header="Detalle de Terapia" widgetVar="dlgpago"
+                <p:dialog id="dlgCajita" header="Detalle de Pago de #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" widgetVar="dlgpago"
                           showEffect="pop" modal="true">
                     <p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.limpiar()}" />
                     <h:panelGrid columns="2" id="pnlChange" >
@@ -237,7 +237,7 @@
                         <p:commandButton icon="ui-icon-disk" title="Guardar" action="#{visitaBean.change}" update="pnlChange,PreVi" rendered="#{visitaBean.edit ne false}" /> 
                     </h:panelGrid>
                     
-                    <p:dataTable id="productosT" var="pro" style="width:400px;"
+                    <p:dataTable id="productosT" var="pro" style="width:400px;" rendered="#{auth.userLogged.tipoUsuario.ventaProductos eq false}"
 							paginatorAlwaysVisible="false" editable="true"
 							value="#{visitaBean.productosDeVisita}"
 							emptyMessage="No se han añadido productos" paginator="true"
