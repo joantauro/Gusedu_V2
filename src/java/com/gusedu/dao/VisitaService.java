@@ -34,4 +34,6 @@ public interface VisitaService {
         public List<Visita> getVisitasByEmpresa();
         
         public boolean SPsaveVisitaxTerapia(Visita vis,Terapia ter); 
+        
+        public Visita visitaDelDia(Cliente cliente);
 }

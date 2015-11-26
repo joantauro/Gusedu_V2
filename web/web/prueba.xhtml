@@ -18,19 +18,20 @@ function get() {
 
 	<h:form id="formulario">
 		<p:growl showDetail="true" autoUpdate="true" />
-		<p:panelGrid columns="2" id="panelRegistro"  >
+                <p:panel id="panelJ" >
+                    <p:panelGrid columns="2" id="panelRegistro"  >
 			<p:outputLabel for="perDni" value="DNI: " />
-                        <p:inputText value="#{personaBean.persona.perDni}" id="perDni" maxlength="8" >
+                        <p:inputText value="#{personaBean.persona.perDni}" id="perDni" maxlength="8" required="true" requiredMessage="El campo DNI es obligatorio" >
 				<pe:keyFilter mask="num" />  
 			</p:inputText>
 
 			<p:outputLabel for="perNombre" value="Nombre: " />
-                        <p:inputText value="#{personaBean.persona.perNombres}" id="perNombre" required="true" >
+                        <p:inputText value="#{personaBean.persona.perNombres}" id="perNombre" required="true" requiredMessage="Se requiere llenar el nombre" >
 
 			</p:inputText>
 
 			<p:outputLabel for="perApePaterno" value="Apellido paterno: " />
-                        <p:inputText value="#{personaBean.persona.perApellidoP}" required="true"
+                        <p:inputText value="#{personaBean.persona.perApellidoP}" required="true" requiredMessage="Se requiere llenar los apellidos"
 				id="perApePaterno" >
 	
 			</p:inputText>
@@ -98,11 +99,13 @@ function get() {
 				<f:selectItem itemLabel="Publicidad" itemValue="Publicidad" />
 			</p:selectOneRadio>
 
-			<p:commandButton value="Registrar"  update=":#{p:component('tablaPac')},:#{p:component('growl')}"
+                        <p:commandButton id="proceReg" value="Registrar"  update=":#{p:component('tablaPac')},:#{p:component('growl')}"
                                          action="#{personaBean.registroPacienteV2()}" icon="ui-icon-check"    />
 			<p:commandButton value="Cancelar" icon="ui-icon-cancel"
 				action="#{personaBean.cancel}" immediate="true" />
 		</p:panelGrid>
+                </p:panel>
+                <p:blockUI block=":#{p:component('panelJ')}" trigger=":#{p:component('proceReg')}" />
 	</h:form>
 </ui:composition>
 </html>

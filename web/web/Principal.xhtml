@@ -117,6 +117,7 @@
 						<f:selectItem itemLabel="Historial de terapias" itemValue="HT"   />
 						<f:selectItem itemLabel="Historial de visitas" itemValue="HV" />
 						<f:selectItem itemLabel="Datos Personales" itemValue="DP" />
+                                                <f:selectItem itemLabel="Pago de Terapia" itemValue="DCaja" />
 						 
 				<!--		<f:selectItem itemLabel="Confirma visita" itemValue="CVi" /> -->
                                 <p:ajax event="change" update=":#{p:component('frame')},:#{p:component('growl')}"
@@ -220,7 +221,58 @@
 				<ui:include src="prueba.xhtml" />
 			</p:dialog>
 		</h:form>
-                
+                <h:form id="formCaja" >
+                <p:dialog id="dlgCajita" header="Detalle de Terapia" widgetVar="dlgpago"
+                          showEffect="pop" modal="true">
+                    <p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.limpiar()}" />
+                    <h:panelGrid columns="2" id="pnlChange" >
+                        <p:outputLabel value="Terapia : " />
+                        <p:outputLabel value="#{visitaBean.ter.tipoTerapia.tteNombre}" />
+                        <p:outputLabel value="Terapeuta : " />
+                        <p:outputLabel value="#{visitaBean.ter.terUsuCreacion}" />
+                        <p:outputLabel value="Precio : " />
+                        <p:outputLabel value="#{visitaBean.ter.terCosto}" rendered="#{visitaBean.edit eq false}"  /> 
+                        <p:inputText value="#{visitaBean.ter.terCosto}" rendered="#{visitaBean.edit ne false}"  />
+                        <p:commandButton icon="ui-icon-pencil" title="Editar" action="#{visitaBean.change}" update="pnlChange" rendered="#{visitaBean.edit eq false}" />
+                        <p:commandButton icon="ui-icon-disk" title="Guardar" action="#{visitaBean.change}" update="pnlChange,PreVi" rendered="#{visitaBean.edit ne false}" /> 
+                    </h:panelGrid>
+                    
+                    <p:dataTable id="productosT" var="pro" style="width:400px;"
+							paginatorAlwaysVisible="false" editable="true"
+							value="#{visitaBean.productosDeVisita}"
+							emptyMessage="No se han añadido productos" paginator="true"
+							rows="5">
+							<f:facet name="header">
+        							Productos del Paciente
+    						</f:facet>
+ 
+       
+							<p:column headerText="Nombre" style="vertical-align:middle;">
+                                                            <h:outputText value="#{pro.producto.proDescripcionM}" />
+							</p:column>
+							<p:column headerText="Cantidad" style="vertical-align:middle;">
+				 
+								   <p:cellEditor>
+                                                                       <f:facet name="output"><h:outputText value="#{pro.pxvCantidad}" /></f:facet>
+                                                                       <f:facet name="input"><p:inputText id="modelInput" value="#{pro.pxvCantidad}" style="width:100%"/></f:facet>
+           							</p:cellEditor>
+							</p:column>
+							<p:column headerText="Costo parcial"
+								style="vertical-align:middle;">
+								<h:outputText
+                                                                    value="#{pro.pxvCostoParcial}" />
+							</p:column>
+					 
+						</p:dataTable>
+                    <br/>
+                    
+                    <p:outputLabel value="Costo Total: " />
+                    <p:outputLabel id="PreVi" value="#{visitaBean.precioTotal}" /> 
+                    <br/>
+                    <br/>
+                    <p:commandButton value="Cerrar" action="#{visitaBean.limpiar()}" oncomplete="PF('dlgpago').hide();" update=":#{p:component('tablaPac')}" />
+                </p:dialog>
+                </h:form>
             </ui:define>
 
             <ui:define name="bottom">

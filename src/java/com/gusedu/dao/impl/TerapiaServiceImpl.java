@@ -28,16 +28,27 @@ public class TerapiaServiceImpl
             }
 
             public boolean updateTerapia(Terapia terapia) {
-/*  52*/        boolean resultado = false;
-/*  54*/        try {
-/*  54*/            em.merge(terapia);
-/*  55*/            resultado = true;
-                }
-/*  56*/        catch (Exception e) {
-/*  57*/            System.out.println((new StringBuilder()).append("ERROR: ").append(e.getMessage()).toString());
-/*  58*/            resultado = false;
-                }
-/*  60*/        return resultado;
+                boolean resultado = false;
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+            sesion.merge(terapia);
+            tx.commit();
+            resultado = true;
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+                System.out.println("ERROR de saveHistoriaClinica : " + e.getMessage());
+            }
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+ 
+       return resultado;
             }
 
             public boolean deleteTerapia(Terapia terapia) {

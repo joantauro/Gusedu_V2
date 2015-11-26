@@ -13,10 +13,12 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import org.primefaces.context.RequestContext;
 
 // Referenced classes of package com.gusedu.bean:
@@ -52,22 +54,33 @@ public class PersonaBean {
 /*  56*/        this.persona = persona;
             }
 
-            public void registroPacienteV2() {
+     public void registroPacienteV2() {
          String empresa = StaticUtil.userLogged();
          RequestContext context = RequestContext.getCurrentInstance();
          FacesContext fc = FacesContext.getCurrentInstance();
          PacienteBean objetoBean = (PacienteBean)fc.getExternalContext().getSessionMap().get("pacienteBean");
+         
+        if( personaService.validarDni(persona.getPerDni())==false)
+        {
+            StaticUtil.errorMessage("Advertencia", "Ya existe una persona registrada con este DNI");
+            StaticUtil.keepMessages();
+            return ;
+        }
+         
          if (personaService.registroPaciente(persona, empresa)) {
              persona = new Persona();
              StaticUtil.correctMesage("Éxito", "Se ha registrado correctamente al paciente");
-/*  73*/            StaticUtil.keepMessages();
-/*  75*/            context.execute("PF('dlg1').hide();");
+            StaticUtil.keepMessages();
+            context.execute("PF('dlg1').hide();");
                 } else {
-/*  77*/            System.out.println("Error Fatal");
-/*  78*/            persona = new Persona();
+           System.out.println("Error Fatal");
+            persona = new Persona();
 
                 }
          objetoBean.listado();
+       
+  
+          
             }
 
             public void cancel() {
@@ -93,4 +106,21 @@ public class PersonaBean {
                 }
                 
             }
+            
+     
+            public void validaDni(String dni)                    
+            {
+              
+                System.out.println("Hola ^_^");
+              boolean valor=  personaService.validarDni(dni);
+              if(valor)
+              {
+                  System.out.println("It's true");
+              }else
+              {
+                  System.out.println("It's false");
+              }
+                
+            }
+            
 }

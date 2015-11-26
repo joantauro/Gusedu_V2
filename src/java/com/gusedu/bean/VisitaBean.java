@@ -15,11 +15,9 @@ import com.gusedu.dao.impl.TerapiaServiceImpl;
 import com.gusedu.dao.impl.VisitaServiceImpl;
 import com.gusedu.model.*;
 import com.gusedu.util.StaticUtil;
-import java.io.PrintStream;
 import java.util.*;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
@@ -47,6 +45,11 @@ public class VisitaBean {
             private String descripcionIMC;
             TerapiaService terapiaService;
             HistoriaClinicaService historiaClinicaService;
+            
+            private Terapia ter;
+            private double precioTotal;
+            private boolean edit;
+            private double prePrecioTerapia;
 
             public VisitaBean() {
 /*  82*/        productoService = new ProductoServiceImpl();
@@ -55,6 +58,11 @@ public class VisitaBean {
 /*  86*/        producto = new Producto();
 /*  87*/        producto.setTipoProducto(new TipoProducto());
 /*  88*/        producto.setUnidadMedida(new UnidadMedida());
+
+                ter = new Terapia();
+                ter.setTipoTerapia(new TipoTerapia());
+                ter.setVisita(new Visita());
+                
 /*  90*/        historiaClinica = new HistoriaClinica();
 /*  91*/        historiaClinica.setVisita(new Visita());
 /*  93*/        cliente.setPersona(new Persona());
@@ -62,8 +70,43 @@ public class VisitaBean {
 /*  96*/        mostrarFormProducto = Integer.valueOf(-1);
 /*  97*/        terapiaService = new TerapiaServiceImpl();
 /*  98*/        historiaClinicaService = new HistoriaClinicaServiceImpl();
+precioTotal=0.0;
+edit=false;
             }
 
+    public double getPrePrecioTerapia() {
+        return prePrecioTerapia;
+    }
+
+    public void setPrePrecioTerapia(double prePrecioTerapia) {
+        this.prePrecioTerapia = prePrecioTerapia;
+    }
+
+    public boolean isEdit() {
+        return edit;
+    }
+
+    public void setEdit(boolean edit) {
+        this.edit = edit;
+    }
+    
+    public double getPrecioTotal() {
+        return precioTotal;
+    }
+    
+    public void setPrecioTotal(double precioTotal) {
+        this.precioTotal = precioTotal;
+    }
+
+    public Terapia getTer() {
+        return ter;
+    }
+
+    public void setTer(Terapia ter) {
+        this.ter = ter;
+    }
+            
+            
             public String getDescripcionIMC() {
 /* 102*/        return descripcionIMC;
             }
@@ -280,14 +323,22 @@ public class VisitaBean {
 /* 347*/            fc.getExternalContext().getSessionMap().put("ultimavisita", ultimavisita);
 /* 349*/            RequestContext.getCurrentInstance().update("formProduct");
                 }
-/* 351*/        if (opciones.equals("DCaja")) {
-/* 353*/            Visita ultimavisita = new Visita();
-/* 355*/            ultimavisita = vis;
-/* 356*/            visita = ultimavisita;
-/* 357*/            fc.getExternalContext().getSessionMap().put("ultimavisita", ultimavisita);
-/* 359*/            RequestContext.getCurrentInstance().update("formCaja");
-/* 360*/            RequestContext context = RequestContext.getCurrentInstance();
-/* 361*/            context.execute("PF('dlgpago').show();");
+         if (opciones.equals("DCaja")) {
+             Visita ultimavisita = new Visita();
+             ultimavisita = vis;
+             visita = ultimavisita;
+             productosDeVisita = productoService.getAllProductosByVisita(visita);
+             ter = terapiaService.terapiaByVisita(visita);
+             
+             precioTotal= visita.getVisCostoTotal();
+            // fc.getExternalContext().getSessionMap().put("ultimavisita", ultimavisita);
+            RequestContext.getCurrentInstance().update("formCaja");
+            // visita=visitaService ter = terapiaService.terapiaByVisita(visita);.visitaDelDia(client);
+             System.out.println("La visita de hoy es : "+ visita.getVisCodigo());
+            
+            
+             RequestContext context = RequestContext.getCurrentInstance();
+             context.execute("PF('dlgpago').show();");
                 }
             }
 
@@ -510,4 +561,46 @@ public class VisitaBean {
 
                 }
             }
+            
+            public void change()
+            {
+                 System.out.println("PRE-EDIT : "+edit);
+                if(edit==false)
+                {
+                    prePrecioTerapia=ter.getTerCosto();
+                    edit=true;
+                    System.out.println("POST-EDIT : "+edit);
+                    System.out.println("Precio Terapia : "+ prePrecioTerapia);
+                }else
+                {
+                    edit=false;
+                     System.out.println("POST-EDIT : "+edit);
+                     pagoTerapia();
+                }
+            }
+            
+            public void pagoTerapia()
+            {
+                
+                terapiaService.updateTerapia(ter);
+                visita.setVisCostoTotal(visita.getVisCostoTotal()-prePrecioTerapia+ter.getTerCosto());
+                visitaService.updateVisita(visita);
+                precioTotal= visita.getVisCostoTotal();
+                System.out.println("Nuevo Precio de Visita :"+visita.getVisCostoTotal());
+            }
+            
+            
+            public void limpiar()
+            {
+                probando();
+                precioTotal=0.0;
+                visita= new Visita();
+                visita.setCliente(new Cliente());
+                
+                ter = new Terapia();
+                ter.setTipoTerapia(new TipoTerapia());
+                ter.setVisita(new Visita());
+                edit=false;
+            }
+            
 }

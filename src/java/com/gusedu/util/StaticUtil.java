@@ -203,7 +203,7 @@ public class StaticUtil {
 /* 195*/            salida = "Obesidad media";
                 }
 /* 197*/        if (imc >= 40D) {
-/* 199*/            salida = "Obesidad m\uFFFDrbida";
+/* 199*/            salida = "Obesidad mórbida";
                 }
 /* 201*/        return salida;
             }

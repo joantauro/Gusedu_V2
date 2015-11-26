@@ -322,4 +322,23 @@ for(int i=0;i<result.size();i++){
          }
          return resultado;
     }
+
+    @Override
+    public Visita visitaDelDia(Cliente cliente) {
+     Visita result = null;
+        
+       Session sesion = HibernateUtil.getSessionFactory().openSession();     
+        try {
+            Query q = sesion.createQuery("select v from Visita v where DATE_FORMAT( v.visFecCreacion,'%Y-%m-%d')=curdate() AND cliente.cliCodigo=:cliente ");
+            q.setParameter("cliente", cliente.getCliCodigo());
+            result = (Visita) q.uniqueResult();
+            System.out.println(result.getVisCodigo());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return result;
+    }
 }

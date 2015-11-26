@@ -220,8 +220,9 @@ public class PersonaServiceImpl
             Query query = sesion.createQuery(sql);
             query.setString("Dni", dni);
 
-            int val = (int) query.uniqueResult();
-
+            int val = Integer.parseInt(query.uniqueResult().toString());
+            System.out.println("Valor de val : "+val);
+            System.out.println("Valor de DNI : "+dni);
             if (val == 0) {
                 result = true;
 
@@ -230,7 +231,7 @@ public class PersonaServiceImpl
             }
         } catch (Exception e) {
 
-            System.out.println(e.getMessage());
+            System.out.println("Error : "+e.getMessage());
         } finally {
             sesion.flush();
             sesion.close();

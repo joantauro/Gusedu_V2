@@ -27,6 +27,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
@@ -252,9 +253,48 @@ public class ScheduleView {
         } else{
             eventModel.updateEvent(event);
         }
+        cancel();
         event = new DefaultScheduleEvent();
     }
-     
+    
+    public void cancel()
+    {
+        visita = new Visita();
+        visita.setCliente(new Cliente());
+        
+        terapia = new Terapia();
+        terapia.setTipoTerapia(new TipoTerapia());
+        terapia.setVisita(new Visita());
+    }
+    public void before(SelectEvent selectEvent)
+    {
+        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+        Date fecha = new Date();
+            
+        if (cli.getCliCodigo() == null || cli.getCliCodigo() == 0) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cuidado", "Seleccione un Paciente");
+            addMessage(message);
+            return;
+        }
+                if(event.getStartDate().before(fecha))
+        {
+             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cuidado", "No puede elegir días anteriores");
+            addMessage(message);
+            return ;
+        }
+        
+        visita.setVisFecCreacion(event.getStartDate());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(event.getEndDate());
+        calendar.add(Calendar.MINUTE, 30);
+        visita.setVisFecFin(calendar.getTime());
+        System.out.println("FECHA INICIO : " + visita.getVisFecCreacion() + "|| FECHA FIN : " + visita.getVisFecFin());
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('eventDialog').show();");
+             
+       
+    }
+    
     public void onEventSelect(SelectEvent selectEvent) {
         event = (ScheduleEvent) selectEvent.getObject();
         
@@ -338,13 +378,29 @@ public class ScheduleView {
             
     public void onEventMove(ScheduleEntryMoveEvent event) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
-         
-        addMessage(message);
+         System.out.println("Se movio la cita D: \nNueva Entrada : "+event.getScheduleEvent().getStartDate()+"\nNueva Salida : "+event.getScheduleEvent().getEndDate());
+         Visita v = (Visita) event.getScheduleEvent().getData();
+         v.setVisFecCreacion(event.getScheduleEvent().getStartDate());
+         v.setVisFecFin(event.getScheduleEvent().getEndDate());
+         visitaService.updateVisita(v);
+         Terapia ter = terapiaService.terapiaByVisita(v);
+         ter.setTerFecRealizada(event.getScheduleEvent().getStartDate());
+         terapiaService.updateTerapia(ter);
+         System.out.println("ID VISITA : "+ v.getVisCodigo() );
+         addMessage(message);
     }
      
     public void onEventResize(ScheduleEntryResizeEvent event) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
-         
+        System.out.println("Se movio la cita D: \nNueva Entrada : "+event.getScheduleEvent().getStartDate()+"\nNueva Salida : "+event.getScheduleEvent().getEndDate()); 
+        Visita v = (Visita) event.getScheduleEvent().getData();
+        v.setVisFecCreacion(event.getScheduleEvent().getStartDate());
+        v.setVisFecFin(event.getScheduleEvent().getEndDate());
+        visitaService.updateVisita(v);
+        Terapia ter = terapiaService.terapiaByVisita(v);
+        ter.setTerFecRealizada(event.getScheduleEvent().getStartDate());
+        terapiaService.updateTerapia(ter);
+        System.out.println("ID VISITA : "+ v.getVisCodigo() );
         addMessage(message);
     }
      
