@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -32,9 +32,15 @@ public class Persona  implements java.io.Serializable {
      private String perFacebook;
      private int perEdad;
      private String perDireccion;
-     private Set llamadas = new HashSet(0);
-     private Set usuarios = new HashSet(0);
+     private Integer perDepartamento;
+     private Integer perProvincia;
+     private Integer perDistrito;
      private Set clientes = new HashSet(0);
+     private Set usuarios = new HashSet(0);
+     private Set llamadas = new HashSet(0);
+     private Set llamadas_1 = new HashSet(0);
+     private Set usuarios_1 = new HashSet(0);
+     private Set clientes_1 = new HashSet(0);
 
     public Persona() {
     }
@@ -46,7 +52,7 @@ public class Persona  implements java.io.Serializable {
         this.perNombres = perNombres;
         this.perEdad = perEdad;
     }
-    public Persona(String perApellidoM, String perApellidoP, String perEnteroGusedu, String perCorreo, String perDni, Boolean perCliPotencial, String perEstadoCivil, Date perFecCreacion, Date perFecNacimiento, Integer perNit, String perNombres, String perSexo, String perSignoZodiacal, String perTelFijo, String perTelMovil, String perUsuCreacion, String perFacebook, int perEdad, String perDireccion, Set llamadas, Set usuarios, Set clientes) {
+    public Persona(String perApellidoM, String perApellidoP, String perEnteroGusedu, String perCorreo, String perDni, Boolean perCliPotencial, String perEstadoCivil, Date perFecCreacion, Date perFecNacimiento, Integer perNit, String perNombres, String perSexo, String perSignoZodiacal, String perTelFijo, String perTelMovil, String perUsuCreacion, String perFacebook, int perEdad, String perDireccion, Integer perDepartamento, Integer perProvincia, Integer perDistrito, Set clientes, Set usuarios, Set llamadas, Set llamadas_1, Set usuarios_1, Set clientes_1) {
        this.perApellidoM = perApellidoM;
        this.perApellidoP = perApellidoP;
        this.perEnteroGusedu = perEnteroGusedu;
@@ -66,9 +72,15 @@ public class Persona  implements java.io.Serializable {
        this.perFacebook = perFacebook;
        this.perEdad = perEdad;
        this.perDireccion = perDireccion;
-       this.llamadas = llamadas;
-       this.usuarios = usuarios;
+       this.perDepartamento = perDepartamento;
+       this.perProvincia = perProvincia;
+       this.perDistrito = perDistrito;
        this.clientes = clientes;
+       this.usuarios = usuarios;
+       this.llamadas = llamadas;
+       this.llamadas_1 = llamadas_1;
+       this.usuarios_1 = usuarios_1;
+       this.clientes_1 = clientes_1;
     }
    
     public Integer getPerCodigo() {
@@ -211,12 +223,33 @@ public class Persona  implements java.io.Serializable {
     public void setPerDireccion(String perDireccion) {
         this.perDireccion = perDireccion;
     }
-    public Set getLlamadas() {
-        return this.llamadas;
+    public Integer getPerDepartamento() {
+        return this.perDepartamento;
     }
     
-    public void setLlamadas(Set llamadas) {
-        this.llamadas = llamadas;
+    public void setPerDepartamento(Integer perDepartamento) {
+        this.perDepartamento = perDepartamento;
+    }
+    public Integer getPerProvincia() {
+        return this.perProvincia;
+    }
+    
+    public void setPerProvincia(Integer perProvincia) {
+        this.perProvincia = perProvincia;
+    }
+    public Integer getPerDistrito() {
+        return this.perDistrito;
+    }
+    
+    public void setPerDistrito(Integer perDistrito) {
+        this.perDistrito = perDistrito;
+    }
+    public Set getClientes() {
+        return this.clientes;
+    }
+    
+    public void setClientes(Set clientes) {
+        this.clientes = clientes;
     }
     public Set getUsuarios() {
         return this.usuarios;
@@ -225,12 +258,33 @@ public class Persona  implements java.io.Serializable {
     public void setUsuarios(Set usuarios) {
         this.usuarios = usuarios;
     }
-    public Set getClientes() {
-        return this.clientes;
+    public Set getLlamadas() {
+        return this.llamadas;
     }
     
-    public void setClientes(Set clientes) {
-        this.clientes = clientes;
+    public void setLlamadas(Set llamadas) {
+        this.llamadas = llamadas;
+    }
+    public Set getLlamadas_1() {
+        return this.llamadas_1;
+    }
+    
+    public void setLlamadas_1(Set llamadas_1) {
+        this.llamadas_1 = llamadas_1;
+    }
+    public Set getUsuarios_1() {
+        return this.usuarios_1;
+    }
+    
+    public void setUsuarios_1(Set usuarios_1) {
+        this.usuarios_1 = usuarios_1;
+    }
+    public Set getClientes_1() {
+        return this.clientes_1;
+    }
+    
+    public void setClientes_1(Set clientes_1) {
+        this.clientes_1 = clientes_1;
     }
 
 

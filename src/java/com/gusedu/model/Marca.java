@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,13 +14,15 @@ public class Marca  implements java.io.Serializable {
      private Integer marCodigo;
      private String marNombre;
      private Set modelos = new HashSet(0);
+     private Set modelos_1 = new HashSet(0);
 
     public Marca() {
     }
 
-    public Marca(String marNombre, Set modelos) {
+    public Marca(String marNombre, Set modelos, Set modelos_1) {
        this.marNombre = marNombre;
        this.modelos = modelos;
+       this.modelos_1 = modelos_1;
     }
    
     public Integer getMarCodigo() {
@@ -43,6 +45,13 @@ public class Marca  implements java.io.Serializable {
     
     public void setModelos(Set modelos) {
         this.modelos = modelos;
+    }
+    public Set getModelos_1() {
+        return this.modelos_1;
+    }
+    
+    public void setModelos_1(Set modelos_1) {
+        this.modelos_1 = modelos_1;
     }
 
 

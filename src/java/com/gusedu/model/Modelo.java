@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -18,6 +18,7 @@ public class Modelo  implements java.io.Serializable {
      private String modNombre;
      private String modSize;
      private Set productos = new HashSet(0);
+     private Set productos_1 = new HashSet(0);
 
     public Modelo() {
     }
@@ -26,13 +27,14 @@ public class Modelo  implements java.io.Serializable {
     public Modelo(Marca marca) {
         this.marca = marca;
     }
-    public Modelo(Marca marca, String modYearFab, String modColor, String modNombre, String modSize, Set productos) {
+    public Modelo(Marca marca, String modYearFab, String modColor, String modNombre, String modSize, Set productos, Set productos_1) {
        this.marca = marca;
        this.modYearFab = modYearFab;
        this.modColor = modColor;
        this.modNombre = modNombre;
        this.modSize = modSize;
        this.productos = productos;
+       this.productos_1 = productos_1;
     }
    
     public Integer getModCodigo() {
@@ -83,6 +85,13 @@ public class Modelo  implements java.io.Serializable {
     
     public void setProductos(Set productos) {
         this.productos = productos;
+    }
+    public Set getProductos_1() {
+        return this.productos_1;
+    }
+    
+    public void setProductos_1(Set productos_1) {
+        this.productos_1 = productos_1;
     }
 
 

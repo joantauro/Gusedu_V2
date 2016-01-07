@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,13 +14,15 @@ public class Grupo  implements java.io.Serializable {
      private Integer gruCodigo;
      private String gruNombre;
      private Set pars = new HashSet(0);
+     private Set pars_1 = new HashSet(0);
 
     public Grupo() {
     }
 
-    public Grupo(String gruNombre, Set pars) {
+    public Grupo(String gruNombre, Set pars, Set pars_1) {
        this.gruNombre = gruNombre;
        this.pars = pars;
+       this.pars_1 = pars_1;
     }
    
     public Integer getGruCodigo() {
@@ -43,6 +45,13 @@ public class Grupo  implements java.io.Serializable {
     
     public void setPars(Set pars) {
         this.pars = pars;
+    }
+    public Set getPars_1() {
+        return this.pars_1;
+    }
+    
+    public void setPars_1(Set pars_1) {
+        this.pars_1 = pars_1;
     }
 
 

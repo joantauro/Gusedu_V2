@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -19,17 +19,19 @@ public class TipoTerapia  implements java.io.Serializable {
      private String tteNombre;
      private String tteUsuModificacion;
      private Set terapias = new HashSet(0);
+     private Set terapias_1 = new HashSet(0);
 
     public TipoTerapia() {
     }
 
-    public TipoTerapia(Double tteCosto, String tteCurrencySymbol, Date tteFecModificacion, String tteNombre, String tteUsuModificacion, Set terapias) {
+    public TipoTerapia(Double tteCosto, String tteCurrencySymbol, Date tteFecModificacion, String tteNombre, String tteUsuModificacion, Set terapias, Set terapias_1) {
        this.tteCosto = tteCosto;
        this.tteCurrencySymbol = tteCurrencySymbol;
        this.tteFecModificacion = tteFecModificacion;
        this.tteNombre = tteNombre;
        this.tteUsuModificacion = tteUsuModificacion;
        this.terapias = terapias;
+       this.terapias_1 = terapias_1;
     }
    
     public Integer getTteCodigo() {
@@ -80,6 +82,13 @@ public class TipoTerapia  implements java.io.Serializable {
     
     public void setTerapias(Set terapias) {
         this.terapias = terapias;
+    }
+    public Set getTerapias_1() {
+        return this.terapias_1;
+    }
+    
+    public void setTerapias_1(Set terapias_1) {
+        this.terapias_1 = terapias_1;
     }
 
 

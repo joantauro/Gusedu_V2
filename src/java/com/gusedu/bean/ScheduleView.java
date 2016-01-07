@@ -18,6 +18,7 @@ import com.gusedu.model.TipoCliente;
 import com.gusedu.model.TipoTerapia;
 import com.gusedu.model.Visita;
 import com.gusedu.util.StaticUtil;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -85,7 +86,7 @@ public class ScheduleView {
     
     public void cleaner()
     {
-         cli = new Cliente();
+        cli = new Cliente();
         cli.setPersona(new Persona());
         cli.setTipoCliente(new TipoCliente());
         
@@ -270,26 +271,39 @@ public class ScheduleView {
     {
         event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
         Date fecha = new Date();
-            
+          
+        
         if (cli.getCliCodigo() == null || cli.getCliCodigo() == 0) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cuidado", "Seleccione un Paciente");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Cuidado", "Seleccione un Paciente");
             addMessage(message);
             return;
         }
-                if(event.getStartDate().before(fecha))
+        int a = visitaService.visitaProgramada(event.getStartDate(), cli);
+        if(a==1)
         {
-             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cuidado", "No puede elegir días anteriores");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Cuidado", "Ya existe una cita del paciente "+cli.getPersona().getPerNombres()+" "+cli.getPersona().getPerApellidoP()+" "+cli.getPersona().getPerApellidoM()+" para la fecha seleccionada");
             addMessage(message);
             return ;
         }
-        
+        if(event.getStartDate().before(fecha))
+        {
+             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Cuidado", "No puede elegir días pasados de la fecha de hoy");
+            addMessage(message);
+            return ;
+        }
+        visita = new Visita();
+        visita.setCliente(new Cliente());
         visita.setVisFecCreacion(event.getStartDate());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(event.getEndDate());
         calendar.add(Calendar.MINUTE, 30);
         visita.setVisFecFin(calendar.getTime());
         System.out.println("FECHA INICIO : " + visita.getVisFecCreacion() + "|| FECHA FIN : " + visita.getVisFecFin());
+        System.out.println("DESCRIPCION : "+visita.getVisDescripcion());
         RequestContext context = RequestContext.getCurrentInstance();
+       /* RequestContext.getCurrentInstance().update("formCalendario");
+        RequestContext.getCurrentInstance().update("pnlCitas");
+        RequestContext.getCurrentInstance().update("eventDetails");*/
         context.execute("PF('eventDialog').show();");
              
        

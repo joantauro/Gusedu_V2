@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,18 +13,24 @@ public class Sintoma  implements java.io.Serializable {
 
      private Integer sinCodigo;
      private String sinDescripcion;
+     private Set sintomaPars = new HashSet(0);
      private Set sintomaTerapias = new HashSet(0);
      private Set sintomaVisitas = new HashSet(0);
-     private Set sintomaPars = new HashSet(0);
+     private Set sintomaPars_1 = new HashSet(0);
+     private Set sintomaTerapias_1 = new HashSet(0);
+     private Set sintomaVisitas_1 = new HashSet(0);
 
     public Sintoma() {
     }
 
-    public Sintoma(String sinDescripcion, Set sintomaTerapias, Set sintomaVisitas, Set sintomaPars) {
+    public Sintoma(String sinDescripcion, Set sintomaPars, Set sintomaTerapias, Set sintomaVisitas, Set sintomaPars_1, Set sintomaTerapias_1, Set sintomaVisitas_1) {
        this.sinDescripcion = sinDescripcion;
+       this.sintomaPars = sintomaPars;
        this.sintomaTerapias = sintomaTerapias;
        this.sintomaVisitas = sintomaVisitas;
-       this.sintomaPars = sintomaPars;
+       this.sintomaPars_1 = sintomaPars_1;
+       this.sintomaTerapias_1 = sintomaTerapias_1;
+       this.sintomaVisitas_1 = sintomaVisitas_1;
     }
    
     public Integer getSinCodigo() {
@@ -41,6 +47,13 @@ public class Sintoma  implements java.io.Serializable {
     public void setSinDescripcion(String sinDescripcion) {
         this.sinDescripcion = sinDescripcion;
     }
+    public Set getSintomaPars() {
+        return this.sintomaPars;
+    }
+    
+    public void setSintomaPars(Set sintomaPars) {
+        this.sintomaPars = sintomaPars;
+    }
     public Set getSintomaTerapias() {
         return this.sintomaTerapias;
     }
@@ -55,12 +68,26 @@ public class Sintoma  implements java.io.Serializable {
     public void setSintomaVisitas(Set sintomaVisitas) {
         this.sintomaVisitas = sintomaVisitas;
     }
-    public Set getSintomaPars() {
-        return this.sintomaPars;
+    public Set getSintomaPars_1() {
+        return this.sintomaPars_1;
     }
     
-    public void setSintomaPars(Set sintomaPars) {
-        this.sintomaPars = sintomaPars;
+    public void setSintomaPars_1(Set sintomaPars_1) {
+        this.sintomaPars_1 = sintomaPars_1;
+    }
+    public Set getSintomaTerapias_1() {
+        return this.sintomaTerapias_1;
+    }
+    
+    public void setSintomaTerapias_1(Set sintomaTerapias_1) {
+        this.sintomaTerapias_1 = sintomaTerapias_1;
+    }
+    public Set getSintomaVisitas_1() {
+        return this.sintomaVisitas_1;
+    }
+    
+    public void setSintomaVisitas_1(Set sintomaVisitas_1) {
+        this.sintomaVisitas_1 = sintomaVisitas_1;
     }
 
 

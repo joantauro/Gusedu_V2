@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -17,18 +17,22 @@ public class Punto  implements java.io.Serializable {
      private String punUbicacionC;
      private String punUbicacionM;
      private Set parsForPunCodigoP2 = new HashSet(0);
+     private Set parsForPunCodigoP2_1 = new HashSet(0);
      private Set parsForPunCodigoP1 = new HashSet(0);
+     private Set parsForPunCodigoP1_1 = new HashSet(0);
 
     public Punto() {
     }
 
-    public Punto(String punNombre, Integer punOrdenFisico, String punUbicacionC, String punUbicacionM, Set parsForPunCodigoP2, Set parsForPunCodigoP1) {
+    public Punto(String punNombre, Integer punOrdenFisico, String punUbicacionC, String punUbicacionM, Set parsForPunCodigoP2, Set parsForPunCodigoP2_1, Set parsForPunCodigoP1, Set parsForPunCodigoP1_1) {
        this.punNombre = punNombre;
        this.punOrdenFisico = punOrdenFisico;
        this.punUbicacionC = punUbicacionC;
        this.punUbicacionM = punUbicacionM;
        this.parsForPunCodigoP2 = parsForPunCodigoP2;
+       this.parsForPunCodigoP2_1 = parsForPunCodigoP2_1;
        this.parsForPunCodigoP1 = parsForPunCodigoP1;
+       this.parsForPunCodigoP1_1 = parsForPunCodigoP1_1;
     }
    
     public Integer getPunCodigo() {
@@ -73,12 +77,26 @@ public class Punto  implements java.io.Serializable {
     public void setParsForPunCodigoP2(Set parsForPunCodigoP2) {
         this.parsForPunCodigoP2 = parsForPunCodigoP2;
     }
+    public Set getParsForPunCodigoP2_1() {
+        return this.parsForPunCodigoP2_1;
+    }
+    
+    public void setParsForPunCodigoP2_1(Set parsForPunCodigoP2_1) {
+        this.parsForPunCodigoP2_1 = parsForPunCodigoP2_1;
+    }
     public Set getParsForPunCodigoP1() {
         return this.parsForPunCodigoP1;
     }
     
     public void setParsForPunCodigoP1(Set parsForPunCodigoP1) {
         this.parsForPunCodigoP1 = parsForPunCodigoP1;
+    }
+    public Set getParsForPunCodigoP1_1() {
+        return this.parsForPunCodigoP1_1;
+    }
+    
+    public void setParsForPunCodigoP1_1(Set parsForPunCodigoP1_1) {
+        this.parsForPunCodigoP1_1 = parsForPunCodigoP1_1;
     }
 
 

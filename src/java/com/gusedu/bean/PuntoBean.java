@@ -99,7 +99,7 @@ public class PuntoBean {
         int f = len * 4 - (int)p;
         for (int i = 0; i < len; i++) {
             if (i >= len - f) {
-                ptos.add(new Punto());
+                ptos.add(new Punto("", 0, " ", " ", null, null, null, null));
                     }
             lista.add(new classPunto((Punto)ptos.get(i), (Punto)ptos.get(i + len * 1), (Punto)ptos.get(i + len * 2), (Punto)ptos.get(i + len * 3)));
                 }
@@ -142,6 +142,28 @@ public class PuntoBean {
 		}
 		puntos = filtrados;
 	}
+        
+        public void filtrarNuevo() {
+            listarpuntos();
+            List<classPunto> filtrados = new ArrayList<>();
+            for(classPunto cp : lista) {
+                        
+                        if(cp.getPunto1().getPunNombre()!=null && 
+                           cp.getPunto2().getPunNombre()!=null && 
+                           cp.getPunto3().getPunNombre()!=null &&
+                           cp.getPunto1().getPunNombre()!=null){
+                            
+                        }
+                        if (cp.getPunto1().getPunNombre().toLowerCase().contains(query.toLowerCase())||
+                            cp.getPunto2().getPunNombre().toLowerCase().contains(query.toLowerCase()) ||
+                                cp.getPunto3().getPunNombre().toLowerCase().contains(query.toLowerCase()) ||
+                                cp.getPunto4().getPunNombre().toLowerCase().contains(query.toLowerCase())){
+                            filtrados.add(cp);
+                        }
+            }
+            lista = filtrados;
+            System.out.println("CANTIDAD DE FILTRADOS :D" +lista.size());
+        }
            
         
         	public void añadirPuntoWeb()

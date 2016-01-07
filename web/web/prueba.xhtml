@@ -18,7 +18,7 @@ function get() {
 
 	<h:form id="formulario">
 		<p:growl showDetail="true" autoUpdate="true" />
-                <p:panel id="panelJ" >
+                <p:panel id="panelJ" style="height: 500px" >
                     <p:panelGrid columns="2" id="panelRegistro"  >
 			<p:outputLabel for="perDni" value="DNI: " />
                         <p:inputText value="#{personaBean.persona.perDni}" id="perDni" maxlength="8" required="true" requiredMessage="El campo DNI es obligatorio" >
@@ -62,6 +62,43 @@ function get() {
                                      value="#{personaBean.persona.perTelMovil}" id="perTelMovil" maxlength="12" >
 				<pe:keyFilter mask="num" />  
 			</p:inputText>
+                        
+                        
+                        <p:outputLabel value="Departamento : " />
+                        <p:selectOneMenu id="idDepa" 
+                                         value="#{ubigoBean.idDepartamento}"
+                                         requiredMessage="Seleccionar un departamento" >
+                            <f:selectItem itemLabel="Seleccione un tipo" itemValue="#{null}" />
+                            <f:selectItems value="#{ubigoBean.listadepa}" var="tt"
+                                           itemValue="#{tt.idDepa}" itemLabel="#{tt.departamento}" />
+                            <p:ajax event="change" 
+                                    update=":#{p:component('idProv')},
+                                    :#{p:component('idDis')}"
+                                    listener="#{ubigoBean.LISTA_PROVINCIAS()}" 
+                                    />
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Provincia : " />
+                        <p:selectOneMenu id="idProv" 
+                 value="#{ubigoBean.idProvincia}"
+                                        requiredMessage="Seleccionar una provincia" >
+                           <f:selectItem itemLabel="Seleccione un tipo" itemValue="#{null}" />
+                           <f:selectItems value="#{ubigoBean.listapro}" var="u_prov"
+                                          itemValue="#{u_prov.idProv}" itemLabel="#{u_prov.provincia}" />
+                           <p:ajax event="change" 
+                                    update=":#{p:component('idDis')}"
+                                    listener="#{ubigoBean.LISTA_DISTRITO()}" 
+                                   />
+                       </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Distrito : " />
+                        <p:selectOneMenu id="idDis" 
+                                         value="#{ubigoBean.idDistrito}"
+                                         requiredMessage="Seleccionar un Distrito" >
+                            <f:selectItem itemLabel="Seleccione un tipo" itemValue="#{null}" />
+                            <f:selectItems value="#{ubigoBean.listadis}" var="u_dis"
+                                           itemValue="#{u_dis.idDist}" itemLabel="#{u_dis.distrito}" />
+                        </p:selectOneMenu>
                         
 			<p:outputLabel for="perDireccion" value="Dirección: " />
                         <p:inputText value="#{personaBean.persona.perDireccion}" id="perDireccion" style="width: 310px"   />

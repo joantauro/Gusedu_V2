@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -21,10 +21,14 @@ public class Terapia  implements java.io.Serializable {
      private String terUsuCreacion;
      private Double terCosto;
      private String terEmpresa;
-     private Set terapiaPars = new HashSet(0);
-     private Set sintomaTerapias = new HashSet(0);
      private Set enfermedadTerapias = new HashSet(0);
+     private Set terapiaPars = new HashSet(0);
      private Set diagnosticos = new HashSet(0);
+     private Set sintomaTerapias = new HashSet(0);
+     private Set sintomaTerapias_1 = new HashSet(0);
+     private Set enfermedadTerapias_1 = new HashSet(0);
+     private Set diagnosticos_1 = new HashSet(0);
+     private Set terapiaPars_1 = new HashSet(0);
 
     public Terapia() {
     }
@@ -34,7 +38,7 @@ public class Terapia  implements java.io.Serializable {
         this.tipoTerapia = tipoTerapia;
         this.visita = visita;
     }
-    public Terapia(TipoTerapia tipoTerapia, Visita visita, String terDescripcion, Date terFecProxima, Date terFecRealizada, String terUsuCreacion, Double terCosto, String terEmpresa, Set terapiaPars, Set sintomaTerapias, Set enfermedadTerapias, Set diagnosticos) {
+    public Terapia(TipoTerapia tipoTerapia, Visita visita, String terDescripcion, Date terFecProxima, Date terFecRealizada, String terUsuCreacion, Double terCosto, String terEmpresa, Set enfermedadTerapias, Set terapiaPars, Set diagnosticos, Set sintomaTerapias, Set sintomaTerapias_1, Set enfermedadTerapias_1, Set diagnosticos_1, Set terapiaPars_1) {
        this.tipoTerapia = tipoTerapia;
        this.visita = visita;
        this.terDescripcion = terDescripcion;
@@ -43,10 +47,14 @@ public class Terapia  implements java.io.Serializable {
        this.terUsuCreacion = terUsuCreacion;
        this.terCosto = terCosto;
        this.terEmpresa = terEmpresa;
-       this.terapiaPars = terapiaPars;
-       this.sintomaTerapias = sintomaTerapias;
        this.enfermedadTerapias = enfermedadTerapias;
+       this.terapiaPars = terapiaPars;
        this.diagnosticos = diagnosticos;
+       this.sintomaTerapias = sintomaTerapias;
+       this.sintomaTerapias_1 = sintomaTerapias_1;
+       this.enfermedadTerapias_1 = enfermedadTerapias_1;
+       this.diagnosticos_1 = diagnosticos_1;
+       this.terapiaPars_1 = terapiaPars_1;
     }
    
     public Integer getTerCodigo() {
@@ -112,12 +120,26 @@ public class Terapia  implements java.io.Serializable {
     public void setTerEmpresa(String terEmpresa) {
         this.terEmpresa = terEmpresa;
     }
+    public Set getEnfermedadTerapias() {
+        return this.enfermedadTerapias;
+    }
+    
+    public void setEnfermedadTerapias(Set enfermedadTerapias) {
+        this.enfermedadTerapias = enfermedadTerapias;
+    }
     public Set getTerapiaPars() {
         return this.terapiaPars;
     }
     
     public void setTerapiaPars(Set terapiaPars) {
         this.terapiaPars = terapiaPars;
+    }
+    public Set getDiagnosticos() {
+        return this.diagnosticos;
+    }
+    
+    public void setDiagnosticos(Set diagnosticos) {
+        this.diagnosticos = diagnosticos;
     }
     public Set getSintomaTerapias() {
         return this.sintomaTerapias;
@@ -126,19 +148,33 @@ public class Terapia  implements java.io.Serializable {
     public void setSintomaTerapias(Set sintomaTerapias) {
         this.sintomaTerapias = sintomaTerapias;
     }
-    public Set getEnfermedadTerapias() {
-        return this.enfermedadTerapias;
+    public Set getSintomaTerapias_1() {
+        return this.sintomaTerapias_1;
     }
     
-    public void setEnfermedadTerapias(Set enfermedadTerapias) {
-        this.enfermedadTerapias = enfermedadTerapias;
+    public void setSintomaTerapias_1(Set sintomaTerapias_1) {
+        this.sintomaTerapias_1 = sintomaTerapias_1;
     }
-    public Set getDiagnosticos() {
-        return this.diagnosticos;
+    public Set getEnfermedadTerapias_1() {
+        return this.enfermedadTerapias_1;
     }
     
-    public void setDiagnosticos(Set diagnosticos) {
-        this.diagnosticos = diagnosticos;
+    public void setEnfermedadTerapias_1(Set enfermedadTerapias_1) {
+        this.enfermedadTerapias_1 = enfermedadTerapias_1;
+    }
+    public Set getDiagnosticos_1() {
+        return this.diagnosticos_1;
+    }
+    
+    public void setDiagnosticos_1(Set diagnosticos_1) {
+        this.diagnosticos_1 = diagnosticos_1;
+    }
+    public Set getTerapiaPars_1() {
+        return this.terapiaPars_1;
+    }
+    
+    public void setTerapiaPars_1(Set terapiaPars_1) {
+        this.terapiaPars_1 = terapiaPars_1;
     }
 
 

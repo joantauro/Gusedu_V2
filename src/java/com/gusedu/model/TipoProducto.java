@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -17,15 +17,17 @@ public class TipoProducto  implements java.io.Serializable {
      private String tprNombre;
      private String tprUsuModificacion;
      private Set productos = new HashSet(0);
+     private Set productos_1 = new HashSet(0);
 
     public TipoProducto() {
     }
 
-    public TipoProducto(Date tprFecModificacion, String tprNombre, String tprUsuModificacion, Set productos) {
+    public TipoProducto(Date tprFecModificacion, String tprNombre, String tprUsuModificacion, Set productos, Set productos_1) {
        this.tprFecModificacion = tprFecModificacion;
        this.tprNombre = tprNombre;
        this.tprUsuModificacion = tprUsuModificacion;
        this.productos = productos;
+       this.productos_1 = productos_1;
     }
    
     public Integer getTprCodigo() {
@@ -62,6 +64,13 @@ public class TipoProducto  implements java.io.Serializable {
     
     public void setProductos(Set productos) {
         this.productos = productos;
+    }
+    public Set getProductos_1() {
+        return this.productos_1;
+    }
+    
+    public void setProductos_1(Set productos_1) {
+        this.productos_1 = productos_1;
     }
 
 

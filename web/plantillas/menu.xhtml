@@ -8,7 +8,8 @@
 <ui:composition>
 	<h:form id="menu">
             <p:menubar>
-                <p:menuitem value="Inicio" url="/web/Principal.jsf" rendered="#{auth.userLogged.tipoUsuario.home}" ></p:menuitem>
+                <p:menuitem value="Inicio" url="/web/Principal.jsf" rendered="#{auth.userLogged.tipoUsuario.home}" />
+                <p:menuitem value="Inicio R" url="/web/Principal_recepcion.jsf" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 4}"/>
                 <p:menuitem icon="ui-icon-document" value="Calendario de Citas" url="/web/Citas.jsf" rendered="#{auth.userLogged.tipoUsuario.calendarioCitas}" />
                 <p:submenu label="Reportes" icon="ui-icon-document">
                     <p:menuitem value="Productos"  url="#" rendered="#{auth.userLogged.tipoUsuario.reporteProducto}" />
@@ -37,6 +38,7 @@
                 <p:submenu label="Opciones de administrador" icon="ui-icon-pencil" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 3}" >
                     <p:menuitem value="Gestionar usuarios" url="/web/seguridad/gestionUsuario.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionUsuarios}" />
                     <p:menuitem value="Gestionar Tipo de usuarios" url="/web/seguridad/gestionTipoUsuario.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionTipoUsuarios}" />
+                    <p:menuitem value="Gestionar Productos" url="/web/producto/gestionProducto.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionTipoUsuarios}" />
                     <p:menuitem value="Estadística" url="/web/estadística/gestionEstadistica.xhtml" />
                     <p:menuitem value="Citas" url="/web/Citas.xhtml" />
                 </p:submenu>

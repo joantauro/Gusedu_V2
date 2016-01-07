@@ -36,4 +36,6 @@ public interface VisitaService {
         public boolean SPsaveVisitaxTerapia(Visita vis,Terapia ter); 
         
         public Visita visitaDelDia(Cliente cliente);
+        
+        public int visitaProgramada(Date fecha,Cliente cliente);
 }

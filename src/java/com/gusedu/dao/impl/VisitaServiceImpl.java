@@ -12,6 +12,7 @@ import com.gusedu.model.Visita;
 import com.gusedu.util.HibernateUtil;
 import com.gusedu.util.StaticUtil;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -340,5 +341,29 @@ for(int i=0;i<result.size();i++){
             sesion.close();
         }
         return result;
+    }
+
+    @Override
+    public int visitaProgramada(Date fecha, Cliente cliente) {
+        int valor=0;
+         Session sesion = HibernateUtil.getSessionFactory().openSession();  
+         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");   
+        String fechaConFormato = sdf.format(fecha);
+    
+        try {
+            Query q = sesion.createQuery("select count(*) from Visita v where DATE_FORMAT( v.visFecCreacion,'%Y-%m-%d')=:fecha AND cliente.cliCodigo=:cliente ");
+            q.setParameter("cliente", cliente.getCliCodigo());
+            Date nuevaFecha = sdf.parse(fechaConFormato);
+            q.setParameter("fecha", fechaConFormato);
+            //System.out.println("Valor de count : "+);
+            valor = Integer.parseInt( q.uniqueResult().toString());
+            System.out.println("Valor de count : "+valor);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return valor;
     }
 }

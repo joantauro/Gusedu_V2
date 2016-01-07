@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 05/01/2016 05:20:58 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.gusedu.model.Persona" table="persona" catalog="gusedu_dbsv" lazy="false" optimistic-lock="version"   >
+    <class name="com.gusedu.model.Persona" table="persona" catalog="gusedu_dbsv" optimistic-lock="version">
         <id name="perCodigo" type="java.lang.Integer">
             <column name="per_codigo" />
             <generator class="identity" />
@@ -65,11 +65,20 @@
         <property name="perDireccion" type="string">
             <column name="per_direccion" length="225" />
         </property>
-        <set name="llamadas" table="llamada" inverse="true" lazy="true" fetch="select">
+        <property name="perDepartamento" type="java.lang.Integer">
+            <column name="per_departamento" />
+        </property>
+        <property name="perProvincia" type="java.lang.Integer">
+            <column name="per_provincia" />
+        </property>
+        <property name="perDistrito" type="java.lang.Integer">
+            <column name="per_distrito" />
+        </property>
+        <set name="clientes" table="cliente" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="per_codigo" not-null="true" />
+                <column name="per_codigo" />
             </key>
-            <one-to-many class="com.gusedu.model.Llamada" />
+            <one-to-many class="com.gusedu.model.Cliente" />
         </set>
         <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
             <key>
@@ -77,7 +86,25 @@
             </key>
             <one-to-many class="com.gusedu.model.Usuario" />
         </set>
-        <set name="clientes" table="cliente" inverse="true" lazy="true" fetch="select">
+        <set name="llamadas" table="llamada" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="per_codigo" not-null="true" />
+            </key>
+            <one-to-many class="com.gusedu.model.Llamada" />
+        </set>
+        <set name="llamadas_1" table="llamada" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="per_codigo" not-null="true" />
+            </key>
+            <one-to-many class="com.gusedu.model.Llamada" />
+        </set>
+        <set name="usuarios_1" table="usuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="per_codigo" />
+            </key>
+            <one-to-many class="com.gusedu.model.Usuario" />
+        </set>
+        <set name="clientes_1" table="cliente" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="per_codigo" />
             </key>

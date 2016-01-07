@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,13 +14,15 @@ public class UnidadMedida  implements java.io.Serializable {
      private Integer umeCodigo;
      private String umeDescripcion;
      private Set productos = new HashSet(0);
+     private Set productos_1 = new HashSet(0);
 
     public UnidadMedida() {
     }
 
-    public UnidadMedida(String umeDescripcion, Set productos) {
+    public UnidadMedida(String umeDescripcion, Set productos, Set productos_1) {
        this.umeDescripcion = umeDescripcion;
        this.productos = productos;
+       this.productos_1 = productos_1;
     }
    
     public Integer getUmeCodigo() {
@@ -43,6 +45,13 @@ public class UnidadMedida  implements java.io.Serializable {
     
     public void setProductos(Set productos) {
         this.productos = productos;
+    }
+    public Set getProductos_1() {
+        return this.productos_1;
+    }
+    
+    public void setProductos_1(Set productos_1) {
+        this.productos_1 = productos_1;
     }
 
 

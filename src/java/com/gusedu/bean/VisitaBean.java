@@ -297,17 +297,19 @@ edit=false;
                         
                     }
                 }
-/* 318*/        if (opciones.equals("HT")) {
-/* 320*/            objetoHTBean.llenamatriz();
-/* 321*/            RequestContext context = RequestContext.getCurrentInstance();
-/* 322*/            context.execute("PF('dlgHTe').show();");
-/* 323*/            RequestContext.getCurrentInstance().update("frame5");
+                if (opciones.equals("HT")) {
+                   objetoHTBean.llenamatriz();
+                    RequestContext context = RequestContext.getCurrentInstance();
+                    RequestContext.getCurrentInstance().update("dialoghistorialTerapia");
+                    context.execute("PF('dlgHTe').show();");
+                 // RequestContext.getCurrentInstance().update("frame5");
                 }
 /* 325*/        if (opciones.equals("HV")) {
 /* 327*/            ListarVisitas();
 /* 328*/            RequestContext context = RequestContext.getCurrentInstance();
+                    RequestContext.getCurrentInstance().update("dialogHistorialVisitas");
 /* 329*/            context.execute("PF('dlgHV').show();");
-/* 330*/            RequestContext.getCurrentInstance().update("frame4");
+/* 330*/            //RequestContext.getCurrentInstance().update("frame4");
                 }
 /* 332*/        if (opciones.equals("DP")) {
 /* 334*/            RequestContext context = RequestContext.getCurrentInstance();

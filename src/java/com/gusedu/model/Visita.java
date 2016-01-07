@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -23,10 +23,15 @@ public class Visita  implements java.io.Serializable {
      private String visDescripcion;
      private Date visFecFin;
      private Set enfermedadVisitas = new HashSet(0);
-     private Set terapias = new HashSet(0);
-     private Set productoVisitas = new HashSet(0);
      private Set sintomaVisitas = new HashSet(0);
+     private Set productoVisitas = new HashSet(0);
+     private Set terapias = new HashSet(0);
+     private Set terapias_1 = new HashSet(0);
+     private Set productoVisitas_1 = new HashSet(0);
+     private Set enfermedadVisitas_1 = new HashSet(0);
+     private Set sintomaVisitas_1 = new HashSet(0);
      private Set historiaClinicas = new HashSet(0);
+     private Set historiaClinicas_1 = new HashSet(0);
 
     public Visita() {
     }
@@ -35,7 +40,7 @@ public class Visita  implements java.io.Serializable {
     public Visita(Cliente cliente) {
         this.cliente = cliente;
     }
-    public Visita(Cliente cliente, Double visCostoTotal, Boolean visPresencial, Integer visEstado, Date visFecCreacion, Integer visPrioridad, String visUsuCreacion, String visDescripcion, Date visFecFin,Set enfermedadVisitas, Set terapias, Set productoVisitas, Set sintomaVisitas, Set historiaClinicas) {
+    public Visita(Cliente cliente, Double visCostoTotal, Boolean visPresencial, Integer visEstado, Date visFecCreacion, Integer visPrioridad, String visUsuCreacion, String visDescripcion, Date visFecFin, Set enfermedadVisitas, Set sintomaVisitas, Set productoVisitas, Set terapias, Set terapias_1, Set productoVisitas_1, Set enfermedadVisitas_1, Set sintomaVisitas_1, Set historiaClinicas, Set historiaClinicas_1) {
        this.cliente = cliente;
        this.visCostoTotal = visCostoTotal;
        this.visPresencial = visPresencial;
@@ -44,12 +49,17 @@ public class Visita  implements java.io.Serializable {
        this.visPrioridad = visPrioridad;
        this.visUsuCreacion = visUsuCreacion;
        this.visDescripcion = visDescripcion;
+       this.visFecFin = visFecFin;
        this.enfermedadVisitas = enfermedadVisitas;
-       this.terapias = terapias;
-       this.productoVisitas = productoVisitas;
        this.sintomaVisitas = sintomaVisitas;
+       this.productoVisitas = productoVisitas;
+       this.terapias = terapias;
+       this.terapias_1 = terapias_1;
+       this.productoVisitas_1 = productoVisitas_1;
+       this.enfermedadVisitas_1 = enfermedadVisitas_1;
+       this.sintomaVisitas_1 = sintomaVisitas_1;
        this.historiaClinicas = historiaClinicas;
-       this.visFecFin=visFecFin;
+       this.historiaClinicas_1 = historiaClinicas_1;
     }
    
     public Integer getVisCodigo() {
@@ -115,26 +125,19 @@ public class Visita  implements java.io.Serializable {
     public void setVisDescripcion(String visDescripcion) {
         this.visDescripcion = visDescripcion;
     }
+    public Date getVisFecFin() {
+        return this.visFecFin;
+    }
+    
+    public void setVisFecFin(Date visFecFin) {
+        this.visFecFin = visFecFin;
+    }
     public Set getEnfermedadVisitas() {
         return this.enfermedadVisitas;
     }
     
     public void setEnfermedadVisitas(Set enfermedadVisitas) {
         this.enfermedadVisitas = enfermedadVisitas;
-    }
-    public Set getTerapias() {
-        return this.terapias;
-    }
-    
-    public void setTerapias(Set terapias) {
-        this.terapias = terapias;
-    }
-    public Set getProductoVisitas() {
-        return this.productoVisitas;
-    }
-    
-    public void setProductoVisitas(Set productoVisitas) {
-        this.productoVisitas = productoVisitas;
     }
     public Set getSintomaVisitas() {
         return this.sintomaVisitas;
@@ -143,6 +146,48 @@ public class Visita  implements java.io.Serializable {
     public void setSintomaVisitas(Set sintomaVisitas) {
         this.sintomaVisitas = sintomaVisitas;
     }
+    public Set getProductoVisitas() {
+        return this.productoVisitas;
+    }
+    
+    public void setProductoVisitas(Set productoVisitas) {
+        this.productoVisitas = productoVisitas;
+    }
+    public Set getTerapias() {
+        return this.terapias;
+    }
+    
+    public void setTerapias(Set terapias) {
+        this.terapias = terapias;
+    }
+    public Set getTerapias_1() {
+        return this.terapias_1;
+    }
+    
+    public void setTerapias_1(Set terapias_1) {
+        this.terapias_1 = terapias_1;
+    }
+    public Set getProductoVisitas_1() {
+        return this.productoVisitas_1;
+    }
+    
+    public void setProductoVisitas_1(Set productoVisitas_1) {
+        this.productoVisitas_1 = productoVisitas_1;
+    }
+    public Set getEnfermedadVisitas_1() {
+        return this.enfermedadVisitas_1;
+    }
+    
+    public void setEnfermedadVisitas_1(Set enfermedadVisitas_1) {
+        this.enfermedadVisitas_1 = enfermedadVisitas_1;
+    }
+    public Set getSintomaVisitas_1() {
+        return this.sintomaVisitas_1;
+    }
+    
+    public void setSintomaVisitas_1(Set sintomaVisitas_1) {
+        this.sintomaVisitas_1 = sintomaVisitas_1;
+    }
     public Set getHistoriaClinicas() {
         return this.historiaClinicas;
     }
@@ -150,16 +195,15 @@ public class Visita  implements java.io.Serializable {
     public void setHistoriaClinicas(Set historiaClinicas) {
         this.historiaClinicas = historiaClinicas;
     }
-
-    public Date getVisFecFin() {
-        return visFecFin;
+    public Set getHistoriaClinicas_1() {
+        return this.historiaClinicas_1;
     }
-
-    public void setVisFecFin(Date visFecFin) {
-        this.visFecFin = visFecFin;
-    }
-
     
+    public void setHistoriaClinicas_1(Set historiaClinicas_1) {
+        this.historiaClinicas_1 = historiaClinicas_1;
+    }
+
+
 
 
 }

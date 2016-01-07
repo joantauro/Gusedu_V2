@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 15/09/2015 11:54:46 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 05/01/2016 05:20:58 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="com.gusedu.model.UnidadMedida" table="unidad_medida" catalog="gusedu_dbsv" optimistic-lock="version">
         <id name="umeCodigo" type="java.lang.Integer">
@@ -12,6 +12,12 @@
             <column name="ume_descripcion" length="40" />
         </property>
         <set name="productos" table="producto" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ume_codigo" />
+            </key>
+            <one-to-many class="com.gusedu.model.Producto" />
+        </set>
+        <set name="productos_1" table="producto" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ume_codigo" />
             </key>

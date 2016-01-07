@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -24,6 +24,7 @@ public class Producto  implements java.io.Serializable {
      private String proSku;
      private String proUrlImagen;
      private Set productoVisitas = new HashSet(0);
+     private Set productoVisitas_1 = new HashSet(0);
 
     public Producto() {
     }
@@ -32,7 +33,7 @@ public class Producto  implements java.io.Serializable {
     public Producto(TipoProducto tipoProducto) {
         this.tipoProducto = tipoProducto;
     }
-    public Producto(Modelo modelo, TipoProducto tipoProducto, UnidadMedida unidadMedida, Double proCostoUnitario, String proCurrencySymbol, String proDescripcionC, String proDescripcionL, String proDescripcionM, Double proExistencias, String proSku, String proUrlImagen, Set productoVisitas) {
+    public Producto(Modelo modelo, TipoProducto tipoProducto, UnidadMedida unidadMedida, Double proCostoUnitario, String proCurrencySymbol, String proDescripcionC, String proDescripcionL, String proDescripcionM, Double proExistencias, String proSku, String proUrlImagen, Set productoVisitas, Set productoVisitas_1) {
        this.modelo = modelo;
        this.tipoProducto = tipoProducto;
        this.unidadMedida = unidadMedida;
@@ -45,6 +46,7 @@ public class Producto  implements java.io.Serializable {
        this.proSku = proSku;
        this.proUrlImagen = proUrlImagen;
        this.productoVisitas = productoVisitas;
+       this.productoVisitas_1 = productoVisitas_1;
     }
    
     public Integer getProCodigo() {
@@ -137,6 +139,13 @@ public class Producto  implements java.io.Serializable {
     
     public void setProductoVisitas(Set productoVisitas) {
         this.productoVisitas = productoVisitas;
+    }
+    public Set getProductoVisitas_1() {
+        return this.productoVisitas_1;
+    }
+    
+    public void setProductoVisitas_1(Set productoVisitas_1) {
+        this.productoVisitas_1 = productoVisitas_1;
     }
 
 

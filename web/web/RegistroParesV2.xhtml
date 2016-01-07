@@ -13,6 +13,13 @@
  
 	<br/>
 	<br/>
+        <p:outputLabel value="Filtrar: " for="inpQuery" />
+        <p:inputText value="#{puntoBean.query}" id="inpQuery"
+				style="width : 500px;">
+				<p:ajax event="keyup" update=":#{p:component('ttablaPuntos')}" delay="250"
+                                        listener="#{puntoBean.filtrarNuevo()}" >
+				</p:ajax>
+	</p:inputText>
 	<p:dataTable emptyMessage="No hay puntos registrados" id="ttablaPuntos"  scrollable="true"
 			scrollHeight="450"  
                         var="pun" value="#{puntoBean.lista}"    
@@ -24,7 +31,7 @@
 			<p:column headerText="Nombre">
 				<p:commandButton icon="ui-icon-search" 
 				oncomplete="PF('dlgPtos').show();" action="#{puntoBean.buscar(pun.punto1.punCodigo)}"
-				 update=":#{p:component('tablaPar22')}" />#
+				 update=":#{p:component('tablaPar22')}" />
                                 <p:outputLabel value="#{pun.punto1.punNombre}" />
 			</p:column>
 			<p:column headerText="Nombre">

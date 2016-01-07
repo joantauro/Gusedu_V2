@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -21,8 +21,11 @@ public class Usuario  implements java.io.Serializable {
      private String usuUsuario;
      private String usuEmpresa;
      private Date usuFecFinm;
+     private Integer usuPrecio;
      private Set mensajesForUsuCodigoReceptor = new HashSet(0);
+     private Set mensajesForUsuCodigoReceptor_1 = new HashSet(0);
      private Set mensajesForUsuCodigoEmisor = new HashSet(0);
+     private Set mensajesForUsuCodigoEmisor_1 = new HashSet(0);
 
     public Usuario() {
     }
@@ -33,7 +36,7 @@ public class Usuario  implements java.io.Serializable {
         this.usuPassword = usuPassword;
         this.usuUsuario = usuUsuario;
     }
-    public Usuario(Persona persona, TipoUsuario tipoUsuario, Boolean usuActivo, Date usuFecCreacion, String usuPassword, String usuUsuario, String usuEmpresa, Date usuFecFinm, Set mensajesForUsuCodigoReceptor, Set mensajesForUsuCodigoEmisor) {
+    public Usuario(Persona persona, TipoUsuario tipoUsuario, Boolean usuActivo, Date usuFecCreacion, String usuPassword, String usuUsuario, String usuEmpresa, Date usuFecFinm, Integer usuPrecio, Set mensajesForUsuCodigoReceptor, Set mensajesForUsuCodigoReceptor_1, Set mensajesForUsuCodigoEmisor, Set mensajesForUsuCodigoEmisor_1) {
        this.persona = persona;
        this.tipoUsuario = tipoUsuario;
        this.usuActivo = usuActivo;
@@ -42,8 +45,11 @@ public class Usuario  implements java.io.Serializable {
        this.usuUsuario = usuUsuario;
        this.usuEmpresa = usuEmpresa;
        this.usuFecFinm = usuFecFinm;
+       this.usuPrecio = usuPrecio;
        this.mensajesForUsuCodigoReceptor = mensajesForUsuCodigoReceptor;
+       this.mensajesForUsuCodigoReceptor_1 = mensajesForUsuCodigoReceptor_1;
        this.mensajesForUsuCodigoEmisor = mensajesForUsuCodigoEmisor;
+       this.mensajesForUsuCodigoEmisor_1 = mensajesForUsuCodigoEmisor_1;
     }
    
     public Integer getUsuCodigo() {
@@ -109,6 +115,13 @@ public class Usuario  implements java.io.Serializable {
     public void setUsuFecFinm(Date usuFecFinm) {
         this.usuFecFinm = usuFecFinm;
     }
+    public Integer getUsuPrecio() {
+        return this.usuPrecio;
+    }
+    
+    public void setUsuPrecio(Integer usuPrecio) {
+        this.usuPrecio = usuPrecio;
+    }
     public Set getMensajesForUsuCodigoReceptor() {
         return this.mensajesForUsuCodigoReceptor;
     }
@@ -116,12 +129,26 @@ public class Usuario  implements java.io.Serializable {
     public void setMensajesForUsuCodigoReceptor(Set mensajesForUsuCodigoReceptor) {
         this.mensajesForUsuCodigoReceptor = mensajesForUsuCodigoReceptor;
     }
+    public Set getMensajesForUsuCodigoReceptor_1() {
+        return this.mensajesForUsuCodigoReceptor_1;
+    }
+    
+    public void setMensajesForUsuCodigoReceptor_1(Set mensajesForUsuCodigoReceptor_1) {
+        this.mensajesForUsuCodigoReceptor_1 = mensajesForUsuCodigoReceptor_1;
+    }
     public Set getMensajesForUsuCodigoEmisor() {
         return this.mensajesForUsuCodigoEmisor;
     }
     
     public void setMensajesForUsuCodigoEmisor(Set mensajesForUsuCodigoEmisor) {
         this.mensajesForUsuCodigoEmisor = mensajesForUsuCodigoEmisor;
+    }
+    public Set getMensajesForUsuCodigoEmisor_1() {
+        return this.mensajesForUsuCodigoEmisor_1;
+    }
+    
+    public void setMensajesForUsuCodigoEmisor_1(Set mensajesForUsuCodigoEmisor_1) {
+        this.mensajesForUsuCodigoEmisor_1 = mensajesForUsuCodigoEmisor_1;
     }
 
 

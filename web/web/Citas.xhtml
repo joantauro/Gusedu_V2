@@ -27,7 +27,7 @@
                          <h:panelGrid columnClasses="value">
         <h3 style="margin-top: 0">Calendario de Citas</h3>
         <p:schedule id="schedule" value="#{scheduleView.eventModel}" view="agendaWeek"
-                    widgetVar="myschedule" timeZone="GMT-5" locale="es"   >
+                    widgetVar="myschedule" timeZone="GMT-5" locale="es"   > 
 
             <p:ajax  event="dateSelect" listener="#{scheduleView.before}" update=":#{p:component('eventDetails')},:#{p:component('messages')}"   />
             <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}"  update=":#{p:component('eventDetails2')}" oncomplete="PF('eventDialog2').show();" />
@@ -52,8 +52,10 @@
            </p:panelGrid>
          
           
-           <h:form>
-               <p:dialog widgetVar="eventDialog" id="eventDialogP" header="Detalle de Cita" showEffect="clip" hideEffect="clip">
+           <h:form id="formCalendario" >
+               <p:dialog widgetVar="eventDialog" id="eventDialogP" header="Detalle de Cita" 
+                         showEffect="clip" hideEffect="clip" modal="true" >
+                   <p:panel id="pnlCitas" >
                    <h:panelGrid id="eventDetails" columns="2">
                        <p:outputLabel for="title" value="Paciente : " />
                        <p:outputLabel id="title" value="#{scheduleView.cli.persona.perNombres} #{scheduleView.cli.persona.perApellidoP} #{scheduleView.cli.persona.perApellidoM}"  />
@@ -94,6 +96,7 @@
                        
                      
                    </h:panelGrid>
+                   </p:panel>
                </p:dialog>  
                
                <p:dialog widgetVar="eventDialog2" header="Detalle de Cita" showEffect="clip" hideEffect="clip">
@@ -132,7 +135,8 @@
                        <p:commandButton id="addButton2" value="Cerrar" action="#{scheduleView.cleaner()}" oncomplete="PF('myschedule').update();PF('eventDialog2').hide();"  />
 
                    </h:panelGrid>
-               </p:dialog>   
+               </p:dialog>  
+               <p:blockUI block=":#{p:component('pnlCitas')}" trigger=":#{p:component('addButton')}" />
            </h:form> 
           
            <script type="text/javascript">

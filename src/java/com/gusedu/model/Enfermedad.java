@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -15,16 +15,22 @@ public class Enfermedad  implements java.io.Serializable {
      private String enfNombre;
      private Set enfermedadPars = new HashSet(0);
      private Set enfermedadTerapias = new HashSet(0);
+     private Set enfermedadPars_1 = new HashSet(0);
      private Set enfermedadVisitas = new HashSet(0);
+     private Set enfermedadTerapias_1 = new HashSet(0);
+     private Set enfermedadVisitas_1 = new HashSet(0);
 
     public Enfermedad() {
     }
 
-    public Enfermedad(String enfNombre, Set enfermedadPars, Set enfermedadTerapias, Set enfermedadVisitas) {
+    public Enfermedad(String enfNombre, Set enfermedadPars, Set enfermedadTerapias, Set enfermedadPars_1, Set enfermedadVisitas, Set enfermedadTerapias_1, Set enfermedadVisitas_1) {
        this.enfNombre = enfNombre;
        this.enfermedadPars = enfermedadPars;
        this.enfermedadTerapias = enfermedadTerapias;
+       this.enfermedadPars_1 = enfermedadPars_1;
        this.enfermedadVisitas = enfermedadVisitas;
+       this.enfermedadTerapias_1 = enfermedadTerapias_1;
+       this.enfermedadVisitas_1 = enfermedadVisitas_1;
     }
    
     public Integer getEnfCodigo() {
@@ -55,12 +61,33 @@ public class Enfermedad  implements java.io.Serializable {
     public void setEnfermedadTerapias(Set enfermedadTerapias) {
         this.enfermedadTerapias = enfermedadTerapias;
     }
+    public Set getEnfermedadPars_1() {
+        return this.enfermedadPars_1;
+    }
+    
+    public void setEnfermedadPars_1(Set enfermedadPars_1) {
+        this.enfermedadPars_1 = enfermedadPars_1;
+    }
     public Set getEnfermedadVisitas() {
         return this.enfermedadVisitas;
     }
     
     public void setEnfermedadVisitas(Set enfermedadVisitas) {
         this.enfermedadVisitas = enfermedadVisitas;
+    }
+    public Set getEnfermedadTerapias_1() {
+        return this.enfermedadTerapias_1;
+    }
+    
+    public void setEnfermedadTerapias_1(Set enfermedadTerapias_1) {
+        this.enfermedadTerapias_1 = enfermedadTerapias_1;
+    }
+    public Set getEnfermedadVisitas_1() {
+        return this.enfermedadVisitas_1;
+    }
+    
+    public void setEnfermedadVisitas_1(Set enfermedadVisitas_1) {
+        this.enfermedadVisitas_1 = enfermedadVisitas_1;
     }
 
 

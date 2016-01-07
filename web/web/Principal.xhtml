@@ -109,7 +109,7 @@
                                             <p:selectOneMenu id="sselectoption" value="#{visitaBean.opciones}" onchange="changeEvent(this)"  >
 						<f:selectItem itemLabel="Seleccione" itemValue="S" />
 					<!-- <f:selectItem itemLabel="Crear visita" itemValue="CV"  /> -->
-						<f:selectItem itemLabel="Datos médicos" itemValue="DM" itemDisabled="#{auth.userLogged.tipoUsuario.registroTerapiaPares eq false}" />
+					<!--	<f:selectItem itemLabel="Datos médicos" itemValue="DM" itemDisabled="#{auth.userLogged.tipoUsuario.registroTerapiaPares eq false}" /> -->
 					<!--	<f:selectItem itemLabel="Registro de Terapia" itemValue="RGT"  /> -->
                                                 <f:selectItem itemLabel="Registro de Pares" itemValue="RGPT" itemDisabled="#{auth.userLogged.tipoUsuario.registroTerapiaPares eq false}" />
                                                 <f:selectItem itemLabel="Venta de productos" itemValue="P" itemDisabled="#{auth.userLogged.tipoUsuario.ventaProductos eq false}" />
@@ -120,7 +120,8 @@
                                                 <f:selectItem itemLabel="Detalle de Pago " itemValue="DCaja" />
 						 
 				<!--		<f:selectItem itemLabel="Confirma visita" itemValue="CVi" /> -->
-                                <p:ajax event="change" update=":#{p:component('frame')},:#{p:component('growl')}"
+                                <p:ajax event="change" update=":#{p:component('frame')},:#{p:component('growl')},
+                                                               :#{p:component('dialogDP')},:#{p:component('dialogParesv2')}"
                                                      listener="#{pacienteBean.prueba(pac)}" /> 
 					</p:selectOneMenu>
 					</p:column>

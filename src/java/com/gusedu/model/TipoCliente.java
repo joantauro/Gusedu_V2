@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,13 +14,15 @@ public class TipoCliente  implements java.io.Serializable {
      private Integer tclCodigo;
      private String tclDescripcion;
      private Set clientes = new HashSet(0);
+     private Set clientes_1 = new HashSet(0);
 
     public TipoCliente() {
     }
 
-    public TipoCliente(String tclDescripcion, Set clientes) {
+    public TipoCliente(String tclDescripcion, Set clientes, Set clientes_1) {
        this.tclDescripcion = tclDescripcion;
        this.clientes = clientes;
+       this.clientes_1 = clientes_1;
     }
    
     public Integer getTclCodigo() {
@@ -43,6 +45,13 @@ public class TipoCliente  implements java.io.Serializable {
     
     public void setClientes(Set clientes) {
         this.clientes = clientes;
+    }
+    public Set getClientes_1() {
+        return this.clientes_1;
+    }
+    
+    public void setClientes_1(Set clientes_1) {
+        this.clientes_1 = clientes_1;
     }
 
 

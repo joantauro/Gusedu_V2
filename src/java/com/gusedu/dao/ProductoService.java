@@ -21,5 +21,9 @@ public interface ProductoService {
 	public boolean updateProductoVisita(ProductoVisita productoVisita);
 	
 	public boolean deleteProductoVisita(ProductoVisita productoVisita);
+        
+        public boolean saveProducto(Producto producto);
+        
+        public boolean deleteProducto(Producto producto);
 	
 }

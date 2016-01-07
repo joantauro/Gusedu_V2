@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -32,6 +32,7 @@ public class Cliente  implements java.io.Serializable {
      private String cliHijos;
      private String cliOcupacion;
      private Set visitas = new HashSet(0);
+     private Set visitas_1 = new HashSet(0);
 
     public Cliente() {
     }
@@ -40,7 +41,7 @@ public class Cliente  implements java.io.Serializable {
     public Cliente(TipoCliente tipoCliente) {
         this.tipoCliente = tipoCliente;
     }
-    public Cliente(Persona persona, TipoCliente tipoCliente, String cliAlergia, String cliCanRegular, String cliCirugiaEstetica, String cliDolcabRegular, Boolean cliActivo, Date cliFecCreacion, String cliProGastrico, String cliMedicamentos, String cliOperacion, String cliResRegular, String cliUsuCreacion, String cliAlcohol, String cliEjercicio, String cliHabitos, String cliHijos, String cliOcupacion, Set visitas) {
+    public Cliente(Persona persona, TipoCliente tipoCliente, String cliAlergia, String cliCanRegular, String cliCirugiaEstetica, String cliDolcabRegular, Boolean cliActivo, Date cliFecCreacion, String cliProGastrico, String cliMedicamentos, String cliOperacion, String cliResRegular, String cliUsuCreacion, String cliAlcohol, String cliEjercicio, String cliHabitos, String cliHijos, String cliOcupacion, Set visitas, Set visitas_1) {
        this.persona = persona;
        this.tipoCliente = tipoCliente;
        this.cliAlergia = cliAlergia;
@@ -60,6 +61,7 @@ public class Cliente  implements java.io.Serializable {
        this.cliHijos = cliHijos;
        this.cliOcupacion = cliOcupacion;
        this.visitas = visitas;
+       this.visitas_1 = visitas_1;
     }
    
     public Integer getCliCodigo() {
@@ -201,6 +203,13 @@ public class Cliente  implements java.io.Serializable {
     
     public void setVisitas(Set visitas) {
         this.visitas = visitas;
+    }
+    public Set getVisitas_1() {
+        return this.visitas_1;
+    }
+    
+    public void setVisitas_1(Set visitas_1) {
+        this.visitas_1 = visitas_1;
     }
 
 

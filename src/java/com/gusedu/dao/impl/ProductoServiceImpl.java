@@ -13,7 +13,6 @@ import com.gusedu.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -154,7 +153,7 @@ public class ProductoServiceImpl
         try {
             tx = sesion.beginTransaction();
             System.out.println("Actualizo Producto....");
-/* 133*/        sesion.update(producto);
+/* 133*/        sesion.merge(producto);
 /* 134*/        System.out.println(producto.getProExistencias());
             tx.commit();
             resultado = true;
@@ -200,4 +199,52 @@ public class ProductoServiceImpl
 /* 178*/        boolean resultado = false;
 /* 186*/        return resultado;
             }
+
+    @Override
+    public boolean saveProducto(Producto producto) {
+       boolean resultado = false;
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+            sesion.save(producto);
+            tx.commit();
+            resultado = true;
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+                System.out.println("ERROR de saveProducto : " + e.getMessage());
+            }
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return resultado;
+    }
+
+    @Override
+    public boolean deleteProducto(Producto producto) {
+        boolean resultado = false;
+
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+            sesion.delete(producto);
+            tx.commit();
+            resultado = true;
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+                System.out.println("ERROR de saveProducto : " + e.getMessage());
+            }
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return resultado;
+    }
 }

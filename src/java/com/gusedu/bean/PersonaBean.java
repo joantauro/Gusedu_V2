@@ -60,6 +60,11 @@ public class PersonaBean {
          FacesContext fc = FacesContext.getCurrentInstance();
          PacienteBean objetoBean = (PacienteBean)fc.getExternalContext().getSessionMap().get("pacienteBean");
          
+         UbigoBean ubigeoBean  = (UbigoBean)fc.getExternalContext().getSessionMap().get("ubigoBean");
+         persona.setPerDepartamento(ubigeoBean.getIdDepartamento());
+         persona.setPerProvincia(ubigeoBean.getIdProvincia());
+         persona.setPerDistrito(ubigeoBean.getIdDistrito());
+         
         if( personaService.validarDni(persona.getPerDni())==false)
         {
             StaticUtil.errorMessage("Advertencia", "Ya existe una persona registrada con este DNI");

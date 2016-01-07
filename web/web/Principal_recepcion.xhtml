@@ -1,0 +1,280 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../plantillas/PlantillaPrincipal.xhtml">
+
+            <ui:define name="titulo">
+                Inicio
+            </ui:define>
+
+            <ui:define name="top">
+            
+            </ui:define>
+
+            <ui:define name="content">
+                        <script type="text/javascript">
+		function changeEvent(element) {
+			
+		    var val = $(element).find('option:selected').text();
+		  /*  if(val === 'Datos médicos') {
+		       PF('dlgHEA').show();
+		    }*/
+		    /*if(val === 'Registro de terapia') {
+			       PF('dlgT').show();
+			}*/
+		/*    if(val === 'Venta de productos') {
+			       PF('dlgP').show();
+			}*/
+		    if(val === 'Confirma visita')
+		    {
+                        
+		    	PF('dlgCVi').show();
+		    	//document.getElementById('formNuevo:btnAct').click();
+		    }
+			/*if(val === 'Registro de Pares')
+			 {
+				PF('dlgParesT').show();
+			 }*/
+		   /* if(val == 'Caja')
+		    	{
+		    	PF('dlgpago').show();
+		    	}*/
+		   /** if(val === 'Historial de visitas') {
+			       PF('dlgHV').show();
+			}**///Historial Terapias
+		/**	if(val === 'Datos Personales') {
+				  
+				   
+			       PF('dlgDP').show(); 
+			} **/
+		}
+		</script>
+               
+                   <h:form id="formBusquedaP" style="text-align: center;">
+			<p:outputLabel value="Filtrar: " for="inpQuery" />
+			<p:inputText value="#{pacienteBean.query}" id="inpQuery"
+				style="width : 500px;">
+				<p:ajax event="keyup" update=":#{p:component('tablaPac')}" delay="250"
+					listener="#{pacienteBean.filtrarBusqueda}">
+				</p:ajax>
+			</p:inputText>
+			<p:spacer width="50px;" />
+			<p:commandButton value="Nuevo Paciente" id="btnNuevo"
+				update=":#{p:component('panelRegistro')}"
+				action="#{personaBean.valida}" oncomplete="PF('dlg1').show();" />
+		</h:form>
+                <br/>
+                   <h:form id="formulario">
+       
+				<p:dataTable id="tablaPac" var="pac"
+					value="#{pacienteBean.clientes}" paginator="true" rows="10"
+                                        rowKey="#{pac.cliCodigo}" widgetVar="tablaPacientes"
+					emptyMessage="No hay historial de visitas por el momento" >
+
+					<p:column headerText="DNI" width="60px;">
+                                            <h:outputText value="#{pac.persona.perDni}" />
+					</p:column>
+
+					<p:column headerText="Ap. paterno"   >
+                                            <h:outputText value="#{pac.persona.perApellidoP}" />
+					</p:column>
+
+					<p:column headerText="Ap. materno"   >
+                                            <h:outputText value="#{pac.persona.perApellidoM}" />
+					</p:column>
+
+					<p:column headerText="Nombre"  >
+                                            <h:outputText value="#{pac.persona.perNombres}" />
+					</p:column>
+
+					<p:column headerText="Edad" width="25px;" >
+						<h:outputText value="#{pac.persona.perEdad}" rendered="#{pac.persona.perEdad ne 0}"  />
+						<h:outputText value="" rendered="#{pac.persona.perEdad eq 0}"  />
+					</p:column>
+					
+					<p:column headerText="Teléfono fijo" width="60px;" >
+                                            <h:outputText value="#{pac.persona.perTelFijo}"></h:outputText>
+					</p:column>
+					<p:column headerText="Teléfono móvil" width="70px;">
+                                            <h:outputText value="#{pac.persona.perTelMovil}"></h:outputText>
+					</p:column>
+					<p:column headerText="Opciones"> 
+                                            <p:selectOneMenu id="sselectoption" value="#{visitaBean.opciones}" onchange="changeEvent(this)"  >
+                                                <f:selectItem itemLabel="Seleccione" itemValue="S" />
+                                                <f:selectItem itemLabel="Venta de productos" itemValue="P" />
+                                                <f:selectItem itemLabel="Historial de terapias" itemValue="HT"   />
+                                                <f:selectItem itemLabel="Historial de visitas" itemValue="HV" />
+                                                <f:selectItem itemLabel="Datos Personales" itemValue="DP" />
+                                                <f:selectItem itemLabel="Detalle de Pago " itemValue="DCaja" />
+
+                                                <p:ajax event="change" update=":#{p:component('frame')},:#{p:component('growl')},
+                                                        :#{p:component('dialogDP')},:#{p:component('dialogParesv2')}"
+                                                        listener="#{pacienteBean.prueba(pac)}" /> 
+                                            </p:selectOneMenu>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+                <p:growl id="growlT" showDetail="true"   life="2000" /> 
+                <p:dialog id="iddlgTerapeutas" header="Registrar Terapia" widgetVar="dlgTerapeutas" modal="true" >
+			<p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.probando}" />
+			
+                        <p:outputLabel value="Paciente : #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" />
+			 <h:form>
+			  
+			 <p:panelGrid columns="2" >
+					<p:outputLabel value="Tipo de Terapia : " />
+					<p:selectOneMenu id="iTipoTerapia2"
+						value="#{terapiaBean.idterapia}"  >
+						<f:selectItem itemLabel="Seleccione un tipo" itemValue="0" />
+						<f:selectItems value="#{terapiaBean.tipoTerapias}" var="tt"
+							itemValue="#{tt.tteCodigo}" itemLabel="#{tt.tteNombre}" />
+					</p:selectOneMenu>
+					<p:outputLabel value="Terapeuta : " />
+					<p:selectOneMenu id="prueba" value="#{terapiaBean.idterapeuta}" >
+						<f:selectItem itemLabel="Seleccione Terapeuta" itemValue="0" />
+						<f:selectItems value="#{personaBean.listaTerapeutas}" var="tte"
+                                                               itemValue="#{tte.perNombres} #{tte.perApellidoP} #{tte.perApellidoM}|#{tte.perCodigo}"
+							itemLabel="#{tte.perNombres} #{tte.perApellidoP} #{tte.perApellidoM}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Costo : " />
+					<p:inputText value="#{terapiaBean.precio}"  />					
+				</p:panelGrid>
+ 
+			
+				<p:commandButton value="Registrar" id="disparador"
+                                                 actionListener="#{terapiaBean.addTerapiaSP}" oncomplete="PF('dlgTerapeutas').hide();" update=":#{p:component('growl')}"  />
+				</h:form>
+			</p:dialog>
+                
+                
+       
+                
+                <p:dialog  id="dialoghistorialTerapia" header="Historia de #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" widgetVar="dlgHTe" 
+		        showEffect="pop" modal="true" width="1230px" height="550px">
+		        <p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.probando}" />
+			<h:form id="frame5"  >
+				<ui:include src="HistorialTerapia.xhtml" />
+			</h:form>
+		</p:dialog>
+                <p:dialog id="dialogParesv2" header="Registar pares de #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" widgetVar="dlgParesT" showEffect="pop"  width="80%"  >
+		<p:ajax event="close"
+			 update=":#{p:component('tablaPac')}" 
+			 listener="#{terapiaBean.aceptar}"  />
+			 <h:form id="frame10">
+			       <ui:include src="RegistroParesV2.xhtml" />
+		 
+			</h:form>
+		</p:dialog>
+                
+                <p:dialog id="dialogProducto" header="Productos" widgetVar="dlgP"
+				showEffect="pop" modal="true" width="850px" height="550px">
+				<p:ajax event="close" update=":#{p:component('tablaPac')}" 
+				listener="#{visitaBean.probando}" />
+			<h:form id="formProduct" >
+				<ui:include src="Producto.xhtml" />
+				</h:form>
+			</p:dialog>
+                
+                
+                <p:dialog id="dialogHistorialVisitas" header="Historial de visitas de #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" 
+			widgetVar="dlgHV" showEffect="pop" modal="true" width="800px" height="550px" >
+			<p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.probando}" />
+			<h:form id="frame4"  >
+				<ui:include src="historialVisitas.xhtml" />
+
+			</h:form>
+		</p:dialog>
+                
+                <p:dialog id="dialogDP" header="Datos personales de  #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" widgetVar="dlgDP" showEffect="pop" modal="true"   >
+<p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.probando}" />
+	<h:form id="frame" >
+		<ui:include  src="editarDatosPersonales.xhtml"  />
+	</h:form>
+</p:dialog>
+                
+                <p:dialog id="dialogHEA" header="Historia de #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" widgetVar="dlgHEA"
+				showEffect="pop" modal="true" width="850px" height="500px">
+				<p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.probando}" />
+			
+				<h:form id="frame2" >
+				<ui:include src="HEA.xhtml" />
+				</h:form>
+				
+			</p:dialog>
+                
+                <h:form>
+			<p:dialog id="dialog" header="Nuevo Paciente" widgetVar="dlg1"
+				showEffect="pop" modal="true">
+				<ui:include src="prueba.xhtml" />
+			</p:dialog>
+		</h:form>
+                <h:form id="formCaja" >
+                <p:dialog id="dlgCajita" header="Detalle de Pago de #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" widgetVar="dlgpago"
+                          showEffect="pop" modal="true">
+                    <p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.limpiar()}" />
+                    <h:panelGrid columns="2" id="pnlChange" >
+                        <p:outputLabel value="Terapia : " />
+                        <p:outputLabel value="#{visitaBean.ter.tipoTerapia.tteNombre}" />
+                        <p:outputLabel value="Terapeuta : " />
+                        <p:outputLabel value="#{visitaBean.ter.terUsuCreacion}" />
+                        <p:outputLabel value="Precio : " />
+                        <p:outputLabel value="#{visitaBean.ter.terCosto}" rendered="#{visitaBean.edit eq false}"  /> 
+                        <p:inputText value="#{visitaBean.ter.terCosto}" rendered="#{visitaBean.edit ne false}"  />
+                        <p:commandButton icon="ui-icon-pencil" title="Editar" action="#{visitaBean.change}" update="pnlChange" rendered="#{visitaBean.edit eq false}" />
+                        <p:commandButton icon="ui-icon-disk" title="Guardar" action="#{visitaBean.change}" update="pnlChange,PreVi" rendered="#{visitaBean.edit ne false}" /> 
+                    </h:panelGrid>
+                    
+                    <p:dataTable id="productosT" var="pro" style="width:400px;" rendered="#{auth.userLogged.tipoUsuario.ventaProductos eq false}"
+							paginatorAlwaysVisible="false" editable="true"
+							value="#{visitaBean.productosDeVisita}"
+							emptyMessage="No se han añadido productos" paginator="true"
+							rows="5">
+							<f:facet name="header">
+        							Productos del Paciente
+    						</f:facet>
+ 
+       
+							<p:column headerText="Nombre" style="vertical-align:middle;">
+                                                            <h:outputText value="#{pro.producto.proDescripcionM}" />
+							</p:column>
+							<p:column headerText="Cantidad" style="vertical-align:middle;">
+				 
+								   <p:cellEditor>
+                                                                       <f:facet name="output"><h:outputText value="#{pro.pxvCantidad}" /></f:facet>
+                                                                       <f:facet name="input"><p:inputText id="modelInput" value="#{pro.pxvCantidad}" style="width:100%"/></f:facet>
+           							</p:cellEditor>
+							</p:column>
+							<p:column headerText="Costo parcial"
+								style="vertical-align:middle;">
+								<h:outputText
+                                                                    value="#{pro.pxvCostoParcial}" />
+							</p:column>
+					 
+						</p:dataTable>
+                    <br/>
+                    
+                    <p:outputLabel value="Costo Total: " />
+                    <p:outputLabel id="PreVi" value="#{visitaBean.precioTotal}" /> 
+                    <br/>
+                    <br/>
+                    <p:commandButton value="Cerrar" action="#{visitaBean.limpiar()}" oncomplete="PF('dlgpago').hide();" update=":#{p:component('tablaPac')}" />
+                </p:dialog>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+               
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

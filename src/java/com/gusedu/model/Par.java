@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 15/09/2015 11:54:43 AM by Hibernate Tools 4.3.1
+// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -18,23 +18,29 @@ public class Par  implements java.io.Serializable {
      private String parDescripcion;
      private String parPatogeno;
      private String parUrl;
-     private Set enfermedadPars = new HashSet(0);
      private Set sintomaPars = new HashSet(0);
+     private Set enfermedadPars = new HashSet(0);
+     private Set sintomaPars_1 = new HashSet(0);
+     private Set enfermedadPars_1 = new HashSet(0);
      private Set terapiaPars = new HashSet(0);
+     private Set terapiaPars_1 = new HashSet(0);
 
     public Par() {
     }
 
-    public Par(Grupo grupo, Punto puntoByPunCodigoP2, Punto puntoByPunCodigoP1, String parDescripcion, String parPatogeno, String parUrl, Set enfermedadPars, Set sintomaPars, Set terapiaPars) {
+    public Par(Grupo grupo, Punto puntoByPunCodigoP2, Punto puntoByPunCodigoP1, String parDescripcion, String parPatogeno, String parUrl, Set sintomaPars, Set enfermedadPars, Set sintomaPars_1, Set enfermedadPars_1, Set terapiaPars, Set terapiaPars_1) {
        this.grupo = grupo;
        this.puntoByPunCodigoP2 = puntoByPunCodigoP2;
        this.puntoByPunCodigoP1 = puntoByPunCodigoP1;
        this.parDescripcion = parDescripcion;
        this.parPatogeno = parPatogeno;
        this.parUrl = parUrl;
-       this.enfermedadPars = enfermedadPars;
        this.sintomaPars = sintomaPars;
+       this.enfermedadPars = enfermedadPars;
+       this.sintomaPars_1 = sintomaPars_1;
+       this.enfermedadPars_1 = enfermedadPars_1;
        this.terapiaPars = terapiaPars;
+       this.terapiaPars_1 = terapiaPars_1;
     }
    
     public Integer getParCodigo() {
@@ -86,13 +92,6 @@ public class Par  implements java.io.Serializable {
     public void setParUrl(String parUrl) {
         this.parUrl = parUrl;
     }
-    public Set getEnfermedadPars() {
-        return this.enfermedadPars;
-    }
-    
-    public void setEnfermedadPars(Set enfermedadPars) {
-        this.enfermedadPars = enfermedadPars;
-    }
     public Set getSintomaPars() {
         return this.sintomaPars;
     }
@@ -100,12 +99,40 @@ public class Par  implements java.io.Serializable {
     public void setSintomaPars(Set sintomaPars) {
         this.sintomaPars = sintomaPars;
     }
+    public Set getEnfermedadPars() {
+        return this.enfermedadPars;
+    }
+    
+    public void setEnfermedadPars(Set enfermedadPars) {
+        this.enfermedadPars = enfermedadPars;
+    }
+    public Set getSintomaPars_1() {
+        return this.sintomaPars_1;
+    }
+    
+    public void setSintomaPars_1(Set sintomaPars_1) {
+        this.sintomaPars_1 = sintomaPars_1;
+    }
+    public Set getEnfermedadPars_1() {
+        return this.enfermedadPars_1;
+    }
+    
+    public void setEnfermedadPars_1(Set enfermedadPars_1) {
+        this.enfermedadPars_1 = enfermedadPars_1;
+    }
     public Set getTerapiaPars() {
         return this.terapiaPars;
     }
     
     public void setTerapiaPars(Set terapiaPars) {
         this.terapiaPars = terapiaPars;
+    }
+    public Set getTerapiaPars_1() {
+        return this.terapiaPars_1;
+    }
+    
+    public void setTerapiaPars_1(Set terapiaPars_1) {
+        this.terapiaPars_1 = terapiaPars_1;
     }
 
 

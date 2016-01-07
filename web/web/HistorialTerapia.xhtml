@@ -3,11 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition >
     <h:form id="formularioHistoria"  >
     <br/>
-    <p:dataTable var="rowName" value="#{historialTerapiaBean.rowNames}" rowIndexVar="rowIdx" emptyMessage="No hay pares" >
+    <p:dataTable var="rowName" value="#{historialTerapiaBean.rowNames}"
+                 rowIndexVar="rowIdx" emptyMessage="No hay pares" >
+      
             <p:column headerText="" styleClass="ui-widget-header" width="250px;" >
         <h:outputText value="#{rowName}"/>
     </p:column>
