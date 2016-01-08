@@ -66,13 +66,13 @@
 				</p:ajax>
 			</p:inputText>
 			<p:spacer width="50px;" />
-			<p:commandButton value="Nuevo Paciente" id="btnNuevo"
-				update=":#{p:component('panelRegistro')}"
-				action="#{personaBean.valida}" oncomplete="PF('dlg1').show();" />
-		</h:form>
+	
+                   </h:form>
                 <br/>
                    <h:form id="formulario">
-       
+
+                       
+                       
 				<p:dataTable id="tablaPac" var="pac"
 					value="#{pacienteBean.clientes}" paginator="true" rows="10"
                                         rowKey="#{pac.cliCodigo}" widgetVar="tablaPacientes"
@@ -135,6 +135,8 @@
 			 <h:form>
 			  
 			 <p:panelGrid columns="2" >
+                             
+                             
 					<p:outputLabel value="Tipo de Terapia : " />
 					<p:selectOneMenu id="iTipoTerapia2"
 						value="#{terapiaBean.idterapia}"  >
@@ -155,6 +157,9 @@
 				</p:panelGrid>
  
 			
+                          
+		
+                             
 				<p:commandButton value="Registrar" id="disparador"
                                                  actionListener="#{terapiaBean.addTerapiaSP}" oncomplete="PF('dlgTerapeutas').hide();" update=":#{p:component('growl')}"  />
 				</h:form>
@@ -232,6 +237,10 @@
                         <p:outputLabel value="Terapeuta : " />
                         <p:outputLabel value="#{visitaBean.ter.terUsuCreacion}" />
                         <p:outputLabel value="Precio : " />
+                        
+                        
+                        
+                        
                         <p:outputLabel value="#{visitaBean.ter.terCosto}" rendered="#{visitaBean.edit eq false}"  /> 
                         <p:inputText value="#{visitaBean.ter.terCosto}" rendered="#{visitaBean.edit ne false}"  />
                         <p:commandButton icon="ui-icon-pencil" title="Editar" action="#{visitaBean.change}" update="pnlChange" rendered="#{visitaBean.edit eq false}" />
