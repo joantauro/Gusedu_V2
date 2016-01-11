@@ -40,8 +40,8 @@
                </h:form>
               
                <h:form>
-                    <p:commandButton value="Nuevo Paciente" id="btnNuevoC" 	
-				action="#{personaBean.valida}" oncomplete="PF('dlg1').show();" 
+                   <p:commandButton value="Nuevo Paciente" id="btnNuevoC" update=":#{p:component('dialogCalendar')}"	
+                                    action="#{personaBean.inicializar()}" oncomplete="PF('dlg1').show();" 
                                 styleClass="ui-priority-primary" />
                     <br/>
                     <br/>

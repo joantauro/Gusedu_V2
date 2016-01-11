@@ -42,6 +42,9 @@
 						<p:outputLabel value="#{valor+1}" />
 					</p:column>
 					<p:column headerText="Estado">
+                                            <p:selectBooleanCheckbox value="#{usu.usuActivo}" >
+                                                <p:ajax  listener="#{usuarioBean.ActualizarEstado(usu)}" />
+                                            </p:selectBooleanCheckbox>
 						<p:outputLabel value="Activo" rendered="#{usu.usuActivo eq true}" />
 						<p:outputLabel value="Inactivo" rendered="#{usu.usuActivo ne true}" />
 					</p:column>

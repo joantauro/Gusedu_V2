@@ -93,6 +93,10 @@ public class PersonaBean {
 /*  84*/        context.execute("PF('dlg1').hide();");
 /*  85*/        persona = new Persona();
             }
+            
+            public void inicializar(){
+                persona = new Persona();
+            }
 
             public void valida() {
 /*  90*/        FacesContext fc = FacesContext.getCurrentInstance();

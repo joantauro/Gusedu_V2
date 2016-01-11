@@ -175,7 +175,7 @@ public class UsuarioBean implements Serializable{
 	
 	public String update() {
 		if (usuarioservice.updateUsuario(usuario)) {
-			StaticUtil.correctMesage("�xito", "Se ha actualizado correctamente el usuario");
+			StaticUtil.correctMesage("Éxito", "Se ha actualizado correctamente el usuario");
 			//		return "consultarPacientes?faces-redirect=true";
 			return "gestionUsuario?faces-redirect=true";
 		} else {
@@ -604,4 +604,10 @@ public class UsuarioBean implements Serializable{
 	public void setDiasRestantes(long diasRestantes) {
 		this.diasRestantes = diasRestantes;
 	}
+        
+        public void ActualizarEstado(Usuario usu)
+        {
+            System.out.println("USUARIO : "+usu.getUsuActivo());
+            usuarioservice.updateUsuario(usu);
+        }
 }
