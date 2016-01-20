@@ -9,16 +9,12 @@ import com.gusedu.dao.impl.PersonaServiceImpl;
 import com.gusedu.model.Persona;
 import com.gusedu.dao.PersonaService;
 import com.gusedu.util.StaticUtil;
-import java.io.PrintStream;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import org.primefaces.context.RequestContext;
 
 // Referenced classes of package com.gusedu.bean:
@@ -130,6 +126,16 @@ public class PersonaBean {
                   System.out.println("It's false");
               }
                 
+            }
+            
+            public void validaEdad()
+            {
+                int e =persona.getPerFecNacimiento().getYear()+1900;
+                Date fec = new Date();   
+                int anio = fec.getYear()+1900;
+                int ed= anio-e;
+                persona.setPerEdad(ed);
+                System.out.println("Edad : "+ed);
             }
             
 }

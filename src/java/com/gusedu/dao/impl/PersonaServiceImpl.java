@@ -47,6 +47,7 @@ public class PersonaServiceImpl
         return resultado;
     }
 
+    @Override
     public boolean updatePersona(Persona persona) {
         boolean resultado = false;
         Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -62,9 +63,9 @@ public class PersonaServiceImpl
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
-                System.out.println("ERROR de saveHistoriaClinica : " + e.getMessage());
+                System.out.println("ERROR de updatePersona : " + e.getMessage());
             }
-            System.out.println(e.getMessage());
+            System.out.println("ERROR de updatePersona : " +e.getMessage());
         } finally {
             sesion.flush();
             sesion.close();

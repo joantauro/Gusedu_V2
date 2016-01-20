@@ -66,7 +66,10 @@
 				</p:ajax>
 			</p:inputText>
 			<p:spacer width="50px;" />
-	
+				<p:commandButton value="Nuevo Paciente" id="btnNuevo"
+				update=":#{p:component('panelRegistro')}"
+				action="#{personaBean.valida}" oncomplete="PF('dlg1').show();" />
+		
                    </h:form>
                 <br/>
                    <h:form id="formulario">
@@ -224,7 +227,9 @@
                 <h:form>
 			<p:dialog id="dialog" header="Nuevo Paciente" widgetVar="dlg1"
 				showEffect="pop" modal="true">
-				<ui:include src="prueba.xhtml" />
+                            <p:panel id="panelJ"    >
+                                <ui:include src="prueba.xhtml"  />
+                            </p:panel>
 			</p:dialog>
 		</h:form>
                 <h:form id="formCaja" >

@@ -6,10 +6,14 @@
 package com.gusedu.bean;
 
 import com.gusedu.dao.ClienteService;
+import com.gusedu.dao.PersonaService;
 import com.gusedu.dao.TerapiaService;
+import com.gusedu.dao.UsuarioService;
 import com.gusedu.dao.VisitaService;
 import com.gusedu.dao.impl.ClienteServiceImpl;
+import com.gusedu.dao.impl.PersonaServiceImpl;
 import com.gusedu.dao.impl.TerapiaServiceImpl;
+import com.gusedu.dao.impl.UsuarioServiceImpl;
 import com.gusedu.dao.impl.VisitaServiceImpl;
 import com.gusedu.model.Cliente;
 import com.gusedu.model.Persona;
@@ -49,9 +53,9 @@ public class ScheduleView {
      * Creates a new instance of ScheduleView
      */
     
-    private ScheduleModel eventModel;   
-    private ScheduleModel lazyEventModel;
-    private ScheduleEvent event = new DefaultScheduleEvent();
+    public ScheduleModel eventModel;   
+    public ScheduleModel lazyEventModel;
+    public ScheduleEvent event = new DefaultScheduleEvent();
     
     VisitaService visitaService;
     TerapiaService terapiaService;
@@ -60,16 +64,21 @@ public class ScheduleView {
     private Cliente cli;
     private String nombre;
     private int codigo;
+    private boolean calendar;
     
     private Visita visita;
     private Terapia terapia;
     
     ClienteService clienteService;
+    PersonaService personaservice;
+    UsuarioService usuarioservice;
     
     public ScheduleView() {
         visitaService = new VisitaServiceImpl();
         terapiaService = new TerapiaServiceImpl();
         clienteService= new ClienteServiceImpl();
+        personaservice = new PersonaServiceImpl();
+        usuarioservice = new UsuarioServiceImpl();
         cli = new Cliente();
         cli.setPersona(new Persona());
         cli.setTipoCliente(new TipoCliente());
@@ -81,6 +90,7 @@ public class ScheduleView {
         terapia = new Terapia();
         terapia.setTipoTerapia(new TipoTerapia());
         terapia.setVisita(new Visita());
+        calendar=false;
    
     }
     
@@ -136,6 +146,14 @@ public class ScheduleView {
         }
         
  
+    }
+
+    public boolean isCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(boolean calendar) {
+        this.calendar = calendar;
     }
 
     public void listado()
@@ -317,7 +335,7 @@ public class ScheduleView {
        // visita
         visita.setVisFecCreacion(event.getStartDate());
         visita.setVisFecFin(event.getEndDate());
-       
+       calendar=false;
         //------- Terapia ---------//
         System.out.println("ID VISITA : "+visita.getVisCodigo()); 
         terapia = terapiaService.terapiaByVisita(visita);
@@ -326,6 +344,33 @@ public class ScheduleView {
         System.out.println("TIPO TERAPIA  : "+ terapia.getTipoTerapia().getTteNombre()); 
     }
      
+    public void change()
+            {
+                 System.out.println("PRE-EDIT : "+calendar);
+                if(calendar==false)
+                {
+                    int a=usuarioservice.buscarporUsuario(terapia.getTerDescripcion());
+                    terapia.setTerDescripcion(""+a);
+                    calendar=true;
+                    System.out.println("POST-EDIT : "+calendar);
+                }else
+                {
+                    calendar=false;
+                     
+                 /*   terapia.setTerUsuCreacion(cortar(ust, 0));
+                    terapia.setTerDescripcion(cortar(ust, 1));*/
+                    
+                    Persona p = personaservice.getPersonaById(Integer.parseInt(terapia.getTerDescripcion()));
+                    terapia.setTerUsuCreacion(p.getPerNombres()+" "+p.getPerApellidoP()+" "+p.getPerApellidoM());
+                    String ust=usuarioservice.buscarporCodigo(Integer.parseInt(terapia.getTerDescripcion()));
+                    terapia.setTerDescripcion(ust);
+                    terapiaService.updateTerapia(terapia);  
+                    visitaService.updateVisita(visita);
+                     terapia = terapiaService.terapiaByVisita(visita);
+                }
+            }
+            
+    
     public void onDateSelect(SelectEvent selectEvent) {
         event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
          visita.setVisFecCreacion(event.getStartDate());
@@ -422,4 +467,20 @@ public class ScheduleView {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
     
+     public void ELIMINARCITA()
+    {
+       if(visitaService.SPdeleteVisita(visita.getVisCodigo()))
+       {
+           System.out.println("SI ELIMINIO");
+           listado();
+       }else
+       {
+           System.out.println("No elimino");
+       }
+    }
+    public void DELETE()
+    {
+        System.out.println("Paciente : "+visita.getCliente().getCliCodigo());
+        System.out.println("Visita : " +visita.getVisCodigo());
+    }
 }

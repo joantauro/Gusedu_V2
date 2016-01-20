@@ -204,7 +204,7 @@ public class UsuarioBean implements Serializable{
 		usuario.setUsuActivo(false);
 		usuario.setUsuFecFinm(new Date());
 		if (usuarioservice.updateUsuario(usuario)) {
-			StaticUtil.correctMesage("�xito", "Se ha dado debaja al usuario");
+			StaticUtil.correctMesage("Éxito", "Se ha dado debaja al usuario");
 		 
 		} else {
 			StaticUtil.errorMessage("Error", "No se pudo actualizar el usuario");
@@ -322,7 +322,7 @@ public class UsuarioBean implements Serializable{
 	
 	public void updateTU2() {
 		if (tipousuarioservice.updateTipoUsuario(tipousuario)) {
-			StaticUtil.correctMesage("�xito", "Se ha actualizado correctamente el tipo usuario");
+			StaticUtil.correctMesage("Éxito", "Se ha actualizado correctamente el tipo usuario");
 			//return "pm:datosTipoUsuario?transition=flip";
 		} else {
 			StaticUtil.errorMessage("Error", "No se pudo actualizar el tipo de usuario");
@@ -354,7 +354,7 @@ public class UsuarioBean implements Serializable{
 		if(persona.getPerCodigo()==null)
 		{
 			if (personaservice.savePersona(persona)) {
-				StaticUtil.correctMesage("�xito", "Se ha registrado correctamente los datos del usuario");
+				StaticUtil.correctMesage("Éxito", "Se ha registrado correctamente los datos del usuario");
 				usuario.setPersona(persona);
 				usuarioservice.updateUsuario(usuario);
 				
@@ -369,7 +369,7 @@ public class UsuarioBean implements Serializable{
 		}else
 		{
 			if (personaservice.updatePersona(persona)) {
-				StaticUtil.correctMesage("�xito", "Se ha modificado correctamente los datos del usuario");
+				StaticUtil.correctMesage("Éxito", "Se ha modificado correctamente los datos del usuario");
 				persona = new Persona();
 				usuario = new Usuario();
 				usuario.setTipoUsuario(new TipoUsuario());
@@ -387,7 +387,7 @@ public class UsuarioBean implements Serializable{
 		if(persona.getPerCodigo()==null)
 		{
 			if (personaservice.savePersona(persona)) {
-				StaticUtil.correctMesage("�xito", "Se ha registrado correctamente los datos del usuario");
+				StaticUtil.correctMesage("Éxito", "Se ha registrado correctamente los datos del usuario");
 				usuario.setPersona(persona);
 				usuarioservice.updateUsuario(usuario);
 				
@@ -402,7 +402,7 @@ public class UsuarioBean implements Serializable{
 		}else
 		{
 			if (personaservice.updatePersona(persona)) {
-				StaticUtil.correctMesage("�xito", "Se ha modificado correctamente los datos del usuario");
+				StaticUtil.correctMesage("Éxito", "Se ha modificado correctamente los datos del usuario");
 				persona = new Persona();
 				usuario = new Usuario();
 				usuario.setTipoUsuario(new TipoUsuario());
@@ -421,7 +421,7 @@ public class UsuarioBean implements Serializable{
 
 	public void deleteTU() {
 		if (tipousuarioservice.deleteTipoUsuario(tipousuario)) {
-			StaticUtil.correctMesage("�xito", "Se ha eliminado correctamente el tipo de usuario");
+			StaticUtil.correctMesage("Éxito", "Se ha eliminado correctamente el tipo de usuario");
 		 
 		} else {
 			StaticUtil.errorMessage("Error", "No se pudo eliminar el tipo de usuario");

@@ -604,5 +604,5 @@ edit=false;
                 ter.setVisita(new Visita());
                 edit=false;
             }
-            
+                        
 }

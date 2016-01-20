@@ -38,4 +38,6 @@ public interface VisitaService {
         public Visita visitaDelDia(Cliente cliente);
         
         public int visitaProgramada(Date fecha,Cliente cliente);
+        
+        public boolean SPdeleteVisita(int cod_visita);
 }

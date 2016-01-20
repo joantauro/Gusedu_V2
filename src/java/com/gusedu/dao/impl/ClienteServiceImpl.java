@@ -36,6 +36,7 @@ public class ClienteServiceImpl
 /*  43*/        return resultado;
             }
 
+            @Override
     public boolean updateCliente(Cliente cliente) {
         boolean resultado = false;
         Session sesion = HibernateUtil.getSessionFactory().openSession();
@@ -50,12 +51,12 @@ public class ClienteServiceImpl
             resultado = true;
  
         } catch (Exception e) {
-             System.out.println(e.getMessage());
+             System.out.println("Error : "+e.getMessage());
             if (tx != null) {
                 tx.rollback();
                
             }
-            System.out.println(e.getMessage());
+            System.out.println("Error : "+e.getMessage());
         } finally {
             sesion.flush();
             sesion.close();

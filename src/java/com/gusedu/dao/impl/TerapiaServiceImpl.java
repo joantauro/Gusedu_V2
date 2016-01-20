@@ -40,7 +40,7 @@ public class TerapiaServiceImpl
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
-                System.out.println("ERROR de saveHistoriaClinica : " + e.getMessage());
+                System.out.println("ERROR de updateTerapia : " + e.getMessage());
             }
             System.out.println(e.getMessage());
         } finally {

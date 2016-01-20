@@ -276,7 +276,8 @@ Session sesion = HibernateUtil.getSessionFactory().openSession();
  
         try {
             String username =StaticUtil.userLogged();
-             String sql = "SELECT v FROM Visita v where v.visUsuCreacion=:usuario and v.visFecCreacion >= CURDATE() ORDER BY v.visFecCreacion DESC";
+            // String sql = "SELECT v FROM Visita v where v.visUsuCreacion=:usuario and v.visFecCreacion >= CURDATE() ORDER BY v.visFecCreacion DESC";
+            String sql = "SELECT v FROM Visita v where v.visUsuCreacion=:usuario  ORDER BY v.visFecCreacion DESC";
              Query q = sesion.createQuery(sql);
              q.setParameter("usuario", username);
              result = q.list(); 
@@ -365,5 +366,23 @@ for(int i=0;i<result.size();i++){
             sesion.close();
         }
         return valor;
+    }
+
+    @Override
+    public boolean SPdeleteVisita(int cod_visita) {
+         boolean resultado = false;
+         Session session = HibernateUtil.getSessionFactory().openSession();
+         try {
+             Query q = session.createSQLQuery("{ CALL EliminarCita(:codigo_visita) }");
+             q.setParameter("codigo_visita", cod_visita);
+             q.executeUpdate();
+             resultado = true;
+         }
+         catch(Exception e)
+         {
+             System.out.println("ERROR de SPdeleteVisita : "+e.getMessage());
+             resultado=false;
+         }
+         return resultado;
     }
 }

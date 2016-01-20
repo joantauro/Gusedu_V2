@@ -6,21 +6,20 @@
 package com.gusedu.bean;
 
 import com.gusedu.dao.ClienteService;
+import com.gusedu.dao.PersonaService;
 import com.gusedu.dao.impl.ClienteServiceImpl;
+import com.gusedu.dao.impl.PersonaServiceImpl;
 import com.gusedu.model.Cliente;
 import com.gusedu.model.Persona;
 import com.gusedu.model.TipoCliente;
  
 import com.gusedu.util.StaticUtil;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 // Referenced classes of package com.gusedu.bean:
@@ -31,6 +30,7 @@ import javax.faces.context.FacesContext;
 public class PacienteBean {
 
             ClienteService clienteService;
+            PersonaService personaservice;
             private Cliente cliente;
             private List<Cliente> clientes;
             private String query;
@@ -38,6 +38,7 @@ public class PacienteBean {
 
             public PacienteBean() {
                 clienteService= new ClienteServiceImpl();
+                personaservice = new PersonaServiceImpl();
 /*  42*/        cliente = new Cliente();
 /*  43*/        cliente.setPersona(new Persona());
 /*  44*/        cliente.setTipoCliente(new TipoCliente());
@@ -93,15 +94,19 @@ public class PacienteBean {
             }
 
             public void editar2() {
-/* 102*/        if (clienteService.updateCliente(cliente)) {
-/* 103*/            FacesContext fc = FacesContext.getCurrentInstance();
-/* 104*/            VisitaBean objetoBean = (VisitaBean)fc.getExternalContext().getSessionMap().get("visitaBean");
-/* 105*/            objetoBean.probando();
-/* 106*/            StaticUtil.correctMesage("Éxito", "Se ha actualizado correctamente");
-/* 107*/            StaticUtil.keepMessages();
-/* 108*/            cliente = new Cliente();
+                
+        if (personaservice.updatePersona(cliente.getPersona())) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            VisitaBean objetoBean = (VisitaBean)fc.getExternalContext().getSessionMap().get("visitaBean");
+                    ScheduleView oscheduleBean =new ScheduleView();
+            objetoBean.probando();
+                    oscheduleBean.listado();
+            StaticUtil.correctMesage("Éxito", "Se ha actualizado correctamente");
+            StaticUtil.keepMessages();
+            cliente = new Cliente();
+                    cliente.setPersona(new Persona());
                 } else {
-/* 111*/            StaticUtil.errorMessage("Error", "No se pudo actualizar");
+            StaticUtil.errorMessage("Error", "No se pudo actualizar");
                     StaticUtil.keepMessages();
                 }
             }

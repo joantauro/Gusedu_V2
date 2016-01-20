@@ -6,11 +6,17 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <ui:composition>
+<script type="text/javascript">
+ function foo() {
+ 	 document.getElementById('menu:btnPruebita').click();
+}
+</script>
 	<h:form id="menu">
+            <p:commandButton value="Pruebita" id="btnPruebita" actionListener="#{scheduleView.listado}" style="display: none;" />
             <p:menubar>
                 <p:menuitem value="Inicio" url="/web/Principal.jsf" rendered="#{auth.userLogged.tipoUsuario.home}" />
                 <p:menuitem value="Inicio R" url="/web/Principal_recepcion.jsf" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 4}"/>
-                <p:menuitem icon="ui-icon-document" value="Calendario de Citas" url="/web/Citas.jsf" rendered="#{auth.userLogged.tipoUsuario.calendarioCitas}" />
+                <p:menuitem icon="ui-icon-document" value="Calendario de Citas" update=":#{p:component('schedule')}"  url="/web/Citas.jsf" rendered="#{auth.userLogged.tipoUsuario.calendarioCitas}" />
                 <p:submenu label="Reportes" icon="ui-icon-document">
                     <p:menuitem value="Productos"  url="#" rendered="#{auth.userLogged.tipoUsuario.reporteProducto}" />
                     <p:menuitem value="Puntos por Par" url="#" rendered="#{auth.userLogged.tipoUsuario.reportePar}" />

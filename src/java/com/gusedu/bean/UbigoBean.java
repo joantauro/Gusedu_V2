@@ -37,7 +37,7 @@ public class UbigoBean {
      */
     public UbigoBean() {
         ubigeoservice = new UbigeoServiceImpl();
-        idDepartamento=14;
+        idDepartamento=15;
         idProvincia=1;
        LISTA_PROVINCIAS();
        LISTA_DISTRITO();

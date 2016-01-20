@@ -32,6 +32,7 @@ public class UsuarioServiceImpl implements UsuarioService,Serializable{
         try {
             tx = sesion.beginTransaction();
             usuario.setUsuFecCreacion(new Date());
+            usuario.setUsuPrecio(0);
             sesion.save(usuario);
             tx.commit();
             resultado = true;
@@ -198,6 +199,45 @@ public class UsuarioServiceImpl implements UsuarioService,Serializable{
 		usuario = getAllFinMembresia(2).get(0);
 	 
 		updateUsuario(usuario);
+    }
+
+    @Override
+    public int buscarporUsuario(String usuUsuario) {
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        int valor=0;
+        try {
+           // tx = sesion.beginTransaction();
+             String sql = "select u.persona.perCodigo from Usuario u where u.usuUsuario=:cuenta_usuario";
+            Query q = sesion.createQuery(sql);
+            q.setParameter("cuenta_usuario", usuUsuario);
+            valor=(int) q.uniqueResult();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        } 
+       return valor;
+        
+    }
+
+    @Override
+    public String buscarporCodigo(int codigo) {
+         Session sesion = HibernateUtil.getSessionFactory().openSession();
+        String valor="";
+        try {
+           // tx = sesion.beginTransaction();
+             String sql = "select u.usuUsuario from Usuario u where u.persona.perCodigo=:cuenta_usuario";
+            Query q = sesion.createQuery(sql);
+            q.setParameter("cuenta_usuario", codigo);
+            valor=(String) q.uniqueResult();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        } 
+       return valor;
     }
     
 }

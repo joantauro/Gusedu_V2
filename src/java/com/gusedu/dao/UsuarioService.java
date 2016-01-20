@@ -26,6 +26,7 @@ public interface UsuarioService {
 	
 	public void updateUsuarioFinMembresia();
 	
+        public int buscarporUsuario(String usuUsuario);
 
-
+        public String buscarporCodigo(int codigo);
 }
