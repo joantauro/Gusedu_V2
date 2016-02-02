@@ -8,10 +8,9 @@ package com.gusedu.dao.impl;
 import com.gusedu.dao.TerapiaParService;
 import com.gusedu.model.TerapiaPar;
 import com.gusedu.util.HibernateUtil;
-import java.io.PrintStream;
 import javax.persistence.EntityManager;
+import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 public class TerapiaParServiceImpl
@@ -69,4 +68,23 @@ public class TerapiaParServiceImpl
                 }
 /*  66*/        return resultado;
             }
+
+    @Override
+    public boolean SPsaveTerapiaPar(TerapiaPar terapiapar) {
+       boolean resultado = false;
+         Session session = HibernateUtil.getSessionFactory().openSession();
+         try {
+             Query q = session.createSQLQuery("{ CALL CrearPrePar(:cod_terapia,:cod_par) }");
+             q.setParameter("cod_terapia", terapiapar.getTerapia().getTerCodigo());
+             q.setParameter("cod_par", terapiapar.getPar().getParCodigo());
+             q.executeUpdate();
+             resultado = true;
+         }
+         catch(Exception e)
+         {
+             System.out.println("ERROR de SPsaveTerapiaPar : "+e.getMessage());
+             resultado=false;
+         }
+         return resultado;
+    }
 }

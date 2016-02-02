@@ -77,6 +77,8 @@ public class ParBean {
             public void clean() {
 /*  85*/        par = new Par();
 /*  86*/        par.setGrupo(new Grupo());
+                par.setPuntoByPunCodigoP1(new Punto());
+                par.setPuntoByPunCodigoP2(new Punto());
 /*  87*/        punto1 = new Punto();
 /*  88*/        punto2 = new Punto();
 /*  89*/        parSeleccionado = new Par();
@@ -122,14 +124,20 @@ public class ParBean {
 /* 140*/        if (newPar != null) {
 /* 142*/            TerapiaBean objetoTBean = (TerapiaBean)fc.getExternalContext().getSessionMap().get("terapiaBean");
 /* 143*/            objetoTBean.addPar2(newPar.getParCodigo());
-/* 144*/            par = new Par();
+                   par = new Par();
+                   par.setGrupo(new Grupo());
+                   par.setPuntoByPunCodigoP1(new Punto());
+                   par.setPuntoByPunCodigoP2(new Punto());
 /* 145*/            punto2 = new Punto();
 /* 146*/            return;
                 }
 /* 149*/        if (parService.savePar(par).booleanValue()) {
 /* 153*/            TerapiaBean objetoTBean = (TerapiaBean)fc.getExternalContext().getSessionMap().get("terapiaBean");
 /* 154*/            objetoTBean.addPar2(par.getParCodigo());
-/* 155*/            par = new Par();
+/* 155*/             par = new Par();
+                   par.setGrupo(new Grupo());
+                   par.setPuntoByPunCodigoP1(new Punto());
+                   par.setPuntoByPunCodigoP2(new Punto());
 /* 156*/            punto2 = new Punto();
                 } else {
 /* 159*/            StaticUtil.errorMessage("Error", "Hubo un error al a\361adir el par");
@@ -172,7 +180,7 @@ public class ParBean {
         
         public void toRegistrarWeb()
 	{
-		par = new Par();
+		
 		punto1 = new Punto();
 		punto2 = new Punto();
 		par = new Par();
@@ -246,7 +254,7 @@ public class ParBean {
 	}
         
         	public void backToConsultar() {
-		par = new Par();
+		
 		punto1 = new Punto();
 		punto2 = new Punto();
 		grupoSeleccionado = new Grupo();
@@ -472,5 +480,46 @@ public class ParBean {
 		parSeleccionado = parService.parById(id);
               
 	}
+            
+         public void agregarPar2SP() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Punto p = (Punto)fc.getExternalContext().getSessionMap().get("punto");
+        Grupo gr = new Grupo();
+        gr.setGruCodigo(Integer.valueOf(5));
+        if (punto2 == null) {
+            StaticUtil.errorMessage("Error", "El punto que elegio no existe");
+            punto2 = new Punto();
+            return;
+                }
+        System.out.println("No es nulo :-)");
+        System.out.println((new StringBuilder()).append("Grupo : ").append(gr.getGruCodigo()).toString());
+        System.out.println((new StringBuilder()).append("Punto 1 : ").append(p.getPunCodigo()).toString());
+        System.out.println((new StringBuilder()).append("Punto 2 : ").append(punto2.getPunCodigo()).toString());
+        par.setGrupo(gr);
+        par.setPuntoByPunCodigoP1(p);
+        par.setPuntoByPunCodigoP2(punto2);
+        Par newPar = parService.parByPuntos(p, punto2, gr);
+        if (newPar != null) {
+            TerapiaBean objetoTBean = (TerapiaBean)fc.getExternalContext().getSessionMap().get("terapiaBean");
+            objetoTBean.addPar2(newPar.getParCodigo());
+             par = new Par();
+                   par.setGrupo(new Grupo());
+                   par.setPuntoByPunCodigoP1(new Punto());
+                   par.setPuntoByPunCodigoP2(new Punto());
+            punto2 = new Punto();
+            return;
+                }
+        if (parService.savePar(par).booleanValue()) {
+            TerapiaBean objetoTBean = (TerapiaBean)fc.getExternalContext().getSessionMap().get("terapiaBean");
+            objetoTBean.addPar2SP(par.getParCodigo());
+             par = new Par();
+                   par.setGrupo(new Grupo());
+                   par.setPuntoByPunCodigoP1(new Punto());
+                   par.setPuntoByPunCodigoP2(new Punto());
+            punto2 = new Punto();
+                } else {
+            StaticUtil.errorMessage("Error", "Hubo un error al a\361adir el par");
+                }
+            }
             
 }

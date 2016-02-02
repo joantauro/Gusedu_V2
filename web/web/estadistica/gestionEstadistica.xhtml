@@ -18,8 +18,15 @@
 
                     <p:chart type="bar" model="#{estadisticaBean.barra}"  style="width:400px;" />
                 </h:panelGrid>
-
             </h:form>
+            
+            <h:form>
+                <h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
+                    <p:chart type="bar" model="#{estadisticaBean.barraM}"  style="width:85%;"  />
+                </h:panelGrid>
+            </h:form>
+            
+            <p:chart type="line" model="#{estadisticaBean.lineModel2}" style="height:300px;"/>
         </ui:define>
 
         <ui:define name="bottom">

@@ -14,4 +14,6 @@ public interface TerapiaParService {
     public boolean updateTerapia(TerapiaPar terapiapar);
 
     public  boolean deleteTerapia(TerapiaPar terapiapar);
+    
+    public boolean SPsaveTerapiaPar(TerapiaPar terapiapar);
 }

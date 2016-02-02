@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets" >
+<ui:composition >
+ 		
+    <p:dataTable value="#{pagoBean.listaepago}" emptyMessage="No hay pagos registrados el día de hoy"
+                 var="pagBean" style="width: 660px;" >
+        <p:column headerText="Paciente" >
+            <p:outputLabel value="#{pagBean.paciente}" />
+        </p:column>
+        
+        <p:column headerText="Visita" >
+            <p:outputLabel value="#{pagBean.visita}" >
+                <f:convertDateTime pattern="dd-MM-yyyy hh:mm a" />
+            </p:outputLabel>
+        </p:column>
+        
+        <p:column headerText="Tipo de Pago" width="80px" >
+            <p:outputLabel value="#{pagBean.tipopago}" style="width: 80px;" />
+        </p:column>
+        
+        <p:column headerText="Monto" width="100px" >
+            <p:outputLabel value="#{pagBean.monto}" style="width: 100px;" />
+        </p:column>
+    </p:dataTable>
+    
+    
+</ui:composition>
+</html>

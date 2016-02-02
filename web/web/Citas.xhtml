@@ -213,7 +213,7 @@
                    <h:panelGrid id="eventDetails" columns="2">
                        <p:outputLabel for="title" value="Paciente : " />
                        <p:outputLabel id="title" value="#{scheduleView.cli.persona.perNombres} #{scheduleView.cli.persona.perApellidoP} #{scheduleView.cli.persona.perApellidoM}"  />
-
+                       
                        <p:outputLabel for="from" value="Desde :" />
                        <p:calendar id="from" value="#{scheduleView.visita.visFecCreacion}" timeZone="GMT-5" pattern="dd/MM/yyyy HH:mm"/>
 
@@ -262,6 +262,12 @@
                        <p:outputLabel for="title2" value="Paciente : " />
                        <p:outputLabel id="title2" value="#{scheduleView.cli.persona.perNombres} #{scheduleView.cli.persona.perApellidoP} #{scheduleView.cli.persona.perApellidoM}"  />
 
+                        <p:outputLabel  value="Teléfono fijo : " />
+                       <p:outputLabel  value="#{scheduleView.cli.persona.perTelFijo}" />
+                       
+                       <p:outputLabel  value="Teléfono movil : " />
+                       <p:outputLabel  value="#{scheduleView.cli.persona.perTelMovil}" />
+                       
                        <p:outputLabel for="from2" value="Fecha :" />
                        <p:outputLabel id="from2" value="#{scheduleView.visita.visFecCreacion}" >
                            <f:convertDateTime pattern="dd/MM/yyyy " />

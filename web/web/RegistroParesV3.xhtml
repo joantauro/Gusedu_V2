@@ -1,27 +1,25 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition>
-	<h:form id="formNuevaTerapiaP">
-		<p:commandButton value="Ver Pares del Paciente" 
+	 <p:commandButton value="Ver Pares del Paciente" 
 		action="#{terapiaBean.listado}" oncomplete="PF('dlgParesP').show();" 
-		update=":#{p:component('tablaParPunto12')}"  />
+		update=":#{p:component('tablaParPunto12x')}"  />
  
 	<br/>
 	<br/>
-        <p:outputLabel value="Filtrar: " for="inpQuery" />
-        <p:inputText value="#{puntoBean.query}" id="inpQuery"
+        <p:outputLabel value="Filtrar: " for="inpQueryx" />
+        <p:inputText value="#{puntoBean.query}" id="inpQueryx"
 				style="width : 500px;">
-				<p:ajax event="keyup" update=":#{p:component('ttablaPuntos')}" delay="250"
+				<p:ajax event="keyup" update=":#{p:component('ttablaPuntosx')}" delay="250"
                                         listener="#{puntoBean.filtrarNuevo()}" >
 				</p:ajax>
 	</p:inputText>
-	<p:dataTable emptyMessage="No hay puntos registrados" id="ttablaPuntos"  scrollable="true"
-			scrollHeight="400"  
+	<p:dataTable emptyMessage="No hay puntos registrados" id="ttablaPuntosx"  scrollable="true"
+			scrollHeight="250"  
                         var="pun" value="#{puntoBean.lista}"    
 			paginatorPosition="top" rows="#{puntoBean.filaPunto}" 
 			tableStyleClass="ui-table-columntoggle"> 
@@ -31,25 +29,25 @@
 			<p:column headerText="Nombre">
 				<p:commandButton icon="ui-icon-search" 
 				oncomplete="PF('dlgPtos').show();" action="#{puntoBean.buscar(pun.punto1.punCodigo)}"
-				 update=":#{p:component('tablaPar22')}" />
+				 update=":#{p:component('tablaPar22x')}" />
                                 <p:outputLabel value="#{pun.punto1.punNombre}" />
 			</p:column>
 			<p:column headerText="Nombre">
 			<p:commandButton icon="ui-icon-search" 
 				oncomplete="PF('dlgPtos').show();" action="#{puntoBean.buscar(pun.punto2.punCodigo)}"
-				 update=":#{p:component('tablaPar22')}"   />
+				 update=":#{p:component('tablaPar22x')}"   />
 				<p:outputLabel value="#{pun.punto2.punNombre}" />
 			</p:column>
 			<p:column headerText="Nombre">
 			<p:commandButton icon="ui-icon-search" 
                                          oncomplete="PF('dlgPtos').show();" action="#{puntoBean.buscar(pun.punto3.punCodigo)}"
-				 update=":#{p:component('tablaPar22')}" />
+				 update=":#{p:component('tablaPar22x')}" />
 				<p:outputLabel value="#{pun.punto3.punNombre}" />
 			</p:column>
 			<p:column headerText="Nombre">
 			<p:commandButton icon="ui-icon-search" 
 				oncomplete="PF('dlgPtos').show();" action="#{puntoBean.buscar(pun.punto4.punCodigo)}"
-				 update=":#{p:component('tablaPar22')}"  />
+				 update=":#{p:component('tablaPar22x')}"  />
 				<p:outputLabel value="#{pun.punto4.punNombre}" />
 			</p:column>
 			</p:dataTable>
@@ -58,13 +56,13 @@
 					  showEffect="pop"  >
 			<br/>
 			<p:dataTable emptyMessage="No hay pares" style="width:220px;"
-						id="tablaPar22" value="#{puntoBean.parcito}" var="parpp">
+						id="tablaPar22x" value="#{puntoBean.parcito}" var="parpp">
 						<p:column headerText="Punto"  >
                                                     <p:outputLabel value="#{parpp.puntoByPunCodigoP2.punNombre}" />
 						</p:column>
 						<p:column headerText="#" width="25px;">
                                                     <p:commandButton id="btnAdd" icon="ui-icon-plus"  update=":#{p:component('growl')}"
-                                                                         action="#{terapiaBean.addPar2(parpp.parCodigo)}" />
+                                                                     action="#{terapiaBean.addPar2SP(parpp.parCodigo)}" />
 						</p:column>
 					</p:dataTable>
 			<br />
@@ -77,7 +75,7 @@
 				</p:autoComplete>
                                 
                                 
-				<p:commandButton icon="ui-icon-plus" action="#{parBean.agregarPar2}"
+                                <p:commandButton icon="ui-icon-plus" action="#{parBean.agregarPar2SP}"
 					update=":#{p:component('pnlPar22')}"
 					  />
 			</p:panelGrid>
@@ -88,7 +86,7 @@
 					  showEffect="pop"  >
 					  
 					  <p:dataTable emptyMessage="No hay puntos registrados en el Paciente"
-				style="width:350px;" id="tablaParPunto12" value="#{terapiaBean.listarTerapiaPar}"
+				style="width:350px;" id="tablaParPunto12x" value="#{terapiaBean.listarTerapiaPar}"
 				var="parpu"  scrollable="true"
 			scrollHeight="230"  >
 				<f:facet name="header">
@@ -112,11 +110,10 @@
 			
 		<br/><br/>
 		<p:commandButton value="Aceptar" action="#{terapiaBean.aceptar}"
-				 oncomplete="PF('dlgParesT').hide();"
+				 oncomplete="PF('dlgParesTHV2').hide();"
 				update=":#{p:component('tablaPac')}" />
 			<p:commandButton value="Cancelar" immediate="true"
-				oncomplete="PF('dlgParesT').hide();" action="#{terapiaBean.aceptar}"
+				oncomplete="PF('dlgParesTHV2').hide();" action="#{terapiaBean.aceptar}"
 				update=":#{p:component('tablaPac')}" />	
-	</h:form>
 </ui:composition>
 </html>

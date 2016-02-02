@@ -22,6 +22,7 @@
     <mapping resource="com/gusedu/model/HistoriaClinica.hbm.xml"/>
     <mapping resource="com/gusedu/model/TerapiaPar.hbm.xml"/>
     <mapping resource="com/gusedu/model/EnfermedadTerapia.hbm.xml"/>
+    <mapping resource="com/gusedu/model/TipoPago.hbm.xml"/>
     <mapping resource="com/gusedu/model/Cliente.hbm.xml"/>
     <mapping resource="com/gusedu/model/Foo.hbm.xml"/>
     <mapping resource="com/gusedu/model/Visita.hbm.xml"/>
@@ -43,6 +44,7 @@
     <mapping resource="com/gusedu/model/TipoUsuario.hbm.xml"/>
     <mapping resource="com/gusedu/model/Diagnostico.hbm.xml"/>
     <mapping resource="com/gusedu/model/EnfermedadVisita.hbm.xml"/>
+    <mapping resource="com/gusedu/model/Pago.hbm.xml"/>
     <mapping resource="com/gusedu/model/SintomaPar.hbm.xml"/>
     <mapping resource="com/gusedu/model/Terapia.hbm.xml"/>
     <mapping resource="com/gusedu/model/Ubdepartamento.hbm.xml"/>

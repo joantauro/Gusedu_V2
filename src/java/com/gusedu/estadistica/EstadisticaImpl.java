@@ -30,7 +30,7 @@ public class EstadisticaImpl implements EstadisticaService{
                 Session session = HibernateUtil.getSessionFactory().openSession();
                  try {
           String empresa = StaticUtil.userLogged();
-             Query q = session.createSQLQuery("{ CALL Estadistica_Visita_Anual() }");
+             Query q = session.createSQLQuery("{ CALL Estadistica_Visita_MesActual() }");
 			List<Object[]> d=q.list();
 			for (Object[] result : d) {
 				
@@ -54,7 +54,25 @@ public class EstadisticaImpl implements EstadisticaService{
 
     @Override
     public List<Estadistica> visitaMeses() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         List<Estadistica> lista= new ArrayList<>();
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                 try {
+          String empresa = StaticUtil.userLogged();
+             Query q = session.createSQLQuery("{ CALL Estadistica_Pacientes_Meses() }");
+			List<Object[]> d=q.list();
+			for (Object[] result : d) {
+				
+				BigInteger CANTIDAD = ((BigInteger) result[0]);
+				String FECHA = (String) result[1];
+				lista.add(new Estadistica(CANTIDAD, FECHA));
+			}
+        } catch (Exception e) {
+            System.out.println("Error : "+e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+          return lista;    
     }
 
     @Override

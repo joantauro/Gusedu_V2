@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 05/01/2016 05:20:55 PM by Hibernate Tools 4.3.1
+// Generated 29/01/2016 10:00:22 AM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -27,6 +27,7 @@ public class Visita  implements java.io.Serializable {
      private Set productoVisitas = new HashSet(0);
      private Set terapias = new HashSet(0);
      private Set terapias_1 = new HashSet(0);
+     private Set pagos = new HashSet(0);
      private Set productoVisitas_1 = new HashSet(0);
      private Set enfermedadVisitas_1 = new HashSet(0);
      private Set sintomaVisitas_1 = new HashSet(0);
@@ -40,7 +41,7 @@ public class Visita  implements java.io.Serializable {
     public Visita(Cliente cliente) {
         this.cliente = cliente;
     }
-    public Visita(Cliente cliente, Double visCostoTotal, Boolean visPresencial, Integer visEstado, Date visFecCreacion, Integer visPrioridad, String visUsuCreacion, String visDescripcion, Date visFecFin, Set enfermedadVisitas, Set sintomaVisitas, Set productoVisitas, Set terapias, Set terapias_1, Set productoVisitas_1, Set enfermedadVisitas_1, Set sintomaVisitas_1, Set historiaClinicas, Set historiaClinicas_1) {
+    public Visita(Cliente cliente, Double visCostoTotal, Boolean visPresencial, Integer visEstado, Date visFecCreacion, Integer visPrioridad, String visUsuCreacion, String visDescripcion, Date visFecFin, Set enfermedadVisitas, Set sintomaVisitas, Set productoVisitas, Set terapias, Set terapias_1, Set pagos, Set productoVisitas_1, Set enfermedadVisitas_1, Set sintomaVisitas_1, Set historiaClinicas, Set historiaClinicas_1) {
        this.cliente = cliente;
        this.visCostoTotal = visCostoTotal;
        this.visPresencial = visPresencial;
@@ -55,6 +56,7 @@ public class Visita  implements java.io.Serializable {
        this.productoVisitas = productoVisitas;
        this.terapias = terapias;
        this.terapias_1 = terapias_1;
+       this.pagos = pagos;
        this.productoVisitas_1 = productoVisitas_1;
        this.enfermedadVisitas_1 = enfermedadVisitas_1;
        this.sintomaVisitas_1 = sintomaVisitas_1;
@@ -166,6 +168,13 @@ public class Visita  implements java.io.Serializable {
     
     public void setTerapias_1(Set terapias_1) {
         this.terapias_1 = terapias_1;
+    }
+    public Set getPagos() {
+        return this.pagos;
+    }
+    
+    public void setPagos(Set pagos) {
+        this.pagos = pagos;
     }
     public Set getProductoVisitas_1() {
         return this.productoVisitas_1;

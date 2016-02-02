@@ -29,6 +29,7 @@
                     <p:menuitem value="Pares por Enfermedad"  icon="ui-icon-arrowreturnthick-1-e" rendered="#{auth.userLogged.tipoUsuario.consultaParesPorEnfermedad}" />
                     <p:menuitem value="Pares por Síntoma"  icon="ui-icon-arrowreturnthick-1-e" rendered="#{auth.userLogged.tipoUsuario.consultaParesPorSintoma}" />
                     <p:menuitem value="Estado Diario"  action="#{reporteEstBean.listarEstadoDiario()}"  />
+                    <p:menuitem value="Pago" onclick="PF('dlgpag').show();" actionListener="#{pagoBean.LLENARListaPago()}" update=":#{p:component('formPago')}" />
                 </p:submenu>
 
                 <p:submenu label="Gestión" icon="ui-icon-pencil" >
@@ -45,7 +46,7 @@
                     <p:menuitem value="Gestionar usuarios" url="/web/seguridad/gestionUsuario.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionUsuarios}" />
                     <p:menuitem value="Gestionar Tipo de usuarios" url="/web/seguridad/gestionTipoUsuario.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionTipoUsuarios}" />
                     <p:menuitem value="Gestionar Productos" url="/web/producto/gestionProducto.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionTipoUsuarios}" />
-                    <p:menuitem value="Estadística" url="/web/estadística/gestionEstadistica.xhtml" />
+                    <p:menuitem value="Estadística" url="/web/estadistica/gestionEstadistica.xhtml" />
                     <p:menuitem value="Citas" url="/web/Citas.xhtml" />
                 </p:submenu>
 
@@ -62,7 +63,13 @@
 		
 		
 	</h:form>
-	
+    <p:dialog id="dialogPag" widgetVar="dlgpag" 
+              showEffect="pop" modal="true" header="Estado de Caja"  >
+        <h:form id="formPago" >
+             <ui:include src="/web/PagoDiario.xhtml"  />
+        </h:form>
+       
+    </p:dialog>
     <p:dialog id="dialogPass" header="Cambiar Contraseña"
 				widgetVar="dlgpass" showEffect="pop" modal="true">
 				<h:form  id="formpass" >

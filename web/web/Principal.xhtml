@@ -242,7 +242,7 @@
                         <p:outputLabel value="Terapeuta : " />
                         <p:outputLabel value="#{visitaBean.ter.terUsuCreacion}" />
                         <p:outputLabel value="Precio : " />
-                        
+                      
                         
                         
                         
@@ -251,8 +251,8 @@
                         <p:commandButton icon="ui-icon-pencil" title="Editar" action="#{visitaBean.change}" update="pnlChange" rendered="#{visitaBean.edit eq false}" />
                         <p:commandButton icon="ui-icon-disk" title="Guardar" action="#{visitaBean.change}" update="pnlChange,PreVi" rendered="#{visitaBean.edit ne false}" /> 
                     </h:panelGrid>
-                    
-                    <p:dataTable id="productosT" var="pro" style="width:400px;" rendered="#{auth.userLogged.tipoUsuario.ventaProductos eq false}"
+       
+                    <p:dataTable id="productosT" var="pro" style="width:350px;" rendered="#{auth.userLogged.tipoUsuario.ventaProductos eq false}"
 							paginatorAlwaysVisible="false" editable="true"
 							value="#{visitaBean.productosDeVisita}"
 							emptyMessage="No se han añadido productos" paginator="true"
@@ -280,7 +280,31 @@
 					 
 						</p:dataTable>
                     <br/>
-                    
+                                <p:dataTable id="pagosT" var="pagT" value="#{visitaBean.listaPagoByVisita}"
+                                 emptyMessage="No hay pagos registrados de esta visita"
+                                 editable="true"
+                                 style="width: 350px" >
+                        <f:facet name="header">
+        			Pagos
+    			</f:facet>
+                        
+                        <p:ajax event="rowEdit" listener="#{pagoBean.onRowEdit}" update=":#{p:component('pagosT')}" />
+                        <p:ajax event="rowEditCancel"  update=":#{p:component('pagosT')}" />
+ 
+                        
+                        <p:column  headerText="Forma de Pago">
+                            <p:outputLabel value="#{pagT.tipoPago.nombre}" />
+                        </p:column>
+                        <p:column  headerText="Monto">
+                            <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{pagT.monto}" /></f:facet>
+                                    <f:facet name="input"><p:inputText id="montoInput" value="#{pagT.monto}" style="width:100%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column style="width:32px">
+                            <p:rowEditor />
+                        </p:column>
+                    </p:dataTable>
                     <p:outputLabel value="Costo Total: " />
                     <p:outputLabel id="PreVi" value="#{visitaBean.precioTotal}" /> 
                     <br/>

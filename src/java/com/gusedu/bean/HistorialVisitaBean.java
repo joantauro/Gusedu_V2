@@ -5,8 +5,11 @@
  */
 package com.gusedu.bean;
 
+import com.gusedu.dao.TerapiaService;
 import com.gusedu.dao.VisitaService;
+import com.gusedu.dao.impl.TerapiaServiceImpl;
 import com.gusedu.dao.impl.VisitaServiceImpl;
+import com.gusedu.model.Terapia;
 import com.gusedu.model.Visita;
 import com.gusedu.util.StaticUtil;
 import java.text.ParseException;
@@ -16,6 +19,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -33,9 +37,11 @@ public class HistorialVisitaBean {
 	private Date fechaactual;
         
         VisitaService visitaService;
+        TerapiaService terapiaservice;
     
     public HistorialVisitaBean() {
         visitaService = new VisitaServiceImpl();
+        terapiaservice = new TerapiaServiceImpl();
         Date fec= new Date();
 		fechaactual=fec;
 		SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
@@ -145,5 +151,21 @@ public class HistorialVisitaBean {
 		fechafinal=fecha2;
 		actualizar();
 	}
+        
+        public void obtenerVisita(Visita vis)
+        {
+            FacesContext fc = FacesContext.getCurrentInstance();
+             fc.getExternalContext().getSessionMap().put("ultimavisita", vis);
+            System.out.println("ID de Visita : "+vis.getVisCodigo());
+            Terapia ter = terapiaservice.terapiaByVisita(vis);
+            System.out.println("ID TERAPIA : "+ter.getTerCodigo());
+            TerapiaBean terbean = new TerapiaBean();
+            terbean.TerapiaHV(ter);
+        }
+        
+        public void listado()
+        {
+            System.out.println("Hola soy una clase :D");
+        }
     
 }

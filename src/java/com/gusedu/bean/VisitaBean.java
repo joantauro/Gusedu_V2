@@ -6,10 +6,12 @@
 package com.gusedu.bean;
 
 import com.gusedu.dao.HistoriaClinicaService;
+import com.gusedu.dao.PagoService;
 import com.gusedu.dao.ProductoService;
 import com.gusedu.dao.TerapiaService;
 import com.gusedu.dao.VisitaService;
 import com.gusedu.dao.impl.HistoriaClinicaServiceImpl;
+import com.gusedu.dao.impl.PagoServiceImpl;
 import com.gusedu.dao.impl.ProductoServiceImpl;
 import com.gusedu.dao.impl.TerapiaServiceImpl;
 import com.gusedu.dao.impl.VisitaServiceImpl;
@@ -50,9 +52,13 @@ public class VisitaBean {
             private double precioTotal;
             private boolean edit;
             private double prePrecioTerapia;
+            
+            private List<Pago> listaPagoByVisita;
+            PagoService pagoservice;
 
             public VisitaBean() {
 /*  82*/        productoService = new ProductoServiceImpl();
+                pagoservice = new PagoServiceImpl();
 /*  83*/        visita = new Visita();
 /*  84*/        cliente = new Cliente();
 /*  86*/        producto = new Producto();
@@ -333,7 +339,11 @@ edit=false;
              ter = terapiaService.terapiaByVisita(visita);
              
              precioTotal= visita.getVisCostoTotal();
-            // fc.getExternalContext().getSessionMap().put("ultimavisita", ultimavisita);
+             fc.getExternalContext().getSessionMap().put("visitaPago", visita);
+             /*PagoBean pbean = new PagoBean();
+             pbean.llenarlista(visita.getVisCodigo());*/
+             llenarlista(visita.getVisCodigo());
+             RequestContext.getCurrentInstance().update("pagosT");
             RequestContext.getCurrentInstance().update("formCaja");
             // visita=visitaService ter = terapiaService.terapiaByVisita(visita);.visitaDelDia(client);
              System.out.println("La visita de hoy es : "+ visita.getVisCodigo());
@@ -604,5 +614,20 @@ edit=false;
                 ter.setVisita(new Visita());
                 edit=false;
             }
-                        
+
+    public List<Pago> getListaPagoByVisita() {
+        return listaPagoByVisita;
+    }
+        public void llenarlista(int id)
+    {
+      
+     
+      listaPagoByVisita= pagoservice.allPagosByVisita(id);
+        System.out.println("Cantidad de Pagos : "+listaPagoByVisita.size());
+        for (int i = 0; i < listaPagoByVisita.size(); i++) {
+            System.out.println("MODALIDAD : "+ listaPagoByVisita.get(i).getTipoPago().getNombre() +
+                               "\n MONTO :  "+ listaPagoByVisita.get(i).getMonto());
+        }
+    }     
+          
 }

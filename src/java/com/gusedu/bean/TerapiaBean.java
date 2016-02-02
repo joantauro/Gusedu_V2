@@ -198,7 +198,7 @@ public class TerapiaBean {
 /* 229*/        clear();
 /* 230*/        FacesContext fc = FacesContext.getCurrentInstance();
 /* 231*/        Visita visita = (Visita)fc.getExternalContext().getSessionMap().get("ultimavisita");
-/* 232*/        System.out.println((new StringBuilder()).append("VISITA : ").append(visita.getVisCodigo()).toString());
+/* 232*/        System.out.println("VISITA : "+visita.getVisCodigo());
 /* 233*/        List e = terapiaService.terapiasPorVisita(visita);
 /* 234*/        if (e.size() > 0) {
 /* 237*/            terapia = (Terapia)e.get(0);
@@ -208,11 +208,18 @@ public class TerapiaBean {
 
             public void clear() {
 /* 244*/        terapia = new Terapia();
+                terapia.setVisita(new Visita());
+                terapia.setTipoTerapia(new TipoTerapia());
             }
 
             public void aceptar() {
 /* 251*/        clear();
-/* 253*/        listarTerapiaPar.clear();
+           
+                if(listarTerapiaPar!=null)
+                {
+                    listarTerapiaPar.clear();
+                }
+/* 253*/        //listarTerapiaPar.clear();
 /* 254*/        FacesContext fc = FacesContext.getCurrentInstance();
 /* 256*/        VisitaBean objetoTBean = (VisitaBean)fc.getExternalContext().getSessionMap().get("visitaBean");
 /* 257*/        objetoTBean.probando();
@@ -223,7 +230,7 @@ public class TerapiaBean {
             }
 
             public boolean ParExistente(int idpar) {
-/* 267*/        boolean valor = false;
+/* 267*/        boolean valor = false;   
 /* 268*/        for (Iterator iterator = listarTerapiaPar.iterator(); iterator.hasNext();) {
 /* 268*/            TerapiaPar s = (TerapiaPar)iterator.next();
 /* 270*/            System.out.println((new StringBuilder()).append(s.getPar().getParCodigo()).append("-").append(idpar).toString());
@@ -379,4 +386,51 @@ public class TerapiaBean {
 /* 482*/        Visita vis = (Visita)fc.getExternalContext().getSessionMap().get("ultimavisita");
 /* 483*/        listaenfermedadvisita = terapiaService.getAllEnfermedadxVisita(vis);
             }
+            
+             public void TerapiaHV(Terapia terHV) {
+               FacesContext fc = FacesContext.getCurrentInstance();
+        
+              terapia = terHV;
+              listarTerapiaPar = terapiaService.getAllTerapiaParbyTerapia(terapia);
+              fc.getExternalContext().getSessionMap().put("terapia", terapia);
+              System.out.println("|SIZE : "+listarTerapiaPar.size());
+            }
+             
+             
+      public void addPar2SP(Integer idpar) {
+        if (!ParExistenteV2(idpar.intValue())) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+           Terapia terapia = (Terapia)fc.getExternalContext().getSessionMap().get("terapia");
+            if (terapia == null) {
+                StaticUtil.errorMessage("Error", "Seleccione un tipo de Terapia");
+                StaticUtil.keepMessages();
+                return;
+                    }
+            Par par = new Par();
+            par.setParCodigo(idpar);
+            TerapiaPar tp = new TerapiaPar();
+            tp.setPar(par);
+            tp.setTerapia(terapia);
+            tp.setTxpActivo(Boolean.valueOf(true));
+            //terapiaService.saveTerapiaPar(tp);
+            terapiaparService.SPsaveTerapiaPar(tp);
+            StaticUtil.correctMesage("Exito", "Se agregó el par");
+            StaticUtil.keepMessages();
+            listarTerapiaPar = terapiaService.getAllTerapiaParbyTerapia(terapia);
+                }
+            } 
+         public boolean ParExistenteV2(int idpar) {
+        boolean valor = false;   
+        listarTerapiaPar = terapiaService.getAllTerapiaParbyTerapia(terapia);
+        for (Iterator iterator = listarTerapiaPar.iterator(); iterator.hasNext();) {
+            TerapiaPar s = (TerapiaPar)iterator.next();
+            System.out.println((new StringBuilder()).append(s.getPar().getParCodigo()).append("-").append(idpar).toString());
+            if (s.getPar().getParCodigo().intValue() == idpar) {
+                StaticUtil.errorMessage("Error", "El par ya ha sido agregado");
+               return true;
+                    }
+                }
+
+        return valor;
+            }     
 }

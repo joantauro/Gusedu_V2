@@ -19,8 +19,22 @@
 			</p:column>			
 			<p:column headerText="Gasto Total: ">
                             <h:outputText value="#{vis.visCostoTotal}"/>
-			</p:column>			
+			</p:column>	
+                           <p:column>
+                                <p:commandButton icon="ui-icon-pencil" actionListener="#{historialVisitaBean.obtenerVisita(vis)}" 
+                                                 title="Editar" oncomplete="PF('dlgParesTHV2').show();" 
+                                                 update=":#{p:component('dialogParesByHistorial')}" />
+                           </p:column>
 		</p:dataTable>
+            
+                  <p:dialog id="dialogParesByHistorial"
+                            header="Registar pares de #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" 
+                            widgetVar="dlgParesTHV2" showEffect="pop" width="80%"  >
+			       <ui:include src="RegistroParesV3.xhtml" />
+                  </p:dialog>
 	</h:form>
+    
+      
+    
 </ui:composition>
 </html>
