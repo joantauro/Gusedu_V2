@@ -95,6 +95,19 @@ public class PagoBean {
         inicializar();
     }
     
+    public void cambioFecha()
+    {
+        if(fechafin.before(fechaini))
+        {
+           // System.out.println("FECHA FIN ES ANTES QUE LA FECHA INICIAL");
+            fechaini=fechafin;
+        }/*else
+        {
+            System.out.println("FECHA INICIO ES ANTES QUE LA FECHA FIN");
+        }*/
+        LLENARListaPago();
+    }
+    
     public void LLENARListaPago()
     {
         listaepago=pagoservice.allReport(fechaini, fechafin);

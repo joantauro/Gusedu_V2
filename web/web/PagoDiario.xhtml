@@ -6,9 +6,33 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets" >
 <ui:composition >
- 		
-    <p:dataTable value="#{pagoBean.listaepago}" emptyMessage="No hay pagos registrados el día de hoy"
+ 
+    <p:panelGrid id="pnlFecha" columns="4"  >
+        <p:outputLabel   value="Fecha Inicio :" />
+        <p:calendar   value="#{pagoBean.fechaini}" maxdate="#{pagoBean.fechafin}" >
+            <p:ajax event="dateSelect" listener="#{pagoBean.cambioFecha}" update=":#{p:component('pnlFecha')},:#{p:component('datatablePago')}" />
+        </p:calendar>
+        <p:outputLabel   value="Fecha Fin :" />
+        <p:calendar   value="#{pagoBean.fechafin}"  maxdate="new Date();" >
+             <p:ajax event="dateSelect" listener="#{pagoBean.cambioFecha}" update=":#{p:component('pnlFecha')},:#{p:component('datatablePago')}" />
+        </p:calendar>
+    </p:panelGrid>
+    <br/>
+    <br/>
+    <p:dataTable value="#{pagoBean.listaepago}" emptyMessage="No hay pagos registrados el día de hoy" 
+                 id="datatablePago"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                 paginator="true" rows="10"
                  var="pagBean" style="width: 660px;" >
+        <f:facet name="{Exporters}">
+            <h:commandLink>
+                <p:graphicImage value="/resources/images/Excel.png"  width="24"/>
+                <p:dataExporter type="xls" target="datatablePago" fileName="Pagos"/>
+            </h:commandLink>
+ 
+ 
+
+        </f:facet>
         <p:column headerText="Paciente" >
             <p:outputLabel value="#{pagBean.paciente}" />
         </p:column>
