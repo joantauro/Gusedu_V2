@@ -81,19 +81,23 @@
                                         rowKey="#{pac.cliCodigo}" widgetVar="tablaPacientes"
 					emptyMessage="No hay historial de visitas por el momento" >
 
-					<p:column headerText="DNI" width="60px;">
+                                    <p:column headerText="DNI" width="60px;" filterBy="#{pac.persona.perDni}"
+                                              filterMatchMode="contains" >
                                             <h:outputText value="#{pac.persona.perDni}" />
 					</p:column>
 
-					<p:column headerText="Ap. paterno"   >
+                                    <p:column headerText="Ap. paterno" sortBy="#{pac.persona.perApellidoP}" 
+                                              filterBy="#{pac.persona.perApellidoP}"  filterMatchMode="contains" >
                                             <h:outputText value="#{pac.persona.perApellidoP}" />
 					</p:column>
 
-					<p:column headerText="Ap. materno"   >
+                                    <p:column headerText="Ap. materno" sortBy="#{pac.persona.perApellidoM}"
+                                              filterBy="#{pac.persona.perApellidoM}" filterMatchMode="contains" >
                                             <h:outputText value="#{pac.persona.perApellidoM}" />
 					</p:column>
 
-					<p:column headerText="Nombre"  >
+                                    <p:column headerText="Nombre" sortBy="#{pac.persona.perNombres}"
+                                              filterBy="#{pac.persona.perNombres}" filterMatchMode="contains" >
                                             <h:outputText value="#{pac.persona.perNombres}" />
 					</p:column>
 
@@ -206,24 +210,24 @@
 
 			</h:form>
 		</p:dialog>
-                
+
                 <p:dialog id="dialogDP" header="Datos personales de  #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" widgetVar="dlgDP" showEffect="pop" modal="true"   >
-<p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.probando}" />
-	<h:form id="frame" >
-		<ui:include  src="editarDatosPersonales.xhtml"  />
-	</h:form>
-</p:dialog>
-                
+                    <p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.probando}" />
+                    <h:form id="frame" >
+                        <ui:include  src="editarDatosPersonales.xhtml"  />
+                    </h:form>
+                </p:dialog>
+
                 <p:dialog id="dialogHEA" header="Historia de #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" widgetVar="dlgHEA"
-				showEffect="pop" modal="true" width="850px" height="500px">
-				<p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.probando}" />
-			
-				<h:form id="frame2" >
-				<ui:include src="HEA.xhtml" />
-				</h:form>
-				
-			</p:dialog>
-                
+                          showEffect="pop" modal="true" width="850px" height="500px">
+                    <p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.probando}" />
+
+                    <h:form id="frame2" >
+                        <ui:include src="HEA.xhtml" />
+                    </h:form>
+
+                </p:dialog>
+
                 <h:form>
 			<p:dialog id="dialog" header="Nuevo Paciente" widgetVar="dlg1"
 				showEffect="pop" modal="true">

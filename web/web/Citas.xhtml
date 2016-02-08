@@ -321,9 +321,13 @@
                         <p:commandButton icon="ui-icon-pencil" title="Editar" action="#{scheduleView.change}" update="eventDetails2" rendered="#{scheduleView.calendar eq false}" />    
                        <p:commandButton icon="ui-icon-disk" title="Guardar" action="#{scheduleView.change}" update="eventDetails2" rendered="#{scheduleView.calendar ne false}" />
                        <p:commandButton 
-							styleClass="ui-btn-inline" icon="ui-icon-close"
+                           styleClass="ui-btn-inline" value="Eliminar Cita"
 							 
 							oncomplete="PF('dlgDeleteCita').show();" />
+                       <p:outputLabel />
+                       <p:commandButton value="Registrar Pares" actionListener="#{historialVisitaBean.obtenerVisitaV2}" 
+                                                 title="Editar" oncomplete="PF('dlgParesTHV2').show();" 
+                                                 update=":#{p:component('dialogParesByHistorial')}" />
                        <p:commandButton id="addButton2" value="Cerrar" action="#{scheduleView.cleaner()}" oncomplete="PF('myschedule').update();PF('eventDialog2').hide();"  />
 
                    </h:panelGrid>
@@ -344,6 +348,11 @@
 						oncomplete="PF('dlgDeleteCita').hide();" />
 				</h:form>
 			</p:dialog>
+                            <p:dialog id="dialogParesByHistorial"
+                            header="Registar pares de #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" 
+                            widgetVar="dlgParesTHV2" showEffect="pop" width="80%"  >
+			       <ui:include src="RegistroParesV4.xhtml" />
+                  </p:dialog>
           
            <script type="text/javascript">
 		PrimeFaces.locales["es"] = {

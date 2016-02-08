@@ -303,12 +303,12 @@ public class ScheduleView {
             addMessage(message);
             return ;
         }
-        if(event.getStartDate().before(fecha))
+       /* if(event.getStartDate().before(fecha))
         {
              FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Cuidado", "No puede elegir días pasados de la fecha de hoy");
             addMessage(message);
             return ;
-        }
+        }*/
         visita = new Visita();
         visita.setCliente(new Cliente());
         visita.setVisFecCreacion(event.getStartDate());
@@ -336,6 +336,8 @@ public class ScheduleView {
         visita.setVisFecCreacion(event.getStartDate());
         visita.setVisFecFin(event.getEndDate());
        calendar=false;
+       FacesContext fc = FacesContext.getCurrentInstance();
+       fc.getExternalContext().getSessionMap().put("visActual", visita);
         //------- Terapia ---------//
         System.out.println("ID VISITA : "+visita.getVisCodigo()); 
         terapia = terapiaService.terapiaByVisita(visita);
@@ -482,5 +484,10 @@ public class ScheduleView {
     {
         System.out.println("Paciente : "+visita.getCliente().getCliCodigo());
         System.out.println("Visita : " +visita.getVisCodigo());
+    }
+    
+    public void ATRACA()
+    {
+        System.out.println("COLO : ");
     }
 }

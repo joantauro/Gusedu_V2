@@ -162,6 +162,18 @@ public class HistorialVisitaBean {
             TerapiaBean terbean = new TerapiaBean();
             terbean.TerapiaHV(ter);
         }
+        public void obtenerVisitaV2()
+        {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            
+            Visita vis = (Visita) fc.getExternalContext().getSessionMap().get("visActual");
+             fc.getExternalContext().getSessionMap().put("ultimavisita", vis);
+            System.out.println("ID de Visita : "+vis.getVisCodigo());
+            Terapia ter = terapiaservice.terapiaByVisita(vis);
+            System.out.println("ID TERAPIA : "+ter.getTerCodigo());
+            TerapiaBean terbean = new TerapiaBean();
+            terbean.TerapiaHV(ter);
+        }
         
         public void listado()
         {
