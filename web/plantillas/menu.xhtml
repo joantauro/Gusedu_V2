@@ -38,8 +38,9 @@
                 </p:submenu>
 
                 <p:submenu label="Opciones Adicionales" icon="ui-icon-help" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 3}" >
-                    <p:menuitem value="Gestionar Enfermedades"   rendered="#{auth.userLogged.tipoUsuario.gestionEnfermedades}" />
-                    <p:menuitem value="Gestionar Síntomas"   rendered="#{auth.userLogged.tipoUsuario.gestionSintomas}" />
+                    <p:menuitem value="Gestionar Enfermedades" onclick="PF('dlgEnfer').show();" rendered="#{auth.userLogged.tipoUsuario.gestionEnfermedades}" />
+                    <p:menuitem value="Gestionar Enfermedades Pares" onclick="PF('dlgEnferPar').show();" />
+                    <p:menuitem value="Gestionar Síntomas"   rendered="#{auth.userLogged.tipoUsuario.gestionSintomas}" />                   
                 </p:submenu>
 
                 <p:submenu label="Opciones de administrador" icon="ui-icon-pencil" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 3}" >
@@ -143,18 +144,30 @@
 		<p:outputLabel value="TOTAL : S/. #{reporteEstBean.costoTotal}"  />
 	</p:dialog>
     
-    
-	<p:dialog id="dialogHT" widgetVar="dlgHT" showEffect="pop" modal="true"
-		width="1230px" height="550px">
-		<h:form>
-			<ui:include src="/web/BMPar.xhtml" />
-		</h:form>
-	</p:dialog>
-    
-    	<p:dialog id="dialogPuntos" header="Gestionar Puntos" widgetVar="dlgPuntos"
-					  showEffect="pop"  width="850px" height="500px" >
-					  <ui:include src="/web/GestionPuntos.xhtml" /> 
-			</p:dialog>
+
+    <p:dialog id="dialogHT" widgetVar="dlgHT" showEffect="pop" modal="true"
+              width="1230px" height="550px">
+        <h:form>
+            <ui:include src="/web/BMPar.xhtml" />
+        </h:form>
+    </p:dialog>
+
+    <p:dialog id="dialogEnfer" widgetVar="dlgEnfer" header="Gestionar enfermedades" showEffect="pop" modal="true" 
+              width="500px" height="550px">
+        <h:form>
+            <ui:include src="/web/GestionEnfermedades.xhtml" />
+        </h:form>
+    </p:dialog>
+
+    <p:dialog id="dialogEnferPar" widgetVar="dlgEnferPar" header="Gestionar enfermedades pares" showEffect="pop" modal="true" 
+              width="750px" height="550px">
+            <ui:include src="/web/GestionEnfermedadesPar.xhtml" />
+    </p:dialog>
+
+    <p:dialog id="dialogPuntos" header="Gestionar Puntos" widgetVar="dlgPuntos"
+              showEffect="pop"  width="850px" height="500px" >
+        <ui:include src="/web/GestionPuntos.xhtml" /> 
+    </p:dialog>
     
     <p:dialog id="dialogPares" widgetVar="dlgPares" showEffect="pop"  
 		width="80%" height="70%">	 

@@ -13,8 +13,8 @@ public interface EnfermedadService {
 
 	//Enfermedad
 	
-	public List<Enfermedad> getAll();
-	
+	public List<Enfermedad> getAll();      
+
 	public boolean saveEnfermedad(Enfermedad enfermedad);
 	
 	public boolean updateEnfermedad(Enfermedad enfermedad);
@@ -26,12 +26,15 @@ public interface EnfermedadService {
 	public Enfermedad getByNombre(String nombre);
 	
 	//EnfermedadPar
-	
+	public List<EnfermedadPar> getAllPar();
+        
 	public boolean saveEnfermedadPar(EnfermedadPar enfermedadPar);
 
 	public boolean deleteEnfermedadPar(EnfermedadPar enfermedadPar); 			
+        
+        public boolean updateEnfermedadPar(EnfermedadPar enfermedadPar); 
 	
-	public EnfermedadPar getByParameters(Enfermedad enfermedad, Par par);
+	public EnfermedadPar getByParameters(Integer enfermedadpar) ;
 	
 	//SintomaPar
 	
@@ -47,7 +50,7 @@ public interface EnfermedadService {
 
 	public boolean deleteEnfermedadTerapia(EnfermedadTerapia enfermedadTerapia);
 
-	
+	public List<Enfermedad> getEnfermedadbyEnfer(String codigo);
 	
 	
 }
