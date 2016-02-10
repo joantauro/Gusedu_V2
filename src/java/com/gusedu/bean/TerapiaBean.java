@@ -432,5 +432,29 @@ public class TerapiaBean {
                 }
 
         return valor;
-            }     
+            }    
+         
+    public void listadoX(Terapia t) {
+        clear();
+
+         FacesContext fc = FacesContext.getCurrentInstance();
+         Terapia ter = (Terapia) fc.getExternalContext().getSessionMap().get("terActual");
+         terapia = ter;
+        listarTerapiaPar = terapiaService.getAllTerapiaParbyTerapia(terapia);
+        System.out.println("Tamaño : " + listarTerapiaPar.size());
+    }
+    
+    
+    public void papu()
+    {
+        FacesContext fc = FacesContext.getCurrentInstance();
+         Terapia ter = (Terapia) fc.getExternalContext().getSessionMap().get("terActual");
+         terapia = ter;
+        System.out.println("Prueba..."+terapia.getTerCodigo());
+        listarTerapiaPar = terapiaService.getAllTerapiaParbyTerapia(terapia);
+        System.out.println("Tamaño : " + listarTerapiaPar.size());
+        /*for (int i = 0; i < listarTerapiaPar.size(); i++) {
+            System.out.println(listarTerapiaPar.get(i).getPar().getPuntoByPunCodigoP1().getPunNombre()+"-"+listarTerapiaPar.get(i).getPar().getPuntoByPunCodigoP2().getPunNombre());
+        }*/
+    }
 }

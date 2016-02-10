@@ -25,18 +25,18 @@
            
            <p:panelGrid columns="2" >
                <h:form> 
-                         <h:panelGrid columnClasses="value">
-        <h3 style="margin-top: 0">Calendario de Citas</h3>
-        <p:schedule id="schedule" value="#{scheduleView.eventModel}" view="agendaWeek"
-                    widgetVar="myschedule" timeZone="GMT-5" locale="es"   > 
+                   <h:panelGrid columnClasses="value">
+                       <h3 style="margin-top: 0">Calendario de Citas</h3>
+                       <p:schedule id="schedule" value="#{scheduleView.eventModel}" view="agendaWeek"
+                                   widgetVar="myschedule" timeZone="GMT-5" locale="es"   > 
 
-            <p:ajax  event="dateSelect" listener="#{scheduleView.before}" update=":#{p:component('eventDetails')},:#{p:component('messages')}"   />
-            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}"  update=":#{p:component('eventDetails2')}" oncomplete="PF('eventDialog2').show();" />
-            <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update=":#{p:component('messages')}" />
-            <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update=":#{p:component('messages')}" />
- 
-        </p:schedule>
-    </h:panelGrid>
+                           <p:ajax  event="dateSelect" listener="#{scheduleView.before}" update=":#{p:component('eventDetails')},:#{p:component('messages')}"   />
+                           <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}"  update=":#{p:component('eventDetails2')}" oncomplete="PF('eventDialog2').show();" />
+                           <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update=":#{p:component('messages')}" />
+                           <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update=":#{p:component('messages')}" />
+
+                       </p:schedule>
+                   </h:panelGrid>
                </h:form>
               
                <h:form>
@@ -324,7 +324,12 @@
                            styleClass="ui-btn-inline" value="Eliminar Cita"
 							 
 							oncomplete="PF('dlgDeleteCita').show();" />
-                       <p:outputLabel />
+                       <p:commandButton id="movieBtn" 
+                                        value="Ver Pares" 
+                                        actionListener="#{historialVisitaBean.obtenerTerapiaV2()}"
+                                        update=":#{p:component('formMoviePanel')}" 
+                                        oncomplete="PF('moviePanel').show();" />
+                       
                        <p:commandButton value="Registrar Pares" actionListener="#{historialVisitaBean.obtenerVisitaV2}" 
                                                  title="Editar" oncomplete="PF('dlgParesTHV2').show();" 
                                                  update=":#{p:component('dialogParesByHistorial')}" />
@@ -334,6 +339,9 @@
                </p:dialog>  
                <p:blockUI block=":#{p:component('pnlCitas')}" trigger=":#{p:component('addButton')}" />
            </h:form> 
+           
+               
+          
            <p:dialog header="¿Eliminar? " widgetVar="dlgDeleteCita"
 				showEffect="pop" closable="false" modal="true">
 				<h:form>
@@ -354,6 +362,35 @@
 			       <ui:include src="RegistroParesV4.xhtml" />
                   </p:dialog>
           
+           <h:form id="formMoviePanel"  >
+                <p:dialog id="moviePanel"  widgetVar="moviePanel" hideEffect="fade" dynamic="true"
+                          width="380px"    >
+              
+        <p:dataTable emptyMessage="No hay puntos registrados en el Paciente"
+                      id="table" value="#{terapiaBean.listarTerapiaPar}"
+                     var="parpu"  scrollable="true"
+                     scrollHeight="230"  >
+            <f:facet name="header">
+                Lista de pares hacia del paciente
+            </f:facet>
+            <p:column headerText="Punto 1" >
+                <p:outputLabel value="#{parpu.par.puntoByPunCodigoP1.punNombre}" />
+            </p:column>
+            <p:column headerText="Punto 2">
+                <p:outputLabel value="#{parpu.par.puntoByPunCodigoP2.punNombre}" />
+            </p:column>
+            <p:column>
+                <p:inputSwitch value="#{parpu.txpActivo}" offLabel="No" onLabel="Si" >
+                    <p:ajax listener="#{terapiaBean.Update(parpu)}"  />
+                </p:inputSwitch>
+            </p:column>
+        </p:dataTable>
+        <p:commandButton value="Actualizar" 
+                         actionListener="#{terapiaBean.papu()}" 
+                         update=":#{p:component('table')}" />
+  
+           </p:dialog>
+           </h:form>
            <script type="text/javascript">
 		PrimeFaces.locales["es"] = {
 			    closeText: "Cerrar",

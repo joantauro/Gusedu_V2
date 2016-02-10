@@ -97,7 +97,7 @@ public class EnfermedadParBean {
         datos = new EnfermedadPar();
         datos.setEnfermedad(new Enfermedad());
         datos.setPar(new Par());
-       // listarPar();
+        listarPar();
     }
     
     public void ELIMINAR()
