@@ -135,8 +135,8 @@ public class PacienteBean {
 /* 121*/            if (!iterator.hasNext()) {
 /* 121*/                break;
                     }
-/* 121*/            Cliente c = (Cliente)iterator.next();
-/* 122*/            if (c.getPersona().getPerApellidoP().toLowerCase().contains(query.toLowerCase()) || c.getPersona().getPerApellidoM().toLowerCase().contains(query.toLowerCase()) || c.getPersona().getPerNombres().toLowerCase().contains(query.toLowerCase())) {
+/* 121*/            EUltimaVisita c = (EUltimaVisita)iterator.next();
+/* 122*/            if (c.getApellidoPPersona().toLowerCase().contains(query.toLowerCase()) || c.getApellidoMPersona().toLowerCase().contains(query.toLowerCase()) || c.getNombresPersona().toLowerCase().contains(query.toLowerCase())) {
 /* 128*/                filtrados.add(c);
                     }
                 } while (true);
