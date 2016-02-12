@@ -20,13 +20,10 @@ public class EUltimaVisita {
     private String nombresPersona;
     private String telmovilPersona;
     private Date fechafinVisita;
-    
-    public EUltimaVisita()
-    {
-        
-    }
+    private double costoTotal;
+    private String tipoCliente; 
 
-    public EUltimaVisita(int codCliente, String dni, String apellidoPPersona, String apellidoMPersona, String nombresPersona, String telmovilPersona, Date fechafinVisita) {
+    public EUltimaVisita(int codCliente, String dni, String apellidoPPersona, String apellidoMPersona, String nombresPersona, String telmovilPersona, Date fechafinVisita, double costoTotal, String tipoCliente) {
         this.codCliente = codCliente;
         this.dni = dni;
         this.apellidoPPersona = apellidoPPersona;
@@ -34,6 +31,13 @@ public class EUltimaVisita {
         this.nombresPersona = nombresPersona;
         this.telmovilPersona = telmovilPersona;
         this.fechafinVisita = fechafinVisita;
+        this.costoTotal = costoTotal;
+        this.tipoCliente = tipoCliente;
+    }
+    
+    public EUltimaVisita()
+    {
+        
     }
 
     
@@ -85,17 +89,27 @@ public class EUltimaVisita {
         this.fechafinVisita = fechafinVisita;
     }        
 
-    /**
-     * @return the dni
-     */
+    public String getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(String tipoCliente) {
+        this.tipoCliente = tipoCliente;
+    }
+
     public String getDni() {
         return dni;
     }
 
-    /**
-     * @param dni the dni to set
-     */
     public void setDni(String dni) {
         this.dni = dni;
+    }
+
+    public double getCostoTotal() {
+        return costoTotal;
+    }
+
+    public void setCostoTotal(double costoTotal) {
+        this.costoTotal = costoTotal;
     }
 }

@@ -110,8 +110,9 @@ public class ClienteServiceImpl
                 String nombres = ((String) result[4]);
                 String telmovil = ((String) result[5]);
                 Date ultimavisita = (Date) (result[6]);
-              
-		resultado.add(new EUltimaVisita(idCliente,dni,apellidoP,apellidoM,nombres,telmovil,ultimavisita));		 
+                double costoTotal = ((double) result[7]);
+                String tipoCliente = ((String) result[8]);
+		resultado.add(new EUltimaVisita(idCliente,dni,apellidoP,apellidoM,nombres,telmovil,ultimavisita,costoTotal,tipoCliente));		 
 	      }
         } 
         catch(Exception e)
