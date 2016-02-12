@@ -10,7 +10,7 @@
     <body>
 
         <ui:composition template="./../plantillas/PlantillaPrincipal.xhtml">
-            
+           
             <ui:define name="titulo">
                 Calendario de Citas
             </ui:define>
@@ -20,9 +20,17 @@
             </ui:define>
 
             <ui:define name="content">
-      
+         <script type="text/javascript">
+ function scroll_messages() {
+ 	//window.parent.fooC();
+        //
+        alert('Soy una alerta.!');
+        // document.getElementById('formMoviePanel:j_idt454').click();
+        PF('moviePanel').show();
+ }
+ </script>     
            <p:growl id="messages" showDetail="true" />
-           
+           <p:commandButton value="alert!" oncomplete="scroll_messages();" />
            <p:panelGrid columns="2" >
                <h:form> 
                    <h:panelGrid columnClasses="value">
@@ -50,9 +58,9 @@
                     <br/>
                     <br/>
                    <p:selectOneListbox id="basic" value="#{scheduleView.codigo}" filter="true" filterMatchMode="contains" style="width: 300px;" scrollHeight="600"  >
-                       <f:selectItems value="#{pacienteBean.clientes}" var="theme" 
-                                      itemLabel="#{theme.persona.perNombres} #{theme.persona.perApellidoP} #{theme.persona.perApellidoM}" 
-                                      itemValue="#{theme.cliCodigo}" />
+                       <f:selectItems value="#{pacienteBean.clientesxfecha}" var="theme" 
+                                      itemLabel="#{theme.nombresPersona} #{theme.apellidoPPersona} #{theme.apellidoMPersona}" 
+                                      itemValue="#{theme.codCliente}" />
                        <p:ajax    listener="#{scheduleView.paciente()}" /> 
                    </p:selectOneListbox>
               
@@ -328,7 +336,7 @@
                                         value="Ver Pares" 
                                         actionListener="#{historialVisitaBean.obtenerTerapiaV2()}"
                                         update=":#{p:component('formMoviePanel')}" 
-                                        oncomplete="PF('moviePanel').show();" />
+                                        oncomplete="scroll_messages();" />
                        
                        <p:commandButton value="Registrar Pares" actionListener="#{historialVisitaBean.obtenerVisitaV2}" 
                                                  title="Editar" oncomplete="PF('dlgParesTHV2').show();" 

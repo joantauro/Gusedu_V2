@@ -447,6 +447,7 @@ public class TerapiaBean {
     
     public void papu()
     {
+        System.out.println("Soy papu :D");
         FacesContext fc = FacesContext.getCurrentInstance();
          Terapia ter = (Terapia) fc.getExternalContext().getSessionMap().get("terActual");
          terapia = ter;
