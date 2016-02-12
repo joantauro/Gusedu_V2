@@ -77,41 +77,40 @@
                        
                        
 				<p:dataTable id="tablaPac" var="pac"
-					value="#{pacienteBean.clientes}" paginator="true" rows="10"
+                                             value="#{pacienteBean.clientesxfecha}" paginator="true" rows="10"
                                         rowKey="#{pac.cliCodigo}" widgetVar="tablaPacientes"
 					emptyMessage="No hay historial de visitas por el momento" >
 
-                                    <p:column headerText="DNI" width="60px;" filterBy="#{pac.persona.perDni}"
+                                    <p:column headerText="DNI" width="60px;" filterBy="#{pac.dni}"
                                               filterMatchMode="contains" >
-                                            <h:outputText value="#{pac.persona.perDni}" />
+                                            <h:outputText value="#{pac.dni}" />
 					</p:column>
 
-                                    <p:column headerText="Ap. paterno" sortBy="#{pac.persona.perApellidoP}" 
+                                    <p:column headerText="Ap. paterno" sortBy="#{pac.apellidoPPersona}" 
                                               filterBy="#{pac.persona.perApellidoP}"  filterMatchMode="contains" >
-                                            <h:outputText value="#{pac.persona.perApellidoP}" />
+                                            <h:outputText value="#{pac.apellidoPPersona}" />
 					</p:column>
 
-                                    <p:column headerText="Ap. materno" sortBy="#{pac.persona.perApellidoM}"
-                                              filterBy="#{pac.persona.perApellidoM}" filterMatchMode="contains" >
-                                            <h:outputText value="#{pac.persona.perApellidoM}" />
+                                    <p:column headerText="Ap. materno" sortBy="#{pac.apellidoMPersona}"
+                                              filterBy="#{pac.apellidoMPersona}" filterMatchMode="contains" >
+                                            <h:outputText value="#{pac.apellidoMPersona}" />
 					</p:column>
 
-                                    <p:column headerText="Nombre" sortBy="#{pac.persona.perNombres}"
-                                              filterBy="#{pac.persona.perNombres}" filterMatchMode="contains" >
-                                            <h:outputText value="#{pac.persona.perNombres}" />
+                                    <p:column headerText="Nombre" sortBy="#{pac.nombresPersona}"
+                                              filterBy="#{pac.nombresPersona}" filterMatchMode="contains" >
+                                            <h:outputText value="#{pac.nombresPersona}" />
 					</p:column>
 
-					<p:column headerText="Edad" width="25px;" >
-						<h:outputText value="#{pac.persona.perEdad}" rendered="#{pac.persona.perEdad ne 0}"  />
-						<h:outputText value="" rendered="#{pac.persona.perEdad eq 0}"  />
-					</p:column>
-					
-					<p:column headerText="Teléfono fijo" width="60px;" >
-                                            <h:outputText value="#{pac.persona.perTelFijo}"></h:outputText>
-					</p:column>
+		
 					<p:column headerText="Teléfono móvil" width="70px;">
-                                            <h:outputText value="#{pac.persona.perTelMovil}"></h:outputText>
+                                            <h:outputText value="#{pac.telmovilPersona}"></h:outputText>
 					</p:column>
+                                    
+                                    <p:column headerText="Última visita" >
+                                        <p:outputLabel value="#{pac.fechafinVisita}" >
+                                        <f:convertDateTime pattern="dd-MM-yyyy hh:mm a" />
+                                        </p:outputLabel>
+                                    </p:column>
 					<p:column headerText="Opciones"> 
                                             <p:selectOneMenu id="sselectoption" value="#{visitaBean.opciones}" onchange="changeEvent(this)"  >
 						<f:selectItem itemLabel="Seleccione" itemValue="S" />
@@ -129,7 +128,7 @@
 				<!--		<f:selectItem itemLabel="Confirma visita" itemValue="CVi" /> -->
                                 <p:ajax event="change" update=":#{p:component('frame')},:#{p:component('growl')},
                                                                :#{p:component('dialogDP')},:#{p:component('dialogParesv2')}"
-                                                     listener="#{pacienteBean.prueba(pac)}" /> 
+                                                               listener="#{pacienteBean.cargaCliente(pac.codCliente)}" /> 
 					</p:selectOneMenu>
 					</p:column>
 				</p:dataTable>

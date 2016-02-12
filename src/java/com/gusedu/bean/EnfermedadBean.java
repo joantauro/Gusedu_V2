@@ -30,16 +30,22 @@ public class EnfermedadBean {
     private EnfermedadService enfermedadservice;
     private String query;
     
-    public EnfermedadBean() {
+    public EnfermedadBean() 
+    {
         enfermedadservice = new EnfermedadServiceImpl();
         datos = new Enfermedad();
         query = "";
-
+        inicializar();
     }
 
     public void inicializar()
     {
         datos = new Enfermedad();
+    }
+    
+    public void listarEnfermedad()
+    {
+         listar = enfermedadservice.getAll();
     }
     
     @PostConstruct
@@ -85,6 +91,7 @@ public class EnfermedadBean {
         System.out.println("Ingresando enfermedad...");
         enfermedadservice.saveEnfermedad(datos);      
         datos = new Enfermedad();
+        listarEnfermedad();
     }
     
     public void ACTUALIZAR()
@@ -92,6 +99,7 @@ public class EnfermedadBean {
         System.out.println("Actualizando enfermedad...");
         enfermedadservice.updateEnfermedad(datos);
         datos = new Enfermedad();
+        listarEnfermedad();
     }
     
     public void ELIMINAR()
@@ -99,6 +107,7 @@ public class EnfermedadBean {
         System.out.println("Eliminando enfermedad...");
         enfermedadservice.deleteEnfermedad(datos);
         datos = new Enfermedad();
+        listarEnfermedad();
     }
     
     public void BUSCARXID(int codigo)

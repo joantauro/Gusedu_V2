@@ -7,9 +7,11 @@ package com.gusedu.dao.impl;
 
 import com.gusedu.model.Cliente;
 import com.gusedu.dao.ClienteService;
+import com.gusedu.estadistica.EUltimaVisita;
 import com.gusedu.util.HibernateUtil;
 import com.gusedu.util.StaticUtil;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -87,6 +89,41 @@ public class ClienteServiceImpl
 /* 112*/        return result;
             }
 
+
+            @Override
+    public List<EUltimaVisita>  getListaUltimaVisita(String cliUsuCreacion) 
+    {
+        List<EUltimaVisita> resultado = new ArrayList<>();
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+            Query q = sesion.createSQLQuery("{ CALL sp_ListarUltimaVisita(:cliUsuCreacion) }");
+            q.setParameter("cliUsuCreacion", cliUsuCreacion);
+            List<Object[]> d=q.list();
+            for (Object[] result : d) 
+            {
+                int idCliente = ((int) result[0]);
+                String dni = ((String) result[1]);
+                String apellidoP = ((String) result[2]);
+                String apellidoM = ((String) result[3]);
+                String nombres = ((String) result[4]);
+                String telmovil = ((String) result[5]);
+                Date ultimavisita = (Date) (result[6]);
+              
+		resultado.add(new EUltimaVisita(idCliente,dni,apellidoP,apellidoM,nombres,telmovil,ultimavisita));		 
+	      }
+        } 
+        catch(Exception e)
+        {
+            System.out.println("ERROR de Lista Ultima Visita : "+e.getMessage());
+        }
+         return resultado;
+    }
+            
+     
+            
+            
     @Override
     public List<Cliente> getClientesPacientesByUsuario(String usuario) {
         Session sesion = HibernateUtil.getSessionFactory().openSession();

@@ -9,6 +9,7 @@ import com.gusedu.dao.ClienteService;
 import com.gusedu.dao.PersonaService;
 import com.gusedu.dao.impl.ClienteServiceImpl;
 import com.gusedu.dao.impl.PersonaServiceImpl;
+import com.gusedu.estadistica.EUltimaVisita;
 import com.gusedu.model.Cliente;
 import com.gusedu.model.Persona;
 import com.gusedu.model.TipoCliente;
@@ -32,7 +33,9 @@ public class PacienteBean {
             ClienteService clienteService;
             PersonaService personaservice;
             private Cliente cliente;
-            private List<Cliente> clientes;
+            //private List<Cliente> clientes;
+            private List<EUltimaVisita> clientesxfecha;
+            
             private String query;
             
 
@@ -60,20 +63,31 @@ public class PacienteBean {
 /*  66*/        objetoBean.lastvisita(getCliente());
             }
 
+            public void cargaCliente(int codcliente)
+            {
+                cliente=clienteService.getClienteById(codcliente);
+                
+/*  62*/        FacesContext fc = FacesContext.getCurrentInstance();
+/*  63*/        fc.getExternalContext().getSessionMap().put("cliente", getCliente());
+/*  65*/        VisitaBean objetoBean = (VisitaBean)fc.getExternalContext().getSessionMap().get("visitaBean");
+/*  66*/        objetoBean.lastvisita(getCliente());
+            }
+            
             public void listado() {
 /*  71*/        clienteService = new ClienteServiceImpl();
 /*  72*/        String username = StaticUtil.userLogged();
-/*  73*/        clientes = clienteService.getClientesPacientesByUsuario(username);
+/*  73*/     //   clientes = clienteService.getClientesPacientesByUsuario(username);
+                clientesxfecha = clienteService.getListaUltimaVisita(username);
             }
 
             
-            public List<Cliente> getClientes() {
+         /*   public List<Cliente> getClientes() {
                  return clientes;
             }
 
     public void setClientes(List<Cliente> clientes) {
         this.clientes = clientes;
-    }
+    }*/
             
             
             
@@ -114,9 +128,9 @@ public class PacienteBean {
             public void filtrarBusqueda() {
 /* 117*/        String username = StaticUtil.userLogged();
 /* 118*/        System.out.println("Entro a filtrar Busqueda :O");
-/* 119*/        clientes = clienteService.getClientesPacientesByUsuario(username);
+/* 119*/        clientesxfecha = clienteService.getListaUltimaVisita(username);
 /* 120*/        List filtrados = new ArrayList();
-/* 121*/        Iterator iterator = clientes.iterator();
+/* 121*/        Iterator iterator = clientesxfecha.iterator();
 /* 121*/        do {
 /* 121*/            if (!iterator.hasNext()) {
 /* 121*/                break;
@@ -126,7 +140,7 @@ public class PacienteBean {
 /* 128*/                filtrados.add(c);
                     }
                 } while (true);
-/* 131*/        clientes = filtrados;
+/* 131*/        clientesxfecha = filtrados;
 /* 132*/        enviarQuery();
             }
 
@@ -135,4 +149,14 @@ public class PacienteBean {
 /* 137*/        fc.getExternalContext().getSessionMap().put("query", query);
 /* 138*/        System.out.println("Enviando query....");
             }
+
+    public List<EUltimaVisita> getClientesxfecha() {
+        return clientesxfecha;
+    }
+
+    public void setClientesxfecha(List<EUltimaVisita> clientesxfecha) {
+        this.clientesxfecha = clientesxfecha;
+    }
+            
+            
 }

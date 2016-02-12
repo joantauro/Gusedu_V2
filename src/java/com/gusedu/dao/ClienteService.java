@@ -1,5 +1,6 @@
 package com.gusedu.dao;
 
+import com.gusedu.estadistica.EUltimaVisita;
 import java.util.List;
 
 import com.gusedu.model.Cliente;
@@ -25,4 +26,7 @@ public interface ClienteService {
 	public List<Cliente> ordenar();	
 	
 	public Cliente lastClient();
+        
+        public List<EUltimaVisita>  getListaUltimaVisita(String cliUsuCreacion) ;      
+        
 }

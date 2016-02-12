@@ -36,14 +36,6 @@ public interface EnfermedadService {
 	
 	public EnfermedadPar getByParameters(Integer enfermedadpar) ;
 	
-	//SintomaPar
-	
-	public boolean saveSintomaPar(SintomaPar sintomaPar);
-
-	public boolean deleteSintomaPar(SintomaPar sintomaPar);
-	
-	public SintomaPar getByParameters(Sintoma sintoma, Par par);
-	
 	//EnfermedadTerapia
 	
 	public boolean saveEnfermedadTerapia(EnfermedadTerapia enfermedadTerapia);
