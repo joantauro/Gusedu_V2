@@ -24,13 +24,16 @@
  function scroll_messages() {
  	//window.parent.fooC();
         //
-        alert('Soy una alerta.!');
-        // document.getElementById('formMoviePanel:j_idt454').click();
+        //alert('Soy una alerta.!');
+        document.getElementById('alerta').click();
         PF('moviePanel').show();
  }
  </script>     
            <p:growl id="messages" showDetail="true" />
-           <p:commandButton value="alert!" oncomplete="scroll_messages();" />
+           
+           <p:commandButton id="alertador" value="alert!" oncomplete="scroll_messages();" style="display: none;" />
+               <p:commandButton id="alerta" value="alert By2!" actionListener="#{terapiaBean.papu()}" style="display: none;"
+                         update=":#{p:component('table')}"  />
            <p:panelGrid columns="2" >
                <h:form> 
                    <h:panelGrid columnClasses="value">
@@ -333,10 +336,10 @@
 							 
 							oncomplete="PF('dlgDeleteCita').show();" />
                        <p:commandButton id="movieBtn" 
-                                        value="Ver Pares" 
+                                        value="Ver Pares" icon="ui-icon-search"
                                         actionListener="#{historialVisitaBean.obtenerTerapiaV2()}"
                                         update=":#{p:component('formMoviePanel')}" 
-                                        oncomplete="scroll_messages();" />
+                                        oncomplete="scroll_messages();"  />
                        
                        <p:commandButton value="Registrar Pares" actionListener="#{historialVisitaBean.obtenerVisitaV2}" 
                                                  title="Editar" oncomplete="PF('dlgParesTHV2').show();" 
@@ -372,14 +375,14 @@
           
            <h:form id="formMoviePanel"  >
                 <p:dialog id="moviePanel"  widgetVar="moviePanel" hideEffect="fade" dynamic="true"
-                          width="380px"    >
+                          width="380px" header="Lista de Pares"   >
               
-        <p:dataTable emptyMessage="No hay puntos registrados en el Paciente"
+        <p:dataTable emptyMessage="No hay pares registrados en el Paciente"
                       id="table" value="#{terapiaBean.listarTerapiaPar}"
                      var="parpu"  scrollable="true"
-                     scrollHeight="230"  >
+                     scrollHeight="350"  >
             <f:facet name="header">
-                Lista de pares hacia del paciente
+                Paciente #{scheduleView.cli.persona.perNombres} #{scheduleView.cli.persona.perApellidoP} #{scheduleView.cli.persona.perApellidoM}
             </f:facet>
             <p:column headerText="Punto 1" >
                 <p:outputLabel value="#{parpu.par.puntoByPunCodigoP1.punNombre}" />
@@ -393,9 +396,7 @@
                 </p:inputSwitch>
             </p:column>
         </p:dataTable>
-        <p:commandButton value="Actualizar" 
-                         actionListener="#{terapiaBean.papu()}" 
-                         update=":#{p:component('table')}" />
+                    <p:commandButton icon="ui-icon-pencil" value="Editar" id="respaldo" onclick="PF('eventDialog2').hide();PF('moviePanel').hide();PF('dlgParesTHV2').show();" />
   
            </p:dialog>
            </h:form>

@@ -419,6 +419,30 @@ public class TerapiaBean {
             listarTerapiaPar = terapiaService.getAllTerapiaParbyTerapia(terapia);
                 }
             } 
+      
+      public void addPar3SP(Integer idpar) {
+        if (!ParExistenteV2(idpar.intValue())) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+           Terapia terapia = (Terapia)fc.getExternalContext().getSessionMap().get("terActual");
+            if (terapia == null) {
+                StaticUtil.errorMessage("Error", "Seleccione un tipo de Terapia");
+                StaticUtil.keepMessages();
+                return;
+                    }
+            Par par = new Par();
+            par.setParCodigo(idpar);
+            TerapiaPar tp = new TerapiaPar();
+            tp.setPar(par);
+            tp.setTerapia(terapia);
+            tp.setTxpActivo(Boolean.valueOf(true));
+            //terapiaService.saveTerapiaPar(tp);
+            terapiaparService.SPsaveTerapiaPar(tp);
+            StaticUtil.correctMesage("Exito", "Se agregó el par");
+            StaticUtil.keepMessages();
+            listarTerapiaPar = terapiaService.getAllTerapiaParbyTerapia(terapia);
+                }
+            } 
+      
          public boolean ParExistenteV2(int idpar) {
         boolean valor = false;   
         listarTerapiaPar = terapiaService.getAllTerapiaParbyTerapia(terapia);

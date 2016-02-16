@@ -18,6 +18,7 @@ import com.gusedu.util.StaticUtil;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -65,6 +66,7 @@ public class PacienteBean {
 
             public void cargaCliente(int codcliente)
             {
+                System.out.println("COD_CLIENTE : "+codcliente);
                 cliente=clienteService.getClienteById(codcliente);
                 
 /*  62*/        FacesContext fc = FacesContext.getCurrentInstance();
@@ -158,5 +160,16 @@ public class PacienteBean {
         this.clientesxfecha = clientesxfecha;
     }
             
-            
+  public boolean filterByPrice(Object value, Object filter, Locale locale) {
+        String filterText = (filter == null) ? null : filter.toString().trim();
+        if(filterText == null||filterText.equals("")) {
+            return true;
+        }
+         
+        if(value == null) {
+            return false;
+        }
+         
+        return ((Comparable) value).compareTo(Integer.valueOf(filterText)) > 0;
+    }       
 }
