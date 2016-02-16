@@ -9,6 +9,7 @@ import com.gusedu.dao.TerapiaService;
 import com.gusedu.dao.VisitaService;
 import com.gusedu.dao.impl.TerapiaServiceImpl;
 import com.gusedu.dao.impl.VisitaServiceImpl;
+import com.gusedu.estadistica.EUltimaVisitaxCliente;
 import com.gusedu.model.Terapia;
 import com.gusedu.model.Visita;
 import com.gusedu.util.StaticUtil;
@@ -35,6 +36,7 @@ public class HistorialVisitaBean {
 	private Date fechainicial;
 	private Date fechafinal;
 	private Date fechaactual;
+        private EUltimaVisitaxCliente viscliente;
         
         VisitaService visitaService;
         TerapiaService terapiaservice;
@@ -42,6 +44,7 @@ public class HistorialVisitaBean {
     public HistorialVisitaBean() {
         visitaService = new VisitaServiceImpl();
         terapiaservice = new TerapiaServiceImpl();
+        viscliente = new EUltimaVisitaxCliente();
         Date fec= new Date();
 		fechaactual=fec;
 		SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
@@ -162,11 +165,25 @@ public class HistorialVisitaBean {
             TerapiaBean terbean = new TerapiaBean();
             terbean.TerapiaHV(ter);
         }
+        
         public void obtenerVisitaV2()
         {
             FacesContext fc = FacesContext.getCurrentInstance();
             
             Visita vis = (Visita) fc.getExternalContext().getSessionMap().get("visActual");
+             fc.getExternalContext().getSessionMap().put("ultimavisita", vis);
+            System.out.println("ID de Visita : "+vis.getVisCodigo());
+            Terapia ter = terapiaservice.terapiaByVisita(vis);
+            System.out.println("ID TERAPIA : "+ter.getTerCodigo());
+            TerapiaBean terbean = new TerapiaBean();
+            terbean.TerapiaHV(ter);
+        }
+        
+        public void obtenerVisita3(EUltimaVisitaxCliente codVisita)
+        {
+            Visita vis = visitaService.getVisitaById(codVisita.getVisitaCodigo());
+            viscliente=codVisita;
+            FacesContext fc = FacesContext.getCurrentInstance();
              fc.getExternalContext().getSessionMap().put("ultimavisita", vis);
             System.out.println("ID de Visita : "+vis.getVisCodigo());
             Terapia ter = terapiaservice.terapiaByVisita(vis);
@@ -193,5 +210,13 @@ public class HistorialVisitaBean {
             TerapiaBean terbean = new TerapiaBean();
             terbean.listadoX(ter);
         }
+
+    public EUltimaVisitaxCliente getViscliente() {
+        return viscliente;
+    }
+
+    public void setViscliente(EUltimaVisitaxCliente viscliente) {
+        this.viscliente = viscliente;
+    }
     
 }

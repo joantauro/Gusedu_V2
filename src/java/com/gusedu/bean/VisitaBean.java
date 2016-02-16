@@ -15,6 +15,7 @@ import com.gusedu.dao.impl.PagoServiceImpl;
 import com.gusedu.dao.impl.ProductoServiceImpl;
 import com.gusedu.dao.impl.TerapiaServiceImpl;
 import com.gusedu.dao.impl.VisitaServiceImpl;
+import com.gusedu.estadistica.EUltimaVisitaxCliente;
 import com.gusedu.model.*;
 import com.gusedu.util.StaticUtil;
 import java.util.*;
@@ -43,6 +44,7 @@ public class VisitaBean {
             private Double costoParcial;
             private List<ProductoVisita> productosDeVisita;
             private List<Visita> visitasPaciente;
+            private List<EUltimaVisitaxCliente> visitasxPaciente;
             private HistoriaClinica historiaClinica;
             private String descripcionIMC;
             TerapiaService terapiaService;
@@ -71,6 +73,7 @@ public class VisitaBean {
                 
 /*  90*/        historiaClinica = new HistoriaClinica();
 /*  91*/        historiaClinica.setVisita(new Visita());
+                
 /*  93*/        cliente.setPersona(new Persona());
 /*  95*/        queryProducto = "";
 /*  96*/        mostrarFormProducto = Integer.valueOf(-1);
@@ -78,8 +81,8 @@ public class VisitaBean {
 /*  98*/        historiaClinicaService = new HistoriaClinicaServiceImpl();
 precioTotal=0.0;
 edit=false;
-            }
-
+            }        
+            
     public double getPrePrecioTerapia() {
         return prePrecioTerapia;
     }
@@ -492,11 +495,18 @@ edit=false;
             public void ListarVisitas() {
 /* 528*/        FacesContext fc = FacesContext.getCurrentInstance();
 /* 529*/        Cliente client = (Cliente)fc.getExternalContext().getSessionMap().get("cliente");
-/* 530*/        visitasPaciente = visitaService.getVisitasCliente(client);
-/* 531*/        System.out.println(visitasPaciente.size());
+/* 530*/        visitasxPaciente = visitaService.getVisitasCliente(client.getCliCodigo());
+/* 531*/        System.out.println(visitasxPaciente.size());
             }
 
-            public void cancel() {
+            public List<EUltimaVisitaxCliente> getVisitasxPaciente() {
+                return visitasxPaciente;
+            }
+
+            public void setVisitasxPaciente(List<EUltimaVisitaxCliente> visitasxPaciente) {
+                this.visitasxPaciente = visitasxPaciente;
+            }
+                    public void cancel() {
 /* 537*/        clearEntities();
 /* 538*/        RequestContext.getCurrentInstance().update("formulario");
 /* 539*/        RequestContext context = RequestContext.getCurrentInstance();
@@ -628,6 +638,5 @@ edit=false;
             System.out.println("MODALIDAD : "+ listaPagoByVisita.get(i).getTipoPago().getNombre() +
                                "\n MONTO :  "+ listaPagoByVisita.get(i).getMonto());
         }
-    }     
-          
+    }              
 }

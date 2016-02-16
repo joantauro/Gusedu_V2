@@ -6,12 +6,14 @@
 package com.gusedu.dao.impl;
 
 import com.gusedu.dao.VisitaService;
+import com.gusedu.estadistica.EUltimaVisitaxCliente;
 import com.gusedu.model.Cliente;
 import com.gusedu.model.Terapia;
 import com.gusedu.model.Visita;
 import com.gusedu.util.HibernateUtil;
 import com.gusedu.util.StaticUtil;
 import java.io.PrintStream;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,37 +85,52 @@ public class VisitaServiceImpl
 /*  75*/        return resultado;
             }
 
-            public List<Visita> getVisitasCliente(Cliente cliente) {
-                List<Visita> result= new ArrayList<>();
-                
-                
-
-        Session sesion = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
-        try {
-            tx = sesion.beginTransaction();
-             String sql = "SELECT v FROM Visita v WHERE v.cliente.cliCodigo=:cliente order by v.visFecCreacion desc";
-/*  88*/        Query q = sesion.createQuery(sql);
-/*  89*/        q.setParameter("cliente", cliente.getCliCodigo());
-/*  90*/        result = q.list();
-           // tx.commit();
-            
-        } catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
-                System.out.println("ERROR de saveHistoriaClinica : " + e.getMessage());
+            @Override
+        public List<EUltimaVisitaxCliente> getVisitasCliente(int clicodigo) 
+        {
+            List<EUltimaVisitaxCliente> resultado = new ArrayList<>();
+            Session sesion = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = null;
+            try {
+                tx = sesion.beginTransaction();
+                Query q = sesion.createSQLQuery("{ CALL sp_ListarXSesiones(:clicodigo) }");
+                q.setParameter("clicodigo", clicodigo);
+                List<Object[]> d=q.list();
+                for (Object[] result : d) 
+                {
+                    int codigoVisita = ((int) result[0]);
+                    String visita = "Visita " + ((BigInteger)(result[1]));
+                    Date fechaCreacion = (Date) (result[2]);
+                    double costoTotal = ((double) result[3]);
+                    System.out.println(codigoVisita + " " + visita + " " + fechaCreacion + " " + costoTotal);
+                    resultado.add(new EUltimaVisitaxCliente(codigoVisita,visita,fechaCreacion,costoTotal));		 
+                  }
+            } 
+            catch(Exception e)
+            {
+                System.out.println("ERROR de Lista Ultimas Visitas por Cliente : "+e.getMessage());
             }
-            System.out.println(e.getMessage());
-        } finally {
-            sesion.flush();
-            sesion.close();
+             return resultado;
         }
- 
-/* 105*/        return result;
-            }
 
+            @Override
             public Visita getVisitaById(Integer idVisita) {
-/* 110*/        return (Visita)em.find(Visita.class, idVisita);
+                Visita visitaservice = null;
+                Session sesion = HibernateUtil.getSessionFactory().openSession();
+
+                try {
+                    sesion.beginTransaction();
+                    visitaservice = (Visita) sesion.load(Visita.class, idVisita);
+                    System.out.println(visitaservice.getVisDescripcion());
+
+                } catch (Exception e) {
+
+
+                } finally {
+                    sesion.flush();
+                    sesion.close();
+                }
+                return visitaservice;
             }
 
            public Visita getLastVisitaCliente(Cliente cliente) {

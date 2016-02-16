@@ -39,9 +39,9 @@
 
                 <p:submenu label="Opciones Adicionales" icon="ui-icon-help" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 3}" >
                     <p:menuitem value="Gestionar Enfermedades" onclick="PF('dlgEnfer').show();" />
-                    <p:menuitem value="Gestionar Enfermedades por Pares" onclick="PF('dlgEnferPar').show();" />
+                    <p:menuitem value="Gestionar Enfermedades por Pares" onclick="PF('dlgEnferPar').show();" style="width:220px;"/>
                     <p:menuitem value="Gestionar Síntomas" onclick="PF('dlgSinto').show();" />
-                    <p:menuitem value="Gestionar Sintomas por Pares" onclick="PF('dlgSintoPar').show();" />
+                    <p:menuitem value="Gestionar Sintomas por Pares" onclick="PF('dlgSintoPar').show();" style="width:220px;"/>
                 </p:submenu>
 
                 <p:submenu label="Opciones de administrador" icon="ui-icon-pencil" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 3}" >

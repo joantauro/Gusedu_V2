@@ -1,5 +1,6 @@
 package com.gusedu.dao;
 
+import com.gusedu.estadistica.EUltimaVisitaxCliente;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface VisitaService {
 
 	public boolean deleteVisita(Visita visita);
 
-	public List<Visita> getVisitasCliente(Cliente cliente);
+	public List<EUltimaVisitaxCliente> getVisitasCliente(int clicodigo);
 	
 	public Visita getVisitaById(Integer idVisita);
 	
