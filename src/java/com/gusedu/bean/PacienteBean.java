@@ -65,6 +65,7 @@ public class PacienteBean {
 
             public void cargaCliente(int codcliente)
             {
+                System.out.println(codcliente);
                 cliente=clienteService.getClienteById(codcliente);
                 
 /*  62*/        FacesContext fc = FacesContext.getCurrentInstance();
