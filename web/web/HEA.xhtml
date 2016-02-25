@@ -1,113 +1,113 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:pe="http://primefaces.org/ui/extensions">
-<ui:composition>
-	<h:form id="formularioHEA">
-		<p:growl showDetail="true" autoUpdate="true" />
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <ui:composition>
+        <h:form id="formularioHEA">
+            <p:growl showDetail="true" autoUpdate="true" />
 
-		<p:fieldset legend="Historia de la Enfermedad Actual"
-			toggleable="true" toggleSpeed="500">
-			<p:panelGrid columns="6">
-				<p:outputLabel for="inputFC" value="Frecuencia cardiaca: " />
+            <p:fieldset legend="Historia de la Enfermedad Actual"
+                        toggleable="true" toggleSpeed="500">
+                <p:panelGrid columns="6">
+                    <p:outputLabel for="inputFC" value="Frecuencia cardiaca: " />
 
-				<p:inputText id="inputFC" maxlength="5" style="width:150px;"
-                                             value="#{visitaBean.historiaClinica.hclTemperatura}" >
-				 <pe:keyFilter mask="num" />  
-				 </p:inputText>
+                    <p:inputText id="inputFC" maxlength="5" style="width:150px;"
+                                 value="#{visitaBean.historiaClinica.hclTemperatura}" >
+                        <pe:keyFilter mask="num" />  
+                    </p:inputText>
 
-				<p:outputLabel for="inputTA" value="Tensión Arterial: " />
-				<p:inputText id="inputTA" maxlength="5" style="width:150px;"
-				placeholder="Rango óptimo: 120/80"
-                                value="#{visitaBean.historiaClinica.hclTensionArterial}" >
-				<pe:keyFilter regEx="/[0-9_\.\-/]/i" />  
-				 </p:inputText>
+                    <p:outputLabel for="inputTA" value="Tensión Arterial: " />
+                    <p:inputText id="inputTA" maxlength="5" style="width:150px;"
+                                 placeholder="Rango óptimo: 120/80"
+                                 value="#{visitaBean.historiaClinica.hclTensionArterial}" >
+                        <pe:keyFilter regEx="/[0-9_\.\-/]/i" />  
+                    </p:inputText>
 
-				<p:outputLabel for="inputPeso" value="Peso: " />
-				<p:inputText id="inputPeso" style="width:50px;"
-                                             value="#{visitaBean.historiaClinica.hclPeso}" >
-					<pe:keyFilter mask="num" />  
-					<p:ajax event="keyup" update=":#{p:component('inputIMC')},:#{p:component('inputDescripcion')}" listener="#{visitaBean.calcularIMC}"  />
-					</p:inputText>
+                    <p:outputLabel for="inputPeso" value="Peso: " />
+                    <p:inputText id="inputPeso" style="width:50px;"
+                                 value="#{visitaBean.historiaClinica.hclPeso}" >
+                        <pe:keyFilter mask="num" />  
+                        <p:ajax event="keyup" update=":#{p:component('inputIMC')},:#{p:component('inputDescripcion')}" listener="#{visitaBean.calcularIMC}"  />
+                    </p:inputText>
 
-				<p:outputLabel for="inputTalla" value="Talla:" />
-				<p:inputText id="inputTalla"
-                                             value="#{visitaBean.historiaClinica.hclTalla}" >
-					<pe:keyFilter mask="num" />  
-					<p:ajax event="keyup" update=":#{p:component('inputIMC')},:#{p:component('inputDescripcion')}" listener="#{visitaBean.calcularIMC}" />
-				</p:inputText>
-					
-
-				<p:outputLabel for="inputIMC" value="IMC:" />
-                                <p:outputLabel id="inputIMC" value="#{visitaBean.historiaClinica.hclImc}"  >
-					<f:convertNumber pattern="#,###,##0.00"/>
-				</p:outputLabel>
-				<p:outputLabel id="inputDescripcion" value="#{visitaBean.descripcionIMC}" ></p:outputLabel>
-			</p:panelGrid>
-		</p:fieldset>
-		<p:fieldset legend="Sintomas y Enfermedades" toggleable="true"
-			toggleSpeed="500">
-			<p:panelGrid columns="6">
-				<h:form>
-					<p:outputLabel value="Agregar sintoma" for="autoSintoma" />
-					<p:autoComplete id="autoSintoma" queryDelay="100"
-                                                        value="#{terapiaBean.sintoma}"  
-						completeMethod="#{terapiaBean.autoCompletarSintoma}" var="sin"
-						itemLabel="#{sin.sinDescripcion}" itemValue="#{sin}"
-						converter="sintomaConverter" panelStyleClass="ui-themes">
-					</p:autoComplete>
-					<p:commandButton id="btnAgregar" value="Agregar" process="@form"
-						action="#{terapiaBean.addSintoma3}"
-						update=":#{p:component('tablaSin')}, :#{p:component('autoSintoma')}" />
-				</h:form>
-				<h:form>
-					<p:outputLabel value="Agregar enfermedad" for="autoEnfermedad"></p:outputLabel>
-					<p:autoComplete id="autoEnfermedad" queryDelay="100"
-						value="#{terapiaBean.enfermedad}"  
-						completeMethod="#{terapiaBean.autoCompletarEnfermedad}" var="enf"
-						itemLabel="#{enf.enfNombre}" itemValue="#{enf}"
-						converter="enfermedadConverter" panelStyleClass="ui-themes">
-					</p:autoComplete>
-					<p:commandButton id="btnAgregarEnf" value="Agregar" process="@form"
-						action="#{terapiaBean.addEnfermedad3}"
-						update=":#{p:component('tablaEnf')}, :#{p:component('autoEnfermedad')}" />
-				</h:form>
-			</p:panelGrid>
-			<h:panelGrid columns="2" cellpadding="10" cellspacing="10">
-				<p:dataTable emptyMessage="No hay sintomas en la terapia"
-					id="tablaSin" var="sxt" value="#{terapiaBean.listasintomaxvisita}"
-					paginator="true" rows="3" style="width:350px;">
-					<p:column >
-                                            <p:outputLabel value="#{sxt.sintoma.sinDescripcion}" />
-					</p:column>
-				</p:dataTable>
-				<p:dataTable emptyMessage="No hay enfermedades en la terapia"
-					id="tablaEnf" var="enf" value="#{terapiaBean.listaenfermedadvisita}"
-					paginator="true" rows="3" style="width:350px;">
-					<p:column >
-						<p:outputLabel value="#{enf.enfermedad.enfNombre}" />
-					</p:column>
-				</p:dataTable>
-			</h:panelGrid>
-		</p:fieldset>
-
-		<p:fieldset legend="Antecedentes Patologicos Familiares"
-			toggleable="true" toggleSpeed="500">
-			<p:panelGrid columns="2" style="height: 30px;">
-				<p:outputLabel for="inputDes" value="Descripcion: "
-					style="width:200px" />
-                                <p:inputTextarea id="inputDes" value="#{visitaBean.historiaClinica.hclDatosAdicionales}" style="width:650px" />
-			</p:panelGrid>
-		</p:fieldset>
+                    <p:outputLabel for="inputTalla" value="Talla:" />
+                    <p:inputText id="inputTalla"
+                                 value="#{visitaBean.historiaClinica.hclTalla}" >
+                        <pe:keyFilter mask="num" />  
+                        <p:ajax event="keyup" update=":#{p:component('inputIMC')},:#{p:component('inputDescripcion')}" listener="#{visitaBean.calcularIMC}" />
+                    </p:inputText>
 
 
-		<p:commandButton value="Registrar"
-			action="#{visitaBean.nuevaHistoria2}"
-			update=":#{p:component('tablaPac')},:#{p:component('growl')}" />
-	</h:form>
-</ui:composition>
+                    <p:outputLabel for="inputIMC" value="IMC:" />
+                    <p:outputLabel id="inputIMC" value="#{visitaBean.historiaClinica.hclImc}"  >
+                        <f:convertNumber pattern="#,###,##0.00"/>
+                    </p:outputLabel>
+                    <p:outputLabel id="inputDescripcion" value="#{visitaBean.descripcionIMC}" ></p:outputLabel>
+                </p:panelGrid>
+            </p:fieldset>
+            <p:fieldset legend="Sintomas y Enfermedades" toggleable="true"
+                        toggleSpeed="500">
+                <p:panelGrid columns="6">
+                    <h:form>
+                        <p:outputLabel value="Agregar sintoma" for="autoSintoma" />
+                        <p:autoComplete id="autoSintoma" queryDelay="100"
+                                        value="#{terapiaBean.sintoma}"  
+                                        completeMethod="#{terapiaBean.autoCompletarSintoma}" var="sin"
+                                        itemLabel="#{sin.sinDescripcion}" itemValue="#{sin}"
+                                        converter="sintomaConverter" panelStyleClass="ui-themes">
+                        </p:autoComplete>
+                        <p:commandButton id="btnAgregar" value="Agregar" process="@form"
+                                         action="#{terapiaBean.addSintoma3}"
+                                         update=":#{p:component('tablaSin')}, :#{p:component('autoSintoma')}" />
+                    </h:form>
+                    <h:form>
+                        <p:outputLabel value="Agregar enfermedad" for="autoEnfermedad"></p:outputLabel>
+                        <p:autoComplete id="autoEnfermedad" queryDelay="100"
+                                        value="#{terapiaBean.enfermedad}"  
+                                        completeMethod="#{terapiaBean.autoCompletarEnfermedad}" var="enf"
+                                        itemLabel="#{enf.enfNombre}" itemValue="#{enf}"
+                                        converter="enfermedadConverter" panelStyleClass="ui-themes">
+                        </p:autoComplete>
+                        <p:commandButton id="btnAgregarEnf" value="Agregar" process="@form"
+                                         action="#{terapiaBean.addEnfermedad3}"
+                                         update=":#{p:component('tablaEnf')}, :#{p:component('autoEnfermedad')}" />
+                    </h:form>
+                </p:panelGrid>
+                <h:panelGrid columns="2" cellpadding="10" cellspacing="10">
+                    <p:dataTable emptyMessage="No hay sintomas en la terapia"
+                                 id="tablaSin" var="sxt" value="#{terapiaBean.listasintomaxvisita}"
+                                 paginator="true" rows="3" style="width:350px;">
+                        <p:column >
+                            <p:outputLabel value="#{sxt.sintoma.sinDescripcion}" />
+                        </p:column>
+                    </p:dataTable>
+                    <p:dataTable emptyMessage="No hay enfermedades en la terapia"
+                                 id="tablaEnf" var="enf" value="#{terapiaBean.listaenfermedadvisita}"
+                                 paginator="true" rows="3" style="width:350px;">
+                        <p:column >
+                            <p:outputLabel value="#{enf.enfermedad.enfNombre}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGrid>
+            </p:fieldset>
+
+            <p:fieldset legend="Antecedentes Patologicos Familiares"
+                        toggleable="true" toggleSpeed="500">
+                <p:panelGrid columns="2" style="height: 30px;">
+                    <p:outputLabel for="inputDes" value="Descripcion: "
+                                   style="width:200px" />
+                    <p:inputTextarea id="inputDes" value="#{visitaBean.historiaClinica.hclDatosAdicionales}" style="width:650px" />
+                </p:panelGrid>
+            </p:fieldset>
+
+
+            <p:commandButton value="Registrar"
+                             action="#{visitaBean.nuevaHistoria2}"
+                             update=":#{p:component('tablaPac')},:#{p:component('growl')}" />
+        </h:form>
+    </ui:composition>
 </html>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29/01/2016 10:00:25 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 18/02/2016 11:27:56 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="com.gusedu.model.Llamada" table="llamada" catalog="gusedu_dbsv" optimistic-lock="version">
         <id name="llaCodigo" type="java.lang.Integer">

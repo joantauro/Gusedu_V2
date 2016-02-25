@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 29/01/2016 10:00:22 AM by Hibernate Tools 4.3.1
+// Generated 18/02/2016 11:27:55 AM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -15,6 +15,7 @@ public class Sintoma  implements java.io.Serializable {
      private String sinDescripcion;
      private Set sintomaPars = new HashSet(0);
      private Set sintomaTerapias = new HashSet(0);
+     private Set terapiaSintomas = new HashSet(0);
      private Set sintomaVisitas = new HashSet(0);
      private Set sintomaPars_1 = new HashSet(0);
      private Set sintomaTerapias_1 = new HashSet(0);
@@ -23,10 +24,11 @@ public class Sintoma  implements java.io.Serializable {
     public Sintoma() {
     }
 
-    public Sintoma(String sinDescripcion, Set sintomaPars, Set sintomaTerapias, Set sintomaVisitas, Set sintomaPars_1, Set sintomaTerapias_1, Set sintomaVisitas_1) {
+    public Sintoma(String sinDescripcion, Set sintomaPars, Set sintomaTerapias, Set terapiaSintomas, Set sintomaVisitas, Set sintomaPars_1, Set sintomaTerapias_1, Set sintomaVisitas_1) {
        this.sinDescripcion = sinDescripcion;
        this.sintomaPars = sintomaPars;
        this.sintomaTerapias = sintomaTerapias;
+       this.terapiaSintomas = terapiaSintomas;
        this.sintomaVisitas = sintomaVisitas;
        this.sintomaPars_1 = sintomaPars_1;
        this.sintomaTerapias_1 = sintomaTerapias_1;
@@ -60,6 +62,13 @@ public class Sintoma  implements java.io.Serializable {
     
     public void setSintomaTerapias(Set sintomaTerapias) {
         this.sintomaTerapias = sintomaTerapias;
+    }
+    public Set getTerapiaSintomas() {
+        return this.terapiaSintomas;
+    }
+    
+    public void setTerapiaSintomas(Set terapiaSintomas) {
+        this.terapiaSintomas = terapiaSintomas;
     }
     public Set getSintomaVisitas() {
         return this.sintomaVisitas;

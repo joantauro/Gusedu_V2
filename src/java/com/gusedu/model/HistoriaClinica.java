@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 29/01/2016 10:00:22 AM by Hibernate Tools 4.3.1
+// Generated 18/02/2016 11:27:55 AM by Hibernate Tools 4.3.1
 
 
 

@@ -29,6 +29,8 @@ import javax.faces.context.FacesContext;
 public class TerapiaBean {
 
             private List<TipoTerapia> tipoTerapias;
+            private List<Terapia> listar;
+            private List<TerapiaSintoma> listarTerapiaSint;
             TerapiaService terapiaService;
             TerapiaParService terapiaparService;
             private Terapia terapia;
@@ -157,8 +159,13 @@ public class TerapiaBean {
         this.listaenfermedadvisita = listaenfermedadvisita;
     }
 
-           
-            
+    public List<Terapia> getListar() {
+        return listar;
+    }
+
+    public void setListar(List<Terapia> listar) {
+        this.listar = listar;
+    }      
             
             
 

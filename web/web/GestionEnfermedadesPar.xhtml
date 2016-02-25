@@ -48,7 +48,7 @@
                 <p:column headerText="Codigo" style="width: 40px" >
                     <h:outputText value="#{enfpar.expCodigo}" style="text-align: center;"/>
                 </p:column>
-                <p:column headerText="Enfermedad">
+                <p:column headerText="Enfermedad" sortBy="#{enfpar.enfermedad.enfNombre}" >
                     <h:outputText value="#{enfpar.enfermedad.enfNombre}" />
                 </p:column>
                 <p:column headerText="Par">

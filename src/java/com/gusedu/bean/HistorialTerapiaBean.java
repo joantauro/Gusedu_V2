@@ -6,11 +6,15 @@
 package com.gusedu.bean;
 
 import com.gusedu.dao.TerapiaService;
+import com.gusedu.dao.TerapiaSintomaService;
 import com.gusedu.dao.impl.TerapiaServiceImpl;
+import com.gusedu.dao.impl.TerapiaSintomaServiceImpl;
 import com.gusedu.model.Cliente;
 import com.gusedu.model.Par;
 import com.gusedu.model.Terapia;
 import com.gusedu.model.TerapiaPar;
+import com.gusedu.model.TerapiaSintoma;
+import com.gusedu.util.StaticUtil;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,23 +29,29 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class HistorialTerapiaBean {
-
-    
-    
+public class HistorialTerapiaBean 
+{
     /**  Matriz de las terapias **/
     private List<String> rowNames = new ArrayList<String>();
     private List<String> colNames = new ArrayList<String>();
     private ArrayList<ArrayList<ArrayList<String>>> data3D = new ArrayList<ArrayList<ArrayList<String>>>();
 	   
     
-     private List<Terapia> listaterapia;
-	   private List<TerapiaPar> listaterapiapar;
-	   private List<Par> listapares;
+    private List<Terapia> listaterapia;
+    private List<TerapiaPar> listaterapiapar;
+    private List<Par> listapares;
+    TerapiaService terapiaService;
     
-           TerapiaService terapiaService;
-    public HistorialTerapiaBean() {
+    TerapiaSintomaService terapiasintomaService;
+    private Terapia terapia;
+    private TerapiaSintoma terapiasintoma;
+    
+    public HistorialTerapiaBean() 
+    {
         terapiaService = new TerapiaServiceImpl();
+        terapiasintomaService = new TerapiaSintomaServiceImpl();
+        terapia = new Terapia();
+        terapiasintoma = new TerapiaSintoma();  
     }
 
     public List<Terapia> getListaterapia() {
@@ -96,6 +106,7 @@ public class HistorialTerapiaBean {
     
     public void llenamatriz()
 	{
+                      
 		data3D = new ArrayList<ArrayList<ArrayList<String>>>();
 		rowNames = new ArrayList<String>();
 		colNames = new ArrayList<String>();
@@ -148,31 +159,28 @@ public class HistorialTerapiaBean {
 		}
 	        
 	      
-		for(int i=0;i<listapares.size();i++)
-	        {
-	            for(int j=0;j<listaterapia.size();j++)
-	            {
-	            	for(int a=0;a<all.size();a++)
-	                {
-	            	if(Objects.equals(listaterapia.get(j).getTerCodigo(), all.get(a).getTerapia().getTerCodigo()))
+            for(int i=0;i<listapares.size();i++)
+            {
+                for(int j=0;j<listaterapia.size();j++)
+                {
+                    for(int a=0;a<all.size();a++)
                     {
-                       
-	            		if(Objects.equals(listapares.get(i).getParCodigo(), all.get(a).getPar().getParCodigo()))
-	            		{
-                            if(all.get(a).getTxpActivo())
+                        if(Objects.equals(listaterapia.get(j).getTerCodigo(), all.get(a).getTerapia().getTerCodigo()))
+                        {                      
+                            if(Objects.equals(listapares.get(i).getParCodigo(), all.get(a).getPar().getParCodigo()))
                             {
-                            	data3D.get(i).get(j).add("Si");
-                            }else
-                            {
-                            	data3D.get(i).get(j).add("No");
+                                if(all.get(a).getTxpActivo())
+                                {
+                                    data3D.get(i).get(j).add("Si");
+                                }else
+                                {
+                                    data3D.get(i).get(j).add("No");
+                                }                   
                             }
-                         
                         }
                     }
-	            	}
-	            	  
-	            }
-	        }
+
+                }
+            }
 	}
-    
 }

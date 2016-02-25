@@ -48,7 +48,7 @@
                 <p:column headerText="Codigo" style="width: 40px" >
                     <h:outputText value="#{sintopar.sxpCodigo}" style="text-align: center;"/>
                 </p:column>
-                <p:column headerText="Sintoma">
+                <p:column headerText="Sintoma" sortBy="#{sintopar.sintoma.sinDescripcion}">
                     <h:outputText value="#{sintopar.sintoma.sinDescripcion}" />
                 </p:column>
                 <p:column headerText="Par">

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 29/01/2016 10:00:25 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated 18/02/2016 11:27:56 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="com.gusedu.model.Terapia" table="terapia" catalog="gusedu_dbsv" optimistic-lock="version">
         <id name="terCodigo" type="java.lang.Integer">
@@ -67,6 +67,12 @@
                 <column name="ter_codigo" not-null="true" />
             </key>
             <one-to-many class="com.gusedu.model.EnfermedadTerapia" />
+        </set>
+        <set name="terapiaSintomas" table="terapia_sintoma" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ter_codigo" not-null="true" />
+            </key>
+            <one-to-many class="com.gusedu.model.TerapiaSintoma" />
         </set>
         <set name="diagnosticos_1" table="diagnostico" inverse="true" lazy="true" fetch="select">
             <key>

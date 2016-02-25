@@ -10,6 +10,7 @@ import com.gusedu.model.SintomaTerapia;
 import com.gusedu.model.SintomaVisita;
 import com.gusedu.model.Terapia;
 import com.gusedu.model.TerapiaPar;
+import com.gusedu.model.TerapiaSintoma;
 import com.gusedu.model.TipoTerapia;
 import com.gusedu.model.Visita;
 
@@ -70,4 +71,6 @@ public interface TerapiaService {
         public boolean lastTerapiabyVisita(Visita vis);
 	
         public Terapia terapiaByVisita(Visita visita);
+        
+
 }

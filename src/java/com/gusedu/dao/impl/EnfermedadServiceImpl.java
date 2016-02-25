@@ -17,8 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-public class EnfermedadServiceImpl
-    implements EnfermedadService, Serializable {
+public class EnfermedadServiceImpl implements EnfermedadService, Serializable {
 
             private static final long serialVersionUID = 1L;
             EntityManager em;

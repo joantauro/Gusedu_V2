@@ -1,5 +1,5 @@
 package com.gusedu.model;
-// Generated 29/01/2016 10:00:22 AM by Hibernate Tools 4.3.1
+// Generated 18/02/2016 11:27:55 AM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -25,7 +25,6 @@ public class TipoUsuario  implements java.io.Serializable {
      private Boolean datosMedicos;
      private Boolean gestionCajaDiaria;
      private Boolean gestionEnfermedades;
-     private Boolean gestionEnfermedadesPar;
      private Boolean gestionPares;
      private Boolean gestionPuntos;
      private Boolean gestionSintomas;
@@ -45,7 +44,7 @@ public class TipoUsuario  implements java.io.Serializable {
     public TipoUsuario() {
     }
 
-    public TipoUsuario(String tusDescripcion, Boolean caja, Boolean datosPersonales, Boolean historialTerapias, Boolean historialVisitas, Boolean consultaPares, Boolean consultaParesPorEnfermedad, Boolean consultaParesPorSintoma, Boolean consultaPuntos, Boolean crearVisita, Boolean datosMedicos, Boolean gestionCajaDiaria, Boolean gestionEnfermedades,Boolean gestionEnfermedadesPar, Boolean gestionPares, Boolean gestionPuntos, Boolean gestionSintomas, Boolean gestionTipoUsuarios, Boolean gestionUsuarios, Boolean historialVisita, Boolean home, Boolean registroTerapias, Boolean reporteProducto, Boolean reportePar, Boolean ventaProductos, Boolean registroTerapiaPares, Boolean calendarioCitas, Set usuarios, Set usuarios_1) {
+    public TipoUsuario(String tusDescripcion, Boolean caja, Boolean datosPersonales, Boolean historialTerapias, Boolean historialVisitas, Boolean consultaPares, Boolean consultaParesPorEnfermedad, Boolean consultaParesPorSintoma, Boolean consultaPuntos, Boolean crearVisita, Boolean datosMedicos, Boolean gestionCajaDiaria, Boolean gestionEnfermedades, Boolean gestionPares, Boolean gestionPuntos, Boolean gestionSintomas, Boolean gestionTipoUsuarios, Boolean gestionUsuarios, Boolean historialVisita, Boolean home, Boolean registroTerapias, Boolean reporteProducto, Boolean reportePar, Boolean ventaProductos, Boolean registroTerapiaPares, Boolean calendarioCitas, Set usuarios, Set usuarios_1) {
        this.tusDescripcion = tusDescripcion;
        this.caja = caja;
        this.datosPersonales = datosPersonales;
@@ -59,7 +58,6 @@ public class TipoUsuario  implements java.io.Serializable {
        this.datosMedicos = datosMedicos;
        this.gestionCajaDiaria = gestionCajaDiaria;
        this.gestionEnfermedades = gestionEnfermedades;
-       this.gestionEnfermedadesPar = gestionEnfermedadesPar;
        this.gestionPares = gestionPares;
        this.gestionPuntos = gestionPuntos;
        this.gestionSintomas = gestionSintomas;
@@ -279,14 +277,6 @@ public class TipoUsuario  implements java.io.Serializable {
     
     public void setUsuarios_1(Set usuarios_1) {
         this.usuarios_1 = usuarios_1;
-    }
-
-    public Boolean getGestionEnfermedadesPar() {
-        return gestionEnfermedadesPar;
-    }
-
-    public void setGestionEnfermedadesPar(Boolean gestionEnfermedadesPar) {
-        this.gestionEnfermedadesPar = gestionEnfermedadesPar;
     }
 
 

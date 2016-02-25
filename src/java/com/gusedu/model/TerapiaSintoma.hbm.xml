@@ -3,19 +3,19 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 18/02/2016 11:27:56 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="com.gusedu.model.EnfermedadTerapia" table="enfermedad_terapia" catalog="gusedu_dbsv" optimistic-lock="version">
-        <id name="extCodigo" type="java.lang.Integer">
-            <column name="ext_codigo" />
+    <class name="com.gusedu.model.TerapiaSintoma" table="terapia_sintoma" catalog="gusedu_dbsv" optimistic-lock="version">
+        <id name="txsCodigo" type="java.lang.Integer">
+            <column name="txs_codigo" />
             <generator class="identity" />
         </id>
-        <many-to-one name="enfermedad" class="com.gusedu.model.Enfermedad" fetch="select">
-            <column name="enf_codigo" not-null="true" />
+        <many-to-one name="sintoma" class="com.gusedu.model.Sintoma" fetch="select">
+            <column name="sin_codigo" not-null="true" />
         </many-to-one>
         <many-to-one name="terapia" class="com.gusedu.model.Terapia" fetch="select">
             <column name="ter_codigo" not-null="true" />
         </many-to-one>
-        <property name="extDescripcion" type="string">
-            <column name="ext_descripcion" />
+        <property name="txsComentario" type="string">
+            <column name="txs_comentario" length="200" />
         </property>
     </class>
 </hibernate-mapping>

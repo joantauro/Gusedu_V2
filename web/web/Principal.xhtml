@@ -81,15 +81,15 @@
                             <h:outputText value="#{pac.dni}" />
                         </p:column>
                         <p:column headerText="Ap. paterno" sortBy="#{pac.apellidoPPersona}" 
-                                    >
+                                  >
                             <h:outputText value="#{pac.apellidoPPersona}" />
                         </p:column>
                         <p:column headerText="Ap. materno" sortBy="#{pac.apellidoMPersona}"
-                                 >
+                                  >
                             <h:outputText value="#{pac.apellidoMPersona}" />
                         </p:column>
                         <p:column headerText="Nombre" sortBy="#{pac.nombresPersona}"
-                                    >
+                                  >
                             <h:outputText value="#{pac.nombresPersona}" />
                         </p:column>
                         <p:column headerText="Teléfono móvil" width="70px;">
@@ -111,7 +111,7 @@
                                 <!--	<f:selectItem itemLabel="Registro de Terapia" itemValue="RGT"  /> -->
                                 <f:selectItem itemLabel="Registro de Pares" itemValue="RGPT" itemDisabled="#{auth.userLogged.tipoUsuario.registroTerapiaPares eq false}" />
                                 <f:selectItem itemLabel="Venta de productos" itemValue="P" itemDisabled="#{auth.userLogged.tipoUsuario.ventaProductos eq false}" />
-                                <!-- <f:selectItem itemLabel="Editar Datos Clinicos" itemValue="DC" />-->
+                                <!--<f:selectItem itemLabel="Editar Datos Clinicos" itemValue="DM" /> -->
                                 <f:selectItem itemLabel="Historial de terapias" itemValue="HT"   />
                                 <f:selectItem itemLabel="Historial de visitas" itemValue="HV" />
                                 <f:selectItem itemLabel="Datos Personales" itemValue="DP" />
@@ -167,7 +167,7 @@
 
 
                 <p:dialog  id="dialoghistorialTerapia" header="Historia de #{pacienteBean.cliente.persona.perNombres} #{pacienteBean.cliente.persona.perApellidoP} #{pacienteBean.cliente.persona.perApellidoM}" widgetVar="dlgHTe" 
-                           showEffect="pop" modal="true" width="1230px" height="550px">
+                           showEffect="pop" width="1230px" height="550px"  >
                     <p:ajax event="close" update=":#{p:component('tablaPac')}" listener="#{visitaBean.probando}" />
                     <h:form id="frame5"  >
                         <ui:include src="HistorialTerapia.xhtml" />

@@ -9,11 +9,13 @@ import com.gusedu.dao.HistoriaClinicaService;
 import com.gusedu.dao.PagoService;
 import com.gusedu.dao.ProductoService;
 import com.gusedu.dao.TerapiaService;
+import com.gusedu.dao.TerapiaSintomaService;
 import com.gusedu.dao.VisitaService;
 import com.gusedu.dao.impl.HistoriaClinicaServiceImpl;
 import com.gusedu.dao.impl.PagoServiceImpl;
 import com.gusedu.dao.impl.ProductoServiceImpl;
 import com.gusedu.dao.impl.TerapiaServiceImpl;
+import com.gusedu.dao.impl.TerapiaSintomaServiceImpl;
 import com.gusedu.dao.impl.VisitaServiceImpl;
 import com.gusedu.estadistica.EUltimaVisitaxCliente;
 import com.gusedu.model.*;
@@ -48,7 +50,9 @@ public class VisitaBean {
             private HistoriaClinica historiaClinica;
             private String descripcionIMC;
             TerapiaService terapiaService;
+            TerapiaSintomaService terapiasintomaService;
             HistoriaClinicaService historiaClinicaService;
+            private TerapiaSintoma terapiasintoma;
             
             private Terapia ter;
             private double precioTotal;
@@ -62,6 +66,7 @@ public class VisitaBean {
 /*  82*/        productoService = new ProductoServiceImpl();
                 pagoservice = new PagoServiceImpl();
 /*  83*/        visita = new Visita();
+                terapiasintoma = new TerapiaSintoma();
 /*  84*/        cliente = new Cliente();
 /*  86*/        producto = new Producto();
 /*  87*/        producto.setTipoProducto(new TipoProducto());
@@ -78,6 +83,7 @@ public class VisitaBean {
 /*  95*/        queryProducto = "";
 /*  96*/        mostrarFormProducto = Integer.valueOf(-1);
 /*  97*/        terapiaService = new TerapiaServiceImpl();
+                terapiasintomaService = new TerapiaSintomaServiceImpl();
 /*  98*/        historiaClinicaService = new HistoriaClinicaServiceImpl();
 precioTotal=0.0;
 edit=false;
@@ -235,6 +241,8 @@ edit=false;
 /* 230*/        HistorialTerapiaBean objetoHTBean = (HistorialTerapiaBean)fc.getExternalContext().getSessionMap().get("historialTerapiaBean");
 /* 231*/        TerapiaBean objetoTBean = (TerapiaBean)fc.getExternalContext().getSessionMap().get("terapiaBean");
 /* 232*/        Visita vis = visitaService.buscarVisita(client);
+                TerapiaSintoma tersin = terapiasintomaService.buscarTerapiaSintoma(client);
+                fc.getExternalContext().getSessionMap().put("tersin", tersin);
 /* 234*/        fc.getExternalContext().getSessionMap().put("vis", vis);
 /* 236*/        visita = new Visita();
 /* 237*/        if (vis == null) {
@@ -281,37 +289,38 @@ edit=false;
 /* 298*/          
 
          
-  if (opciones.equals("RGPT")) {
-      if(terapiaService.lastTerapiabyVisita(vis))
-           {
-               RequestContext context = RequestContext.getCurrentInstance();
-               context.execute("PF('dlgParesT').show();");
-  
-              Visita ultimavisita = new Visita();
-               ultimavisita = vis;
-               visita = ultimavisita;
-                fc.getExternalContext().getSessionMap().put("ultimavisita", ultimavisita);
-               objetoTBean.usarTerapia();
-                 objetoBean.Prueba();
-           }else
-      {
-          StaticUtil.errorMessage("Precaución", "Registre una terapia para usar esta opción");
-/* 261*/                StaticUtil.keepMessages();
-    clearEntities();
-/* 253*/                RequestContext.getCurrentInstance().update("formulario");
-      }
-      
-      
-      
-                        
-                    }
-                }
+                    if (opciones.equals("RGPT")) {
+                        if(terapiaService.lastTerapiabyVisita(vis))
+                             {
+                                 RequestContext context = RequestContext.getCurrentInstance();
+                                 context.execute("PF('dlgParesT').show();");
+
+                                Visita ultimavisita = new Visita();
+                                 ultimavisita = vis;
+                                 visita = ultimavisita;
+                                  fc.getExternalContext().getSessionMap().put("ultimavisita", ultimavisita);
+                                 objetoTBean.usarTerapia();
+                                   objetoBean.Prueba();
+                             }else
+                        {
+                            StaticUtil.errorMessage("Precaución", "Registre una terapia para usar esta opción");
+                  /* 261*/                StaticUtil.keepMessages();
+                      clearEntities();
+                  /* 253*/                RequestContext.getCurrentInstance().update("formulario");
+                        }
+
+                                      }
+                                  }
                 if (opciones.equals("HT")) {
                    objetoHTBean.llenamatriz();
                     RequestContext context = RequestContext.getCurrentInstance();
                     RequestContext.getCurrentInstance().update("dialoghistorialTerapia");
                     context.execute("PF('dlgHTe').show();");
-                 // RequestContext.getCurrentInstance().update("frame5");
+                    TerapiaSintoma ultimaterapia = new TerapiaSintoma();
+                    ultimaterapia = tersin;
+                    terapiasintoma  = ultimaterapia;
+                    fc.getExternalContext().getSessionMap().put("ultimaterapia", ultimaterapia);
+                    RequestContext.getCurrentInstance().update("frame5");
                 }
 /* 325*/        if (opciones.equals("HV")) {
 /* 327*/            ListarVisitas();

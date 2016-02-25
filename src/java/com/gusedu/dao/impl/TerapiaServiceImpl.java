@@ -27,6 +27,7 @@ public class TerapiaServiceImpl
 /*  47*/        return resultado;
             }
 
+            @Override
             public boolean updateTerapia(Terapia terapia) {
                 boolean resultado = false;
 
@@ -51,6 +52,7 @@ public class TerapiaServiceImpl
        return resultado;
             }
 
+            @Override
             public boolean deleteTerapia(Terapia terapia) {
 /*  65*/        boolean resultado = false;
 /*  73*/        return resultado;
@@ -151,8 +153,29 @@ public class TerapiaServiceImpl
 /* 131*/        return tipo;
             }
 
-            public Terapia terapiaById(Integer idTerapia) {
-/* 135*/        return (Terapia)em.find(Terapia.class, idTerapia);
+            public Terapia terapiaById(Integer idTerapia) 
+            {
+                Terapia ter;
+                Exception exception;
+/* 115*/        ter = null;
+/* 116*/        Session sesion = HibernateUtil.getSessionFactory().openSession();
+/* 117*/        Transaction tx = null;
+/* 119*/        try {
+/* 119*/            tx = sesion.beginTransaction();
+/* 120*/            ter = (Terapia)sesion.load(Terapia.class, idTerapia);
+/* 121*/            tx.commit();
+                }
+/* 122*/        catch (Exception e) {
+/* 123*/            if (tx != null) {
+/* 125*/                tx.rollback();
+                    }
+/* 127*/            throw new RuntimeException(e);
+                }
+/* 129*/        finally {
+/* 129*/            sesion.close();
+                }
+ 
+/* 131*/        return ter;
             }
 
             public List<EnfermedadTerapia> getEnfermedadesByTerapia(Terapia terapia) {
@@ -396,7 +419,8 @@ public class TerapiaServiceImpl
             result = q.list();
             for(int i=0;i<result.size();i++)
             {
-                System.out.println(result.get(i).getPar().getPuntoByPunCodigoP1().getPunNombre()+" - "+result.get(i).getPar().getPuntoByPunCodigoP2().getPunNombre()+" "+result.get(i).getTerapia().getTerFecRealizada());
+                System.out.println(result.get(i).getPar().getPuntoByPunCodigoP1().getPunNombre()+" - "+result.get(i).getPar().getPuntoByPunCodigoP2().getPunNombre()+" "+result.get(i).getTerapia().getTerFecRealizada()+
+                        result.get(i).getTerapia().getTipoTerapia().getTteNombre() + result.get(i).getTerapia().getTerDescripcion() + result.get(i).getTerapia().getVisita().getVisDescripcion());
             }
              // tx.commit();
          
@@ -428,10 +452,10 @@ public class TerapiaServiceImpl
              Query q = session.createSQLQuery("{ CALL CrearTerapia(:descripcion,:fecha_prox,:usu_creacion,:tte_cod,:vis_cod,:ter_costo,:ter_empresa) }");
              q.setParameter("descripcion", terapia.getTerDescripcion());
              q.setParameter("fecha_prox", terapia.getTerFecProxima());
-            q.setParameter("usu_creacion", terapia.getTerUsuCreacion());
+             q.setParameter("usu_creacion", terapia.getTerUsuCreacion());
              q.setParameter("tte_cod", terapia.getTipoTerapia().getTteCodigo());
-            q.setParameter("vis_cod", terapia.getVisita().getVisCodigo());
-            q.setParameter("ter_costo", terapia.getTerCosto());
+             q.setParameter("vis_cod", terapia.getVisita().getVisCodigo());
+             q.setParameter("ter_costo", terapia.getTerCosto());
              q.setParameter("ter_empresa", terapia.getTerEmpresa());
 /* 497*/            q.executeUpdate();
 /* 499*/            resultado = true;
