@@ -7,6 +7,7 @@ package com.gusedu.dao.impl;
 
 import com.gusedu.model.Cliente;
 import com.gusedu.dao.ClienteService;
+import com.gusedu.entidad.ClientePersona;
 import com.gusedu.estadistica.EUltimaVisita;
 import com.gusedu.util.HibernateUtil;
 import com.gusedu.util.StaticUtil;
@@ -211,4 +212,55 @@ public class ClienteServiceImpl
 /* 167*/        Cliente result = null;
 /* 175*/        return result;
             }
+
+    @Override
+    public List<ClientePersona> listaClientePersona(String nom, String ap_p,String ap_m,String dni) {
+         List<ClientePersona> lista= new ArrayList<>();
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                 try {
+         
+             Query q = session.createSQLQuery("{ CALL SP_BusquedaPaciente(:nom,:ap_p,:ap_m,:dni) }");
+               q.setParameter("nom",nom);
+               q.setParameter("ap_p",ap_p);
+               q.setParameter("ap_m",ap_m);
+               q.setParameter("dni",dni);
+			List<Object[]> d=q.list();
+			for (Object[] result : d) {				
+				   int cli_codigo = (int) result[0];
+                                   String per_dni=(String) result[1];
+                                   String paciente=(String) result[2];
+                                   lista.add(new ClientePersona(cli_codigo, per_dni, paciente));
+                   	}
+        } catch (Exception e) {
+            System.out.println("Error listaClientePersona : "+e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+          return lista;  
+    }
+
+    @Override
+    public List<ClientePersona> getALLlistaClientePersona() {
+        List<ClientePersona> lista= new ArrayList<>();
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                 try {
+         String empresa = StaticUtil.userLogged();
+             Query q = session.createSQLQuery("{ CALL SP_ListaClientePaciente(:empresa) }");
+               q.setParameter("empresa",empresa);
+			List<Object[]> d=q.list();
+			for (Object[] result : d) {				
+				   int cli_codigo = (int) result[0];
+                                   String per_dni=(String) result[1];
+                                   String paciente=(String) result[2];
+                                   lista.add(new ClientePersona(cli_codigo, per_dni, paciente));
+                   	}
+        } catch (Exception e) {
+            System.out.println("Error getALLlistaClientePersona : "+e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+          return lista; 
+    }
 }

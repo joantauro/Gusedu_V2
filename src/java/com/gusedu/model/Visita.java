@@ -22,6 +22,7 @@ public class Visita  implements java.io.Serializable {
      private String visUsuCreacion;
      private String visDescripcion;
      private Date visFecFin;
+     private boolean visLlegada;
      private Set enfermedadVisitas = new HashSet(0);
      private Set sintomaVisitas = new HashSet(0);
      private Set productoVisitas = new HashSet(0);
@@ -41,28 +42,21 @@ public class Visita  implements java.io.Serializable {
     public Visita(Cliente cliente) {
         this.cliente = cliente;
     }
-    public Visita(Cliente cliente, Double visCostoTotal, Boolean visPresencial, Integer visEstado, Date visFecCreacion, Integer visPrioridad, String visUsuCreacion, String visDescripcion, Date visFecFin, Set enfermedadVisitas, Set sintomaVisitas, Set productoVisitas, Set terapias, Set terapias_1, Set pagos, Set productoVisitas_1, Set enfermedadVisitas_1, Set sintomaVisitas_1, Set historiaClinicas, Set historiaClinicas_1) {
-       this.cliente = cliente;
-       this.visCostoTotal = visCostoTotal;
-       this.visPresencial = visPresencial;
-       this.visEstado = visEstado;
-       this.visFecCreacion = visFecCreacion;
-       this.visPrioridad = visPrioridad;
-       this.visUsuCreacion = visUsuCreacion;
-       this.visDescripcion = visDescripcion;
-       this.visFecFin = visFecFin;
-       this.enfermedadVisitas = enfermedadVisitas;
-       this.sintomaVisitas = sintomaVisitas;
-       this.productoVisitas = productoVisitas;
-       this.terapias = terapias;
-       this.terapias_1 = terapias_1;
-       this.pagos = pagos;
-       this.productoVisitas_1 = productoVisitas_1;
-       this.enfermedadVisitas_1 = enfermedadVisitas_1;
-       this.sintomaVisitas_1 = sintomaVisitas_1;
-       this.historiaClinicas = historiaClinicas;
-       this.historiaClinicas_1 = historiaClinicas_1;
+
+    public Visita(Integer visCodigo, Cliente cliente, Double visCostoTotal, Boolean visPresencial, Integer visEstado, Date visFecCreacion, Integer visPrioridad, String visUsuCreacion, String visDescripcion, Date visFecFin, boolean visLlegada) {
+        this.visCodigo = visCodigo;
+        this.cliente = cliente;
+        this.visCostoTotal = visCostoTotal;
+        this.visPresencial = visPresencial;
+        this.visEstado = visEstado;
+        this.visFecCreacion = visFecCreacion;
+        this.visPrioridad = visPrioridad;
+        this.visUsuCreacion = visUsuCreacion;
+        this.visDescripcion = visDescripcion;
+        this.visFecFin = visFecFin;
+        this.visLlegada = visLlegada;
     }
+
    
     public Integer getVisCodigo() {
         return this.visCodigo;
@@ -134,6 +128,17 @@ public class Visita  implements java.io.Serializable {
     public void setVisFecFin(Date visFecFin) {
         this.visFecFin = visFecFin;
     }
+
+    public boolean isVisLlegada() {
+        return visLlegada;
+    }
+
+    public void setVisLlegada(boolean visLlegada) {
+        this.visLlegada = visLlegada;
+    }
+    
+    
+    
     public Set getEnfermedadVisitas() {
         return this.enfermedadVisitas;
     }

@@ -1,5 +1,6 @@
 package com.gusedu.dao;
 
+import com.gusedu.entidad.detalle_factura;
 import java.util.List;
 
 import com.gusedu.model.Producto;
@@ -25,5 +26,15 @@ public interface ProductoService {
         public boolean saveProducto(Producto producto);
         
         public boolean deleteProducto(Producto producto);
-	
+        
+        public boolean SP_SaveProductoVisita(ProductoVisita productoVisita);
+        
+        public boolean SP_DeleteProductoVisita(ProductoVisita productoVisita);
+        
+        public boolean SP_CrearCabeceraProducto(int cod_cli,int prod_cod,
+                                                String nom_item,
+                                                int cantidad,double costo);
+	public List<detalle_factura> SP_ListarProductosF(int cod_cli);
+        
+        public boolean SP_EliminarProductoFactura(int cod_cli);
 }

@@ -12,18 +12,15 @@ import com.gusedu.model.Terapia;
 import com.gusedu.model.Visita;
 import com.gusedu.util.HibernateUtil;
 import com.gusedu.util.StaticUtil;
-import java.io.PrintStream;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 public class VisitaServiceImpl
@@ -56,20 +53,23 @@ public class VisitaServiceImpl
 /*  42*/        return resultado;
             }
 
+            @Override
             public boolean updateVisita(Visita visita) {
                boolean resultado = false;
 
         Session sesion = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try {
+            System.out.println("Pre-Update");
             tx = sesion.beginTransaction();
             sesion.merge(visita);
             tx.commit();
+            System.out.println("Post-Update");
             resultado = true;
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
-                System.out.println("ERROR de saveHistoriaClinica : " + e.getMessage());
+                System.out.println("ERROR de updateVisita : " + e.getMessage());
             }
             System.out.println(e.getMessage());
         } finally {
@@ -398,6 +398,26 @@ for(int i=0;i<result.size();i++){
          catch(Exception e)
          {
              System.out.println("ERROR de SPdeleteVisita : "+e.getMessage());
+             resultado=false;
+         }
+         return resultado;
+    }
+
+    @Override
+    public boolean SP_CrearFactura(boolean llegada, int cli, int vis) {
+         boolean resultado = false;
+         Session session = HibernateUtil.getSessionFactory().openSession();
+         try {
+             Query q = session.createSQLQuery("{ CALL Crear_Cabecera(:llegada,:codigo_cliente,:codigo_visita) }");
+             q.setParameter("llegada", llegada);
+             q.setParameter("codigo_cliente", cli);
+             q.setParameter("codigo_visita", vis);
+             q.executeUpdate();
+             resultado = true;
+         }
+         catch(Exception e)
+         {
+             System.out.println("ERROR de SP_CrearFactura : "+e.getMessage());
              resultado=false;
          }
          return resultado;

@@ -51,6 +51,7 @@
                     <p:menuitem value="Gestionar Productos" url="/web/producto/gestionProducto.jsf" rendered="#{auth.userLogged.tipoUsuario.gestionTipoUsuarios}" />
                     <p:menuitem value="Estadística" url="/web/estadistica/gestionEstadistica.xhtml" />
                     <p:menuitem value="Citas" url="/web/Citas.xhtml" />
+                    <p:menuitem value="Venta de Productos" onclick="PF('dlgVntaProd').show();"  />
                 </p:submenu>
 
 
@@ -174,21 +175,20 @@
         <p:dialog id="dialogSintoPar" widgetVar="dlgSintoPar" header="Gestionar sintomas por pares" showEffect="pop" 
                   width="750px" height="550px">
             <ui:include src="/web/GestionSintomasPar.xhtml" />
-        </p:dialog>
-
-        <p:dialog id="dialogPuntos" header="Gestionar Puntos" widgetVar="dlgPuntos"
-                  showEffect="pop"  width="850px" height="500px" >
-            <ui:include src="/web/GestionPuntos.xhtml" /> 
-        </p:dialog>
-
-        <p:dialog id="dialogPares" widgetVar="dlgPares" showEffect="pop"  
-                  width="80%" height="70%">	 
-            <ui:include src="/web/GestionPar.xhtml" />
-        </p:dialog>
-
-        <p:dialog id="dialogTipoTera" widgetVar="dlgTipoTera" header="Gestionar Tipo de Terapia" showEffect="pop" 
-                  width="600px" height="550px">	 
-            <ui:include src="/web/GestionTipoTerapia.xhtml" />
-        </p:dialog>
-    </ui:composition>
+    </p:dialog>
+    
+    <p:dialog id="dialogPuntos" header="Gestionar Puntos" widgetVar="dlgPuntos"
+              showEffect="pop"  width="850px" height="500px" >
+        <ui:include src="/web/GestionPuntos.xhtml" /> 
+    </p:dialog>
+    
+    <p:dialog id="dialogPares" widgetVar="dlgPares" showEffect="pop"  
+		width="80%" height="70%">	 
+			<ui:include src="/web/GestionPar.xhtml" />
+	</p:dialog>
+    <p:dialog id="dialogVntaProd" widgetVar="dlgVntaProd" showEffect="pop"  
+              width="80%" height="70%" header="Venta de productos" >	 
+			<ui:include src="/web/VentaProducto.xhtml" />
+    </p:dialog>
+</ui:composition>
 </html>

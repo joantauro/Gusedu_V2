@@ -6,15 +6,20 @@
 package com.gusedu.bean;
 
 import com.gusedu.dao.ClienteService;
+import com.gusedu.dao.FacturaService;
 import com.gusedu.dao.PersonaService;
 import com.gusedu.dao.TerapiaService;
 import com.gusedu.dao.UsuarioService;
 import com.gusedu.dao.VisitaService;
 import com.gusedu.dao.impl.ClienteServiceImpl;
+import com.gusedu.dao.impl.FacturaServiceImpl;
 import com.gusedu.dao.impl.PersonaServiceImpl;
 import com.gusedu.dao.impl.TerapiaServiceImpl;
 import com.gusedu.dao.impl.UsuarioServiceImpl;
 import com.gusedu.dao.impl.VisitaServiceImpl;
+import com.gusedu.entidad.cabecera_factura;
+import com.gusedu.entidad.detalle_factura;
+import com.gusedu.estadistica.EUltimaVisitaxCliente;
 import com.gusedu.model.Cliente;
 import com.gusedu.model.Persona;
 import com.gusedu.model.Terapia;
@@ -68,10 +73,15 @@ public class ScheduleView {
     
     private Visita visita;
     private Terapia terapia;
+    private EUltimaVisitaxCliente sesion;
+    private cabecera_factura cab_fact;
+    
+    private List<detalle_factura> lista_detfact;
     
     ClienteService clienteService;
     PersonaService personaservice;
     UsuarioService usuarioservice;
+    FacturaService facturaService;
     
     public ScheduleView() {
         visitaService = new VisitaServiceImpl();
@@ -79,6 +89,7 @@ public class ScheduleView {
         clienteService= new ClienteServiceImpl();
         personaservice = new PersonaServiceImpl();
         usuarioservice = new UsuarioServiceImpl();
+        facturaService = new FacturaServiceImpl();
         cli = new Cliente();
         cli.setPersona(new Persona());
         cli.setTipoCliente(new TipoCliente());
@@ -91,7 +102,9 @@ public class ScheduleView {
         terapia.setTipoTerapia(new TipoTerapia());
         terapia.setVisita(new Visita());
         calendar=false;
-   
+        
+        sesion = new EUltimaVisitaxCliente();
+        cab_fact= new cabecera_factura();
     }
     
     public void cleaner()
@@ -333,11 +346,26 @@ public class ScheduleView {
         visita =(Visita)event.getData();
          cli= visita.getCliente(); 
        // visita
+        /**************         N° de Sesiones                     ***********/
+        List<EUltimaVisitaxCliente> lis= visitaService.getVisitasCliente(cli.getCliCodigo());
+        for(int i=0;i<lis.size();i++)
+        {
+            if(lis.get(i).getVisitaCodigo()==visita.getVisCodigo())
+            {
+                setSesion(lis.get(i));
+            }
+        }
+        /*********************************************************************/
+       
         visita.setVisFecCreacion(event.getStartDate());
         visita.setVisFecFin(event.getEndDate());
        calendar=false;
        FacesContext fc = FacesContext.getCurrentInstance();
        fc.getExternalContext().getSessionMap().put("visActual", visita);
+       fc.getExternalContext().getSessionMap().put("ultimavisita", visita);
+       
+       VisitaBean vbean = new VisitaBean();
+       vbean.changeVisita(visita);
         //------- Terapia ---------//
         System.out.println("ID VISITA : "+visita.getVisCodigo()); 
         terapia = terapiaService.terapiaByVisita(visita);
@@ -412,6 +440,7 @@ public class ScheduleView {
     
     public void saveVisitaSP()
     {
+        visita.setVisLlegada(false);
         visita.setVisPresencial(true);
         visita.setVisPrioridad(2);
         visita.setVisEstado(1);
@@ -489,5 +518,51 @@ public class ScheduleView {
     public void ATRACA()
     {
         System.out.println("COLO : ");
+    }
+
+    public void CREAR_FACTURA()
+    {
+        visitaService.SP_CrearFactura(visita.isVisLlegada(), cli.getCliCodigo(), visita.getVisCodigo());
+    }
+    
+    public EUltimaVisitaxCliente getSesion() {
+        return sesion;
+    }
+
+    public void setSesion(EUltimaVisitaxCliente sesion) {
+        this.sesion = sesion;
+    }
+
+    public List<detalle_factura> getLista_detfact() {
+  
+        lista_detfact=facturaService.SP_ListaDetalle(3);
+        return lista_detfact;
+    }
+
+    public void setLista_detfact(List<detalle_factura> lista_detfact) {
+        this.lista_detfact = lista_detfact;
+    }
+
+    public cabecera_factura getCab_fact() {
+        return cab_fact;
+    }
+
+    public void setCab_fact(cabecera_factura cab_fact) {
+        this.cab_fact = cab_fact;
+    }
+    
+    public void BUSCARFACTURA()
+    {
+        cab_fact= facturaService.SP_ObtenerCabecera(cli.getCliCodigo());
+    }
+    
+    public void BUSCARFACTURA_EXTERNO(int cli_codigo)
+    {
+        cab_fact= facturaService.SP_ObtenerCabecera(cli_codigo);
+    }
+    
+    public void UPDATE_FACTURA()
+    {
+        facturaService.SP_UpdateCabecera(cli.getCliCodigo(), cab_fact.getFactura_real());
     }
 }

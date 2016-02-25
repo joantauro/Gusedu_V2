@@ -456,49 +456,60 @@ edit=false;
             }
 
             public void addProductoToVisitaWeb() {
-/* 479*/        if (cantidadProducto.doubleValue() <= 0.0D) {
-/* 480*/            return;
+        if (cantidadProducto.doubleValue() <= 0.0D) {
+            return;
                 }
-/* 482*/        FacesContext fc = FacesContext.getCurrentInstance();
-/* 483*/        Visita vis = (Visita)fc.getExternalContext().getSessionMap().get("ultimavisita");
-/* 484*/        ProductoVisita toAdd = new ProductoVisita();
-/* 485*/        toAdd.setPxvCantidad(cantidadProducto);
-/* 486*/        toAdd.setPxvCostoParcial(costoParcial);
-/* 487*/        toAdd.setProducto(producto);
-/* 488*/        toAdd.setVisita(vis);
-/* 489*/        if (productoService.saveProductoVisita(toAdd)) {
-/* 490*/            StaticUtil.correctMesage("\311xito", "Se ha registrado correctamente el producto");
-/* 491*/            StaticUtil.keepMessages();
-/* 492*/            System.out.println("SI ACTUALIZO ?");
-/* 495*/            producto.setProExistencias(Double.valueOf(producto.getProExistencias().doubleValue() - cantidadProducto.doubleValue()));
-/* 496*/            productoService.updateProducto(producto);
-/* 498*/            vis.setVisCostoTotal(Double.valueOf(vis.getVisCostoTotal().doubleValue() + toAdd.getPxvCostoParcial().doubleValue()));
-/* 499*/            visitaService.updateVisita(vis);
-/* 501*/            costoParcial = Double.valueOf(0.0D);
-/* 501*/            cantidadProducto = Double.valueOf(0.0D);
-/* 502*/            mostrarFormProducto = Integer.valueOf(-1);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Visita vis = (Visita)fc.getExternalContext().getSessionMap().get("ultimavisita");
+        ProductoVisita toAdd = new ProductoVisita();
+        toAdd.setPxvCantidad(cantidadProducto);
+        toAdd.setPxvCostoParcial(costoParcial);
+        toAdd.setProducto(producto);
+        toAdd.setVisita(vis);
+        if (productoService.SP_SaveProductoVisita(toAdd)) {
+            StaticUtil.correctMesage("Éxito", "Se ha registrado correctamente el producto");
+            StaticUtil.keepMessages();
+            System.out.println("SI ACTUALIZO ?");
+           /* producto.setProExistencias(Double.valueOf(producto.getProExistencias().doubleValue() - cantidadProducto.doubleValue()));
+            productoService.updateProducto(producto);
+            //vis.setVisCostoTotal(Double.valueOf(vis.getVisCostoTotal().doubleValue() + toAdd.getPxvCostoParcial().doubleValue()));
+                    
+                    
+                    Visita v2= new Visita();
+                    v2 = visitaService.getVisitaById(vis.getVisCodigo());
+                    System.out.println("VISITA : "+v2.getVisCodigo()+"\n"
+                            + "Cliente: "+v2.getCliente().getCliCodigo() +
+                            "\nCosto : "+v2.getVisCostoTotal());
+ //#           v2.setVisCostoTotal(vis.getVisCostoTotal()+ toAdd.getPxvCostoParcial());
+            
+            visitaService.updateVisita(v2);*/
+            costoParcial = 0.0;
+            cantidadProducto = 0.0;
+            mostrarFormProducto = -1;
                 } else {
-/* 504*/            System.out.println("ERROR, DEBUGEAR.");
+            System.out.println("ERROR, DEBUGEAR.");
                 }
             }
 
             public void eliminarProducto(ProductoVisita pxv) {
                 FacesContext fc = FacesContext.getCurrentInstance();
-/* 512*/        System.out.println("Elimina Producto");
-/* 514*/        Producto pr = new Producto();
+        System.out.println("Elimina Producto");
+       /* Producto pr = new Producto();
                 Visita v1 = (Visita)fc.getExternalContext().getSessionMap().get("ultimavisita");
  
                 System.out.println("VISITA : "+v1.getVisCodigo() + "|| COSTO : "+v1.getVisCostoTotal());
                 System.out.println("Costo de Producto : "+pxv.getPxvCostoParcial());
                 v1.setVisCostoTotal(v1.getVisCostoTotal()-pxv.getPxvCostoParcial());
                 System.out.println("NEW : "+v1.getVisCostoTotal());
-/* 515*/        pr = pxv.getProducto();
-/* 516*/        pr.setProExistencias(Double.valueOf(pr.getProExistencias().doubleValue() + pxv.getPxvCantidad().doubleValue()));
-/* 517*/        productoService.updateProducto(pr);
-/* 518*/        productoService.deleteProductoVisita(pxv);
+        pr = pxv.getProducto();
+        pr.setProExistencias(Double.valueOf(pr.getProExistencias().doubleValue() + pxv.getPxvCantidad().doubleValue()));
+        productoService.updateProducto(pr);
+        productoService.deleteProductoVisita(pxv);
                
-                visitaService.updateVisita(v1);
-/* 519*/        listar();
+*/
+        productoService.SP_DeleteProductoVisita(pxv);
+//# visitaService.updateVisita(v1);
+        listar();
             }
 
             public void ListarVisitas() {
@@ -648,4 +659,9 @@ edit=false;
                                "\n MONTO :  "+ listaPagoByVisita.get(i).getMonto());
         }
     }              
+        
+        public void changeVisita(Visita v)
+        {
+            visita=v;
+        }
 }

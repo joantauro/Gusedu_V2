@@ -43,7 +43,7 @@
        Historial general de visitas
     </f:facet>
 					<p:column headerText="DNI">
-                                            <h:outputText value="#{vis.visCodigo}" />
+                                            <h:outputText value="#{vis.cliente.persona.perDni}" />
 					</p:column>
 					<p:column  headerText="Paciente"  >
                                             <h:outputText value="#{vis.cliente.persona.perNombres} #{vis.cliente.persona.perApellidoP} #{vis.cliente.persona.perApellidoM}" />

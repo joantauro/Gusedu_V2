@@ -35,6 +35,9 @@
         <property name="visFecFin" type="timestamp">
             <column name="vis_fec_fin" length="19" />
         </property>
+        <property name="visLlegada" type="java.lang.Boolean">
+            <column name="vis_llegada"  />
+        </property>
         <set name="enfermedadVisitas" table="enfermedad_visita" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="vis_codigo" not-null="true" />

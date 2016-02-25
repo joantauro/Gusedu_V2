@@ -41,4 +41,6 @@ public interface VisitaService {
         public int visitaProgramada(Date fecha,Cliente cliente);
         
         public boolean SPdeleteVisita(int cod_visita);
+        
+        public boolean SP_CrearFactura(boolean llegada,int cli,int vis);
 }

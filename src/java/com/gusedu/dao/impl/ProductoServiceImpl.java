@@ -6,6 +6,7 @@
 package com.gusedu.dao.impl;
 
 import com.gusedu.dao.ProductoService;
+import com.gusedu.entidad.detalle_factura;
 import com.gusedu.model.Producto;
 import com.gusedu.model.ProductoVisita;
 import com.gusedu.model.Visita;
@@ -246,5 +247,117 @@ public class ProductoServiceImpl
             sesion.close();
         }
         return resultado;
+    }
+
+    @Override
+    public boolean SP_SaveProductoVisita(ProductoVisita productoVisita) {
+         boolean resultado = false;
+         Session session = HibernateUtil.getSessionFactory().openSession();
+         try {
+             Query q = session.createSQLQuery("{ CALL SP_InsertProductoVisita(:cantidad,:costo,:symbol,:prod_cod,:vis_cod) }");
+             q.setParameter("cantidad", productoVisita.getPxvCantidad());
+             q.setParameter("costo", productoVisita.getPxvCostoParcial());
+             q.setParameter("symbol", productoVisita.getPxvCurrencySymbol());
+             q.setParameter("prod_cod", productoVisita.getProducto().getProCodigo());
+             q.setParameter("vis_cod", productoVisita.getVisita().getVisCodigo());
+             q.executeUpdate();
+             resultado = true;
+         }
+         catch(Exception e)
+         {
+             System.out.println("ERROR de SP_SaveProductoVisita : "+e.getMessage());
+             resultado=false;
+         }
+         return resultado;
+    }
+
+    @Override
+    public boolean SP_DeleteProductoVisita(ProductoVisita productoVisita) {
+             boolean resultado = false;
+         Session session = HibernateUtil.getSessionFactory().openSession();
+         try {
+             Query q = session.createSQLQuery("{ CALL SP_EliminarProductoVisita(:cod_prod,:cod_vis,:cod_pxv,:cantidad,:costo) }");
+             q.setParameter("cod_prod", productoVisita.getProducto().getProCodigo());
+             q.setParameter("cod_vis", productoVisita.getVisita().getVisCodigo());
+             q.setParameter("cod_pxv", productoVisita.getPxvCodigo());
+             q.setParameter("cantidad", productoVisita.getPxvCantidad());
+             q.setParameter("costo", productoVisita.getPxvCostoParcial());
+             q.executeUpdate();
+             resultado = true;
+         }
+         catch(Exception e)
+         {
+             System.out.println("ERROR de SP_DeleteProductoVisita : "+e.getMessage());
+             resultado=false;
+         }
+         return resultado;
+    }
+
+    @Override
+    public boolean SP_CrearCabeceraProducto(int cod_cli, int prod_cod,  String nom_item, int cantidad, double costo) {
+          boolean resultado = false;
+         Session session = HibernateUtil.getSessionFactory().openSession();
+         try {
+             Query q = session.createSQLQuery("{ CALL SP_CrearCabeceraProducto(:codigo_cliente,:prod_cod,:nom_item,:cantidad,:costo) }");
+             q.setParameter("codigo_cliente", cod_cli);
+             q.setParameter("prod_cod",prod_cod);
+             q.setParameter("nom_item", nom_item);
+             q.setParameter("cantidad", cantidad);
+             q.setParameter("costo", costo);
+             q.executeUpdate();
+             resultado = true;
+         }
+         catch(Exception e)
+         {
+             System.out.println("ERROR de SP_CrearCabeceraProducto : "+e.getMessage());
+             resultado=false;
+         }
+         return resultado;
+    }
+
+    @Override
+    public List<detalle_factura> SP_ListarProductosF(int cod_cli) {
+           List<detalle_factura> lista= new ArrayList<>();
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                 try {
+         
+             Query q = session.createSQLQuery("{ CALL SP_ListarProductosF(:cli_cod) }");
+               q.setParameter("cli_cod",cod_cli);
+			List<Object[]> d=q.list();
+			for (Object[] result : d) {
+				
+				    int cod_det_factura = (int) result[0];
+                                    String item=(String) result[1];
+                                    double precio_unitario=(double) result[2];
+                                    int cantidad = (int) result[3];
+                                    double monto=(double) result[4];
+                                    int cod_factura=(int) result[5];
+                                    lista.add(new detalle_factura(cod_det_factura, item, precio_unitario,cantidad, monto, cod_factura));
+			}
+        } catch (Exception e) {
+            System.out.println("Error SP_ListarProductosF : "+e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+          return lista;  
+    }
+
+    @Override
+    public boolean SP_EliminarProductoFactura(int cod_cli) {
+boolean resultado = false;
+         Session session = HibernateUtil.getSessionFactory().openSession();
+         try {
+             Query q = session.createSQLQuery("{ CALL SP_EliminarProductoFactura(:cod_detfact) }");
+             q.setParameter("cod_detfact", cod_cli);
+             q.executeUpdate();
+             resultado = true;
+         }
+         catch(Exception e)
+         {
+             System.out.println("ERROR de SP_EliminarProductoFactura : "+e.getMessage());
+             resultado=false;
+         }
+         return resultado;
     }
 }

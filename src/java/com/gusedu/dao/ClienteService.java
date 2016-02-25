@@ -1,5 +1,6 @@
 package com.gusedu.dao;
 
+import com.gusedu.entidad.ClientePersona;
 import com.gusedu.estadistica.EUltimaVisita;
 import java.util.List;
 
@@ -27,6 +28,10 @@ public interface ClienteService {
 	
 	public Cliente lastClient();
         
-        public List<EUltimaVisita>  getListaUltimaVisita(String cliUsuCreacion) ;      
+        public List<EUltimaVisita>  getListaUltimaVisita(String cliUsuCreacion) ;  
+        
+        public List<ClientePersona> listaClientePersona(String nom, String ap_p,String ap_m,String dni);
+        
+        public List<ClientePersona> getALLlistaClientePersona();
         
 }

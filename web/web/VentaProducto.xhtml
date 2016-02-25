@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions" >
+    <ui:composition>
+        <p:panelGrid columns="2"  >
+            
+        
+        <h:form>
+            <p:panel >
+                <p:selectOneListbox id="selectPaci" value="#{productoBean.cod_cli}"
+                                filter="true" filterMatchMode="contains"
+                                style="width: 300px;"  >
+                <f:selectItems value="#{productoBean.lista_cliper}" var="cliper" 
+                               itemLabel="#{cliper.per_dni} - #{cliper.paciente}" 
+                               itemValue="#{cliper.cli_codigo}" />
+            </p:selectOneListbox>  
+                <br/><br/>
+            <p:panelGrid id="pnlProdV" columns="2">
+
+                <p:outputLabel for="VoutNombre" value="Producto: "></p:outputLabel>
+                <h:outputText id="VoutNombre"
+                              value="#{productoBean.producto.proDescripcionM}"></h:outputText>
+
+                <p:outputLabel for="VoutCosto" value="Costo: "></p:outputLabel>
+                <h:outputText id="VoutCosto"
+                              value="#{productoBean.producto.proCostoUnitario} #{productoBean.producto.proCurrencySymbol}" />
+
+                <p:outputLabel for="VinpCantidad" value="Cantidad: "></p:outputLabel>
+                <p:inputText id="VinpCantidad" value="#{productoBean.cantidadProducto}" disabled="#{visitaBean.prod}"  >
+                    <pe:keyFilter mask="num" />  
+                    <f:validateDoubleRange minimum="0.0"
+                                           maximum="#{productoBean.producto.proExistencias}"></f:validateDoubleRange>
+                    <p:ajax event="keyup" update="VoutCostoParcial"
+                            listener="#{productoBean.calculaCostoParcial}" />
+                </p:inputText>
+
+                <p:outputLabel for="VoutCostoParcial" value="Costo Total: "></p:outputLabel>
+                <h:outputText id="VoutCostoParcial"
+                              value="#{productoBean.costoParcial} #{productoBean.producto.proCurrencySymbol}" />
+                <p:commandButton icon="ui-icon-plus"
+                                 value="Agregar Producto"  
+                                 actionListener="#{productoBean.ADD_PRODUCTO()}" />
+                <p:commandButton icon="ui-icon-search" action="#{productoBean.MOSTRAR()}"
+                                 oncomplete="PF('dlgTP_F').show();" update=":#{p:component('productosf')}" />
+            </p:panelGrid>
+                
+            </p:panel>
+            
+        </h:form>
+       
+        
+        
+        <p:dataTable id="tablaVentaProductos" var="prod_v"
+                     paginatorAlwaysVisible="false" value="#{productoBean.listaproducto}"
+			emptyMessage="No hay productos en stock" paginator="true" rows="8">
+
+		<f:facet name="header">
+        		Productos
+    		</f:facet>
+
+			<p:column headerText="Producto" style="vertical-align:middle;">
+                            <h:outputText value="#{prod_v.proDescripcionM}" />
+			</p:column>
+
+			<p:column headerText="Costo Unitario" style="vertical-align:middle;">
+                            <h:outputText value="#{prod_v.proCostoUnitario} #{prod.proCurrencySymbol}" />
+			</p:column>
+
+			<p:column headerText="Existencias" style="vertical-align:middle;">
+                            <h:outputText value="#{prod_v.proExistencias}" />
+			</p:column>  
+
+			<p:column>
+				<p:commandButton icon="ui-icon-plus"
+                                                  rendered="#{prod_v.proExistencias > 0}"
+                                                  actionListener="#{productoBean.preProducto(prod_v.proCodigo)}"
+                                   
+					update=":#{p:component('pnlProdV')}"
+					 />
+			</p:column>
+		</p:dataTable>
+            </p:panelGrid>
+        <h:form>
+                   <p:dialog  widgetVar="dlgTP_F"  >
+ 			<p:dataTable id="productosf" var="prof" style="width:400px;"
+							paginatorAlwaysVisible="false" editable="true"
+                                                        value="#{productoBean.lista_detfact}"
+							emptyMessage="No se han añadido productos" paginator="true"
+							rows="5">
+							<f:facet name="header">
+        							Productos del Paciente
+    						</f:facet>
+ 
+       
+							<p:column headerText="Nombre" style="vertical-align:middle;">
+                                                            <h:outputText value="#{prof.item}" />
+							</p:column>
+							<p:column headerText="Cantidad" style="vertical-align:middle;">
+				 
+								   <p:cellEditor>
+                                                                       <f:facet name="output"><h:outputText value="#{prof.cantidad}" /></f:facet>
+                                                                       <f:facet name="input"><p:inputText id="modelInput" value="#{prof.cantidad}" style="width:100%"/></f:facet>
+           							</p:cellEditor>
+							</p:column>
+							<p:column headerText="Costo parcial"
+								style="vertical-align:middle;">
+								<h:outputText
+                                                                    value="S/. #{prof.monto} " />
+							</p:column>
+							 
+							<p:column>
+								<p:commandButton icon="ui-icon-close" 
+				update=":#{p:component('productosf')}"
+                                                                                 action="#{productoBean.ELIMINAR(prof.cod_det_factura)}" />
+							</p:column>
+						</p:dataTable>
+ 		
+ 		</p:dialog>
+        </h:form>
+    </ui:composition>
+</html>
+

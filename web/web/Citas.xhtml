@@ -270,6 +270,9 @@
            <h:form id="Calendario2" >
                <p:dialog widgetVar="eventDialog2" header="Detalle de Cita" showEffect="clip" hideEffect="clip">
                    <h:panelGrid id="eventDetails2" columns="2"  cellspacing="10"  >
+                       
+                       <p:outputLabel value="#{scheduleView.sesion.visita}" />
+                       <p:outputLabel />
                        <p:outputLabel for="title2" value="Paciente : " />
                        <p:outputLabel id="title2" value="#{scheduleView.cli.persona.perNombres} #{scheduleView.cli.persona.perApellidoP} #{scheduleView.cli.persona.perApellidoM}"  />
 
@@ -329,7 +332,13 @@
                        <p:outputLabel value="Descripción : " />
                        <h:outputLabel value="#{scheduleView.visita.visDescripcion}" rendered="#{scheduleView.calendar eq false}" />
                        <p:inputTextarea value="#{scheduleView.visita.visDescripcion}" rendered="#{scheduleView.calendar ne false}" />
-                        <p:commandButton icon="ui-icon-pencil" title="Editar" action="#{scheduleView.change}" update="eventDetails2" rendered="#{scheduleView.calendar eq false}" />    
+                        
+                       <h:outputText value="Marcar llegada : " />
+                       <p:selectBooleanCheckbox value="#{scheduleView.visita.visLlegada }" >
+                           <p:ajax  listener="#{scheduleView.CREAR_FACTURA}" />                  
+                       </p:selectBooleanCheckbox>
+ 
+                       <p:commandButton icon="ui-icon-pencil" title="Editar" action="#{scheduleView.change}" update="eventDetails2" rendered="#{scheduleView.calendar eq false}" />    
                        <p:commandButton icon="ui-icon-disk" title="Guardar" action="#{scheduleView.change}" update="eventDetails2" rendered="#{scheduleView.calendar ne false}" />
                        <p:commandButton 
                            styleClass="ui-btn-inline" value="Eliminar Cita"
@@ -344,6 +353,8 @@
                        <p:commandButton value="Registrar Pares" actionListener="#{historialVisitaBean.obtenerVisitaV2}" 
                                                  title="Editar" oncomplete="PF('dlgParesTHV2').show();" 
                                                  update=":#{p:component('dialogParesByHistorial')}" />
+                       <p:commandButton value="Venta de Productos" update=":#{p:component('dialogProduct')}" oncomplete="PF('dlgProduct').show();"  />
+                       <p:commandButton value="Ver Factura" update=":#{p:component('dialogFactura')}" action="#{scheduleView.BUSCARFACTURA()}" oncomplete="PF('dlgFactura').show();" />
                        <p:commandButton id="addButton2" value="Cerrar" action="#{scheduleView.cleaner()}" oncomplete="PF('myschedule').update();PF('eventDialog2').hide();"  />
 
                    </h:panelGrid>
@@ -372,7 +383,19 @@
                             widgetVar="dlgParesTHV2" showEffect="pop" width="80%"  >
 			       <ui:include src="RegistroParesV4.xhtml" />
                   </p:dialog>
+               
           
+               
+               <p:dialog id="dialogProduct" header="Venta de Productos - #{scheduleView.cli.persona.perNombres} #{scheduleView.cli.persona.perApellidoP} #{scheduleView.cli.persona.perApellidoM}" widgetVar="dlgProduct"
+                          showEffect="pop" modal="true" width="850px" height="550px">          
+                        <ui:include src="Producto.xhtml" />         
+                </p:dialog>
+               
+               <p:dialog id="dialogFactura" widgetVar="dlgFactura" header="Factura de #{scheduleView.cli.persona.perNombres} #{scheduleView.cli.persona.perApellidoP} #{scheduleView.cli.persona.perApellidoM}"  
+                         showEffect="pop" modal="true" width="850px" height="550px" >   
+                   <ui:include src="Factura.xhtml" /> 
+               </p:dialog>
+               
            <h:form id="formMoviePanel"  >
                 <p:dialog id="moviePanel"  widgetVar="moviePanel" hideEffect="fade" dynamic="true"
                           width="380px" header="Lista de Pares"   >
@@ -397,7 +420,7 @@
             </p:column>
         </p:dataTable>
                     <p:commandButton icon="ui-icon-pencil" value="Editar" id="respaldo" onclick="PF('eventDialog2').hide();PF('moviePanel').hide();PF('dlgParesTHV2').show();" />
-  
+                  
            </p:dialog>
            </h:form>
            <script type="text/javascript">
