@@ -13,6 +13,7 @@ public class Enfermedad  implements java.io.Serializable {
 
      private Integer enfCodigo;
      private String enfNombre;
+     private String enfDescripcion;
      private Set enfermedadPars = new HashSet(0);
      private Set enfermedadTerapias = new HashSet(0);
      private Set enfermedadPars_1 = new HashSet(0);
@@ -23,8 +24,9 @@ public class Enfermedad  implements java.io.Serializable {
     public Enfermedad() {
     }
 
-    public Enfermedad(String enfNombre, Set enfermedadPars, Set enfermedadTerapias, Set enfermedadPars_1, Set enfermedadVisitas, Set enfermedadTerapias_1, Set enfermedadVisitas_1) {
+    public Enfermedad(String enfNombre,String enfDescripcion,Set enfermedadPars, Set enfermedadTerapias, Set enfermedadPars_1, Set enfermedadVisitas, Set enfermedadTerapias_1, Set enfermedadVisitas_1) {
        this.enfNombre = enfNombre;
+       this.enfDescripcion = enfDescripcion;
        this.enfermedadPars = enfermedadPars;
        this.enfermedadTerapias = enfermedadTerapias;
        this.enfermedadPars_1 = enfermedadPars_1;
@@ -47,6 +49,15 @@ public class Enfermedad  implements java.io.Serializable {
     public void setEnfNombre(String enfNombre) {
         this.enfNombre = enfNombre;
     }
+
+    public String getEnfDescripcion() {
+        return enfDescripcion;
+    }
+
+    public void setEnfDescripcion(String enfDescripcion) {
+        this.enfDescripcion = enfDescripcion;
+    }
+    
     public Set getEnfermedadPars() {
         return this.enfermedadPars;
     }

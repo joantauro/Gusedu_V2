@@ -41,7 +41,7 @@
                     <p:menuitem value="Gestionar Enfermedades" onclick="PF('dlgEnfer').show();" />
                     <p:menuitem value="Gestionar Enfermedades por Pares" onclick="PF('dlgEnferPar').show();" style="width:220px;"/>
                     <p:menuitem value="Gestionar Síntomas" onclick="PF('dlgSinto').show();" />
-                    <p:menuitem value="Gestionar Sintomas por Pares" onclick="PF('dlgSintoPar').show();" style="width:220px;"/>
+                    <p:menuitem value="Gestionar Síntomas por Pares" onclick="PF('dlgSintoPar').show();" style="width:220px;"/>
                     <p:menuitem value="Gestionar Tipo de Terapia" onclick="PF('dlgTipoTera').show();" />
                 </p:submenu>
 
@@ -160,7 +160,7 @@
             <ui:include src="/web/GestionEnfermedades.xhtml" />
         </p:dialog>
 
-        <p:dialog id="dialogSinto" widgetVar="dlgSinto" header="Gestionar sintomas" showEffect="pop"  
+        <p:dialog id="dialogSinto" widgetVar="dlgSinto" header="Gestionar síntomas" showEffect="pop"  
                   width="600px" height="550px">
 
             <ui:include src="/web/GestionSintomas.xhtml" />
@@ -172,7 +172,7 @@
             <ui:include src="/web/GestionEnfermedadesPar.xhtml" />
         </p:dialog>
 
-        <p:dialog id="dialogSintoPar" widgetVar="dlgSintoPar" header="Gestionar sintomas por pares" showEffect="pop" 
+        <p:dialog id="dialogSintoPar" widgetVar="dlgSintoPar" header="Gestionar síntomas por pares" showEffect="pop" 
                   width="750px" height="550px">
             <ui:include src="/web/GestionSintomasPar.xhtml" />
     </p:dialog>

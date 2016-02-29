@@ -12,13 +12,15 @@ public class EnfermedadPar  implements java.io.Serializable {
      private Integer expCodigo;
      private Enfermedad enfermedad;
      private Par par;
+     private String expDescripcion;
 
     public EnfermedadPar() {
     }
 
-    public EnfermedadPar(Enfermedad enfermedad, Par par) {
+    public EnfermedadPar(Enfermedad enfermedad, Par par,String expDescripcion) {
        this.enfermedad = enfermedad;
        this.par = par;
+       this.expDescripcion = expDescripcion;
     }
    
     public Integer getExpCodigo() {
@@ -43,9 +45,13 @@ public class EnfermedadPar  implements java.io.Serializable {
         this.par = par;
     }
 
+    public String getExpDescripcion() {
+        return expDescripcion;
+    }
 
-
-
+    public void setExpDescripcion(String expDescripcion) {
+        this.expDescripcion = expDescripcion;
+    }    
 }
 
 

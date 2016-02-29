@@ -14,5 +14,8 @@
         <many-to-one name="sintoma" class="com.gusedu.model.Sintoma" fetch="select">
             <column name="sin_codigo" not-null="true" />
         </many-to-one>
+        <property name="sxpDescripcion" type="string">
+            <column name="sxp_descripcion" />
+        </property>
     </class>
 </hibernate-mapping>

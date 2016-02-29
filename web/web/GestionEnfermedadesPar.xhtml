@@ -32,6 +32,10 @@
                         <f:selectItems value="#{parBean.pares}" var="listita3"  
                                        itemValue="#{listita3.parCodigo}" itemLabel="#{listita3.puntoByPunCodigoP1.punNombre}-#{listita3.puntoByPunCodigoP2.punNombre}" />
                     </p:selectOneMenu>
+                    <br></br>
+                    <h:outputLabel value="Descripción: " />
+                    <br></br>
+                    <h:inputTextarea value="#{enfermedadParBean.datos.expDescripcion}" style="width:450px"/>
                 </h:panelGrid>
                 <br></br>
                 <p:commandButton value="Ingresar Enfermedad Par" id="btnIngresar" action="#{enfermedadParBean.AGREGAR()}"
@@ -45,7 +49,7 @@
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15" >
-                <p:column headerText="Codigo" style="width: 40px" >
+                <p:column headerText="Código" style="width: 40px" >
                     <h:outputText value="#{enfpar.expCodigo}" style="text-align: center;"/>
                 </p:column>
                 <p:column headerText="Enfermedad" sortBy="#{enfpar.enfermedad.enfNombre}" >
@@ -53,6 +57,9 @@
                 </p:column>
                 <p:column headerText="Par">
                     <h:outputText value="#{enfpar.par.puntoByPunCodigoP1.punNombre}-#{enfpar.par.puntoByPunCodigoP2.punNombre}" />
+                </p:column>
+                <p:column headerText="Descripción">
+                    <h:outputText value="#{enfpar.expDescripcion}" style="text-align: center;"/>
                 </p:column>
                 <p:column headerText="Editar" style="width: 60px" >
                     <p:commandButton id="ajax5" icon="ui-icon-edit" oncomplete="PF('pantallitaEditar').show();"
@@ -88,6 +95,10 @@
                         <f:selectItems value="#{parBean.pares}" var="listita2"  
                                        itemValue="#{listita2.parCodigo}" itemLabel="#{listita2.puntoByPunCodigoP1.punNombre}-#{listita2.puntoByPunCodigoP2.punNombre}" />
                     </p:selectOneMenu>
+                    <br></br>
+                    <h:outputLabel value="Descripción: " />
+                    <br></br>
+                    <h:inputTextarea value="#{enfermedadParBean.datos.expDescripcion}" style="width:450px"/>
                 </h:panelGrid>
                 <br></br>
                 <p:commandButton value="Modificar" id="ajax3" action="#{enfermedadParBean.ACTUALIZAR}" 

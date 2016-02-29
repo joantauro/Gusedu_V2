@@ -11,6 +11,9 @@
         <property name="sinDescripcion" type="string">
             <column name="sin_descripcion" length="40" />
         </property>
+        <property name="sinComentario" type="string">
+            <column name="sin_comentario" length="40" />
+        </property>
         <set name="sintomaPars" table="sintoma_par" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="sin_codigo" not-null="true" />

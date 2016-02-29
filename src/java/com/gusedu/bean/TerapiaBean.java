@@ -18,6 +18,7 @@ import com.gusedu.util.StaticUtil;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -60,7 +61,7 @@ public class TerapiaBean {
 /*  80*/        enfermedadService = new EnfermedadServiceImpl();
 /*  81*/        sintomaService = new SintomaServiceImpl();
             }
-
+            
     public List<TipoTerapia> getTipoTerapias() {
         tipoTerapias = terapiaService.getTipoTerapias();
         return tipoTerapias;
@@ -202,6 +203,7 @@ public class TerapiaBean {
             }
 
             public void listado() {
+                System.out.println("PROBANDO LA LISTA DE PARES.....");
 /* 229*/        clear();
 /* 230*/        FacesContext fc = FacesContext.getCurrentInstance();
 /* 231*/        Visita visita = (Visita)fc.getExternalContext().getSessionMap().get("ultimavisita");
@@ -211,6 +213,7 @@ public class TerapiaBean {
 /* 237*/            terapia = (Terapia)e.get(0);
 /* 238*/            listarTerapiaPar = terapiaService.getAllTerapiaParbyTerapia(terapia);
                 }
+                System.out.println("PRUEBA FINALIZADA..... END");
             }
 
             public void clear() {

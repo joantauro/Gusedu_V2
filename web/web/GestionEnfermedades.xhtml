@@ -16,6 +16,8 @@
                 <h:panelGrid columns="2" cellpadding="5" id="pnlInsertarEnf">
                     <h:outputLabel value="Nombre: " />
                     <h:inputText value="#{enfermedadBean.datos.enfNombre}"/>
+                    <h:outputLabel value="Descripción: " />
+                    <h:inputTextarea value="#{enfermedadBean.datos.enfDescripcion}" style="width:450px"/>
                 </h:panelGrid>
                 <br></br>
                 <p:commandButton value="Ingresar Enfermedad" id="btnIngresar" actionListener="#{enfermedadBean.AGREGAR()}"
@@ -30,11 +32,14 @@
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15" >
-                <p:column headerText="Codigo" style="width: 40px" >
+                <p:column headerText="Código" style="width: 40px" >
                     <h:outputText value="#{enf.enfCodigo}" style="text-align: center;"/>
                 </p:column>
                 <p:column headerText="Nombre" sortBy="#{enf.enfNombre}" >
                     <h:outputText value="#{enf.enfNombre}" />
+                </p:column>
+                <p:column headerText="Descripción" sortBy="#{enf.enfDescripcion}" >
+                    <h:outputText value="#{enf.enfDescripcion}" />
                 </p:column>
                 <p:column headerText="Editar" style="width: 60px" >
                     <p:commandButton id="ajax5" icon="ui-icon-edit" oncomplete="PF('pantallitaEditar').show();"
@@ -54,10 +59,12 @@
             <p:dialog header="Editar Enfermedad" widgetVar="pantallitaEditar" minHeight="100">
                 <br></br>
                 <h:panelGrid columns="2" cellpadding="5" id="pnlEditarEnf">
-                    <h:outputLabel value="Codigo " />
+                    <h:outputLabel value="Código " />
                     <h:outputLabel value="#{enfermedadBean.datos.enfCodigo}"/>
                     <h:outputLabel value="Nombre: " />
                     <h:inputText value="#{enfermedadBean.datos.enfNombre}"/>
+                    <h:outputLabel value="Descripción: " />
+                    <h:inputTextarea value="#{enfermedadBean.datos.enfDescripcion}" style="width:450px"/>
                 </h:panelGrid>
                 <br></br>
                 <p:commandButton value="Modificar" id="ajax3" actionListener="#{enfermedadBean.ACTUALIZAR}" 

@@ -38,6 +38,7 @@ public class HistorialVisitaBean {
 	private Date fechaactual;
         private EUltimaVisitaxCliente viscliente;
         
+        
         VisitaService visitaService;
         TerapiaService terapiaservice;
     
@@ -172,11 +173,21 @@ public class HistorialVisitaBean {
             
             Visita vis = (Visita) fc.getExternalContext().getSessionMap().get("visActual");
              fc.getExternalContext().getSessionMap().put("ultimavisita", vis);
+             
+         fc.getExternalContext().getSessionMap().put("cliente",vis.getCliente());
             System.out.println("ID de Visita : "+vis.getVisCodigo());
             Terapia ter = terapiaservice.terapiaByVisita(vis);
             System.out.println("ID TERAPIA : "+ter.getTerCodigo());
             TerapiaBean terbean = new TerapiaBean();
             terbean.TerapiaHV(ter);
+            terbean.getListar();
+            HistorialTerapiaBean hb = new HistorialTerapiaBean();
+            hb.llenamatriz();
+            System.out.println("TAMAÑO : "+hb.getListaterapia().size());
+            System.out.println("PRUEBITA DE FECHAS:" + terbean.getListar());
+//            HistorialTerapiaBean listarfechas = new HistorialTerapiaBean();
+//            listarfechas.getListaterapia();
+//            System.out.println("PRUEBITA DE FECHAS: " + listarfechas.getListaterapia());
         }
         
         public void obtenerVisita3(EUltimaVisitaxCliente codVisita)

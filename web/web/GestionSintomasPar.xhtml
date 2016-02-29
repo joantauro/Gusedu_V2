@@ -13,10 +13,10 @@
                              update=":#{p:component('pnSintomaPar')}"/>
         </h:form>
         <h:form>
-            <p:dialog header="Agregar Sintoma por Par" widgetVar="pantallitaIngreso1" minHeight="100" id="pnSintomaPar" width="500">
+            <p:dialog header="Agregar Síntoma por Par" widgetVar="pantallitaIngreso1" minHeight="100" id="pnSintomaPar" width="500">
                 <br></br>
                 <h:panelGrid columns="2" cellpadding="5" id="pnlInsertarSintoPar">
-                    <h:outputLabel value="Sintoma: " />
+                    <h:outputLabel value="Síntoma: " />
                     <br></br>
                     <p:selectOneMenu  value="#{sintomaParBean.datos.sintoma.sinCodigo}" >
                         <f:selectItem itemLabel="Seleccionar" itemValue="" />
@@ -32,9 +32,13 @@
                         <f:selectItems value="#{parBean.pares}" var="listita3"  
                                        itemValue="#{listita3.parCodigo}" itemLabel="#{listita3.puntoByPunCodigoP1.punNombre}-#{listita3.puntoByPunCodigoP2.punNombre}" />
                     </p:selectOneMenu>
+                    <br></br>
+                    <h:outputLabel value="Descripción: " />
+                    <br></br>
+                    <h:inputTextarea value="#{sintomaParBean.datos.sxpDescripcion}" style="width:450px"/>
                 </h:panelGrid>
                 <br></br>
-                <p:commandButton value="Ingresar Sintoma por Par" id="btnIngresar" action="#{sintomaParBean.AGREGAR()}"
+                <p:commandButton value="Ingresar Síntoma por Par" id="btnIngresar" action="#{sintomaParBean.AGREGAR()}"
                                  oncomplete="PF('pantallitaIngreso1').hide();" 
                                  update=":#{p:component('formTablaSintoPar')}"/>
             </p:dialog>
@@ -45,14 +49,17 @@
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15" >
-                <p:column headerText="Codigo" style="width: 40px" >
+                <p:column headerText="Código" style="width: 40px" >
                     <h:outputText value="#{sintopar.sxpCodigo}" style="text-align: center;"/>
                 </p:column>
-                <p:column headerText="Sintoma" sortBy="#{sintopar.sintoma.sinDescripcion}">
+                <p:column headerText="Síntoma" sortBy="#{sintopar.sintoma.sinDescripcion}">
                     <h:outputText value="#{sintopar.sintoma.sinDescripcion}" />
                 </p:column>
                 <p:column headerText="Par">
                     <h:outputText value="#{sintopar.par.puntoByPunCodigoP1.punNombre}-#{sintopar.par.puntoByPunCodigoP2.punNombre}" />
+                </p:column>
+                <p:column headerText="Descripción">
+                    <h:outputText value="#{sintopar.sxpDescripcion}" style="text-align: center;"/>
                 </p:column>
                 <p:column headerText="Editar" style="width: 60px" >
                     <p:commandButton id="ajax5" icon="ui-icon-edit" oncomplete="PF('pantallitaEditar').show();"
@@ -63,16 +70,16 @@
                     <p:commandButton id="ajax7" icon="ui-icon-delete"
                                      action="#{sintomaParBean.BuscarEliminar(sintopar.sxpCodigo)}"
                                      styleClass="ui-priority-primary" update=":#{p:component('listaSintomaPar')}">
-                        <p:confirm header="Confirmation" message="¿Estás seguro de eliminar este sintoma par?" icon="ui-icon-alert" />
+                        <p:confirm header="Confirmation" message="¿Estás seguro de eliminar este síntoma par?" icon="ui-icon-alert" />
                     </p:commandButton>               
                 </p:column>
             </p:dataTable>               
         </h:form>           
         <h:form id="formOriginal2"  >
-            <p:dialog header="Editar Sintoma Par" widgetVar="pantallitaEditar" minHeight="100" width="500">
+            <p:dialog header="Editar Síntoma Par" widgetVar="pantallitaEditar" minHeight="100" width="500">
                 <br></br>
                 <h:panelGrid columns="2" cellpadding="5" id="pnlEditarEnf">
-                    <h:outputLabel value="Sintoma: " />
+                    <h:outputLabel value="Síntoma: " />
                     <br></br>
                     <p:selectOneMenu  value="#{sintomaParBean.datos.sintoma.sinCodigo}">
                         <f:selectItem itemLabel="Selecionar" itemValue="" />
@@ -88,6 +95,10 @@
                         <f:selectItems value="#{parBean.pares}" var="listita2"  
                                        itemValue="#{listita2.parCodigo}" itemLabel="#{listita2.puntoByPunCodigoP1.punNombre}-#{listita2.puntoByPunCodigoP2.punNombre}" />
                     </p:selectOneMenu>
+                    <br></br>
+                    <h:outputLabel value="Descripción: " />
+                    <br></br>
+                    <h:inputTextarea value="#{sintomaParBean.datos.sxpDescripcion}" style="width:450px"/>
                 </h:panelGrid>
                 <br></br>
                 <p:commandButton value="Modificar" id="ajax3" action="#{sintomaParBean.ACTUALIZAR}" 

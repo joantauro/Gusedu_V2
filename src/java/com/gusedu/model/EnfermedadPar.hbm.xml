@@ -14,5 +14,8 @@
         <many-to-one name="par" class="com.gusedu.model.Par" fetch="select">
             <column name="par_codigo" not-null="true" />
         </many-to-one>
+        <property name="expDescripcion" type="string">
+            <column name="exp_descripcion" />
+        </property>
     </class>
 </hibernate-mapping>

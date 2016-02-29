@@ -103,7 +103,14 @@ public class HistorialTerapiaBean
         this.data3D = data3D;
     }
     
-    
+    public void llenadomatriz()
+    {
+        FacesContext fc = FacesContext.getCurrentInstance();
+		Cliente cli = (Cliente) fc.getExternalContext().getSessionMap()
+				.get("cliente");
+                System.out.println("Cod : "+cli.getCliCodigo());
+        llenamatriz();
+    }
     public void llenamatriz()
 	{
                       

@@ -12,13 +12,15 @@ public class SintomaPar  implements java.io.Serializable {
      private Integer sxpCodigo;
      private Par par;
      private Sintoma sintoma;
+     private String sxpDescripcion;
 
     public SintomaPar() {
     }
 
-    public SintomaPar(Par par, Sintoma sintoma) {
+    public SintomaPar(Par par, Sintoma sintoma,String sxpDescripcion) {
        this.par = par;
        this.sintoma = sintoma;
+       this.sxpDescripcion = sxpDescripcion;
     }
    
     public Integer getSxpCodigo() {
@@ -43,9 +45,13 @@ public class SintomaPar  implements java.io.Serializable {
         this.sintoma = sintoma;
     }
 
+    public String getSxpDescripcion() {
+        return sxpDescripcion;
+    }
 
-
-
+    public void setSxpDescripcion(String sxpDescripcion) {
+        this.sxpDescripcion = sxpDescripcion;
+    }
 }
 
 

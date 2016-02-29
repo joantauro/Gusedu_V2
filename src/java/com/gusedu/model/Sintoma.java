@@ -13,6 +13,7 @@ public class Sintoma  implements java.io.Serializable {
 
      private Integer sinCodigo;
      private String sinDescripcion;
+     private String sinComentario;
      private Set sintomaPars = new HashSet(0);
      private Set sintomaTerapias = new HashSet(0);
      private Set terapiaSintomas = new HashSet(0);
@@ -24,8 +25,9 @@ public class Sintoma  implements java.io.Serializable {
     public Sintoma() {
     }
 
-    public Sintoma(String sinDescripcion, Set sintomaPars, Set sintomaTerapias, Set terapiaSintomas, Set sintomaVisitas, Set sintomaPars_1, Set sintomaTerapias_1, Set sintomaVisitas_1) {
+    public Sintoma(String sinDescripcion,String sinComentario, Set sintomaPars, Set sintomaTerapias, Set terapiaSintomas, Set sintomaVisitas, Set sintomaPars_1, Set sintomaTerapias_1, Set sintomaVisitas_1) {
        this.sinDescripcion = sinDescripcion;
+       this.sinComentario = sinComentario;
        this.sintomaPars = sintomaPars;
        this.sintomaTerapias = sintomaTerapias;
        this.terapiaSintomas = terapiaSintomas;
@@ -49,6 +51,15 @@ public class Sintoma  implements java.io.Serializable {
     public void setSinDescripcion(String sinDescripcion) {
         this.sinDescripcion = sinDescripcion;
     }
+
+    public String getSinComentario() {
+        return sinComentario;
+    }
+
+    public void setSinComentario(String sinComentario) {
+        this.sinComentario = sinComentario;
+    }
+    
     public Set getSintomaPars() {
         return this.sintomaPars;
     }

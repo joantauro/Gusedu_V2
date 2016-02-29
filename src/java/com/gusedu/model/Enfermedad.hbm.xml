@@ -11,6 +11,9 @@
         <property name="enfNombre" type="string">
             <column name="enf_nombre" />
         </property>
+        <property name="enfDescripcion" type="string">
+            <column name="enf_descripcion" />
+        </property>
         <set name="enfermedadPars" table="enfermedad_par" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="enf_codigo" not-null="true" />
