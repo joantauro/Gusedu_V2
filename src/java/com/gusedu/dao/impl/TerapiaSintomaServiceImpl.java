@@ -186,7 +186,7 @@ public class TerapiaSintomaServiceImpl implements TerapiaSintomaService {
         TerapiaSintoma result = null;
         Session sesion = HibernateUtil.getSessionFactory().openSession();
         try {
-            Query q = sesion.createQuery("SELECT ts FROM TerapiaSintoma ts where ts.terapia.visita.cliente.cliCodigo = cliente");
+            Query q = sesion.createQuery("SELECT ts FROM TerapiaSintoma ts where ts.terapia.visita.cliente.cliCodigo = :cliente");
             q.setParameter("cliente", cliente.getCliCodigo());
             Cliente cli = cliente;
             result = (TerapiaSintoma)q.uniqueResult();
