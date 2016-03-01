@@ -190,6 +190,7 @@ public class ClienteServiceImpl
                    /* if (tx != null) {
                         tx.rollback();
                     }*/
+                     System.out.println("ERROR getClienteById : "+e.getMessage());
                     throw new RuntimeException(e);
                 } finally {
                     sesion.flush();

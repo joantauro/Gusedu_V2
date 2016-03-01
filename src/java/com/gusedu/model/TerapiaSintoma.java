@@ -13,6 +13,7 @@ public class TerapiaSintoma  implements java.io.Serializable {
      private Sintoma sintoma;
      private Terapia terapia;
      private String txsComentario;
+     private Boolean txsActivo;
 
     public TerapiaSintoma() {
     }
@@ -23,10 +24,11 @@ public class TerapiaSintoma  implements java.io.Serializable {
         this.terapia = terapia;
     }
     
-    public TerapiaSintoma(Sintoma sintoma, Terapia terapia, String txsComentario) {
+    public TerapiaSintoma(Sintoma sintoma, Terapia terapia, String txsComentario,Boolean txsActivo) {
        this.sintoma = sintoma;
        this.terapia = terapia;
        this.txsComentario = txsComentario;
+       this.txsActivo=txsActivo;
     }
    
     public Integer getTxsCodigo() {
@@ -57,6 +59,16 @@ public class TerapiaSintoma  implements java.io.Serializable {
     public void setTxsComentario(String txsComentario) {
         this.txsComentario = txsComentario;
     }
+
+    public Boolean getTxsActivo() {
+        return txsActivo;
+    }
+
+    public void setTxsActivo(Boolean txsActivo) {
+        this.txsActivo = txsActivo;
+    }
+
+
 
 
 

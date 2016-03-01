@@ -21,14 +21,15 @@ import org.hibernate.Session;
  */
 public class FacturaServiceImpl implements FacturaService{
 
-    @Override
-    public cabecera_factura SP_ObtenerCabecera(int cli_codigo) {
+   @Override
+    public cabecera_factura SP_ObtenerCabecera(int cli_codigo,Date fec) {
         cabecera_factura obj = null;
                 Session session = HibernateUtil.getSessionFactory().openSession();
                  try {
          
-             Query q = session.createSQLQuery("{ CALL SP_SaveFactura(:cod_cli) }");
+             Query q = session.createSQLQuery("{ CALL SP_SaveFactura(:cod_cli,:fec) }");
                q.setParameter("cod_cli",cli_codigo);
+               q.setParameter("fec",fec);
 			Object[] d =   (Object[]) q.uniqueResult();
                          int cod_factura=(int) d[0];
                          String cliente=(String) d[1];
@@ -78,13 +79,14 @@ public class FacturaServiceImpl implements FacturaService{
     }
 
     @Override
-    public List<detalle_factura> SP_ListaDetalle(int pk_cabecera) {
+    public List<detalle_factura> SP_ListaDetalle(int pk_cabecera,Date fec) {
          List<detalle_factura> lista= new ArrayList<>();
                 Session session = HibernateUtil.getSessionFactory().openSession();
                  try {
          
-             Query q = session.createSQLQuery("{ CALL SP_ListarDetalleFactura(:fact) }");
+             Query q = session.createSQLQuery("{ CALL SP_ListarDetalleFactura(:fact,:fec) }");
                q.setParameter("fact",pk_cabecera);
+                q.setParameter("fec",fec);
 			List<Object[]> d=q.list();
 			for (Object[] result : d) {
 				

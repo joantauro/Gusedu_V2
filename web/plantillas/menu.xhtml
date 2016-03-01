@@ -15,7 +15,6 @@
             <p:commandButton value="Pruebita" id="btnPruebita" actionListener="#{scheduleView.listado}" style="display: none;" />
             <p:menubar>
                 <p:menuitem value="Inicio" url="/web/Principal.jsf" rendered="#{auth.userLogged.tipoUsuario.home}" />
-                <p:menuitem value="Inicio R" url="/web/Principal_recepcion.jsf" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 4}"/>
                 <p:menuitem icon="ui-icon-document" value="Calendario de Citas" update=":#{p:component('schedule')}"  url="/web/Citas.jsf" rendered="#{auth.userLogged.tipoUsuario.calendarioCitas}" />
                 <p:submenu label="Reportes" icon="ui-icon-document">
                     <p:menuitem value="Productos"  url="#" rendered="#{auth.userLogged.tipoUsuario.reporteProducto}" />
@@ -31,8 +30,9 @@
                     <p:menuitem value="Estado Diario"  action="#{reporteEstBean.listarEstadoDiario()}"  />
                     <p:menuitem value="Pago" onclick="PF('dlgpag').show();" actionListener="#{pagoBean.LLENARListaPago()}" update=":#{p:component('formPago')}" />
                 </p:submenu>
+                <p:menuitem value="Ventas" onclick="PF('dlgVntaProd').show();" rendered="#{auth.userLogged.tipoUsuario.ventaProductos}"/>
 
-                <p:submenu label="Gestión" icon="ui-icon-pencil" >
+                <p:submenu label="Gestión" icon="ui-icon-pencil" rendered="#{auth.userLogged.tipoUsuario.tusCodigo eq 3}" >
                     <p:menuitem value="Puntos" onclick="PF('dlgPuntos').show();" icon="ui-icon-arrowreturnthick-1-w" rendered="#{auth.userLogged.tipoUsuario.gestionPuntos}" />
                     <p:menuitem value="Pares" onclick="PF('dlgPares').show();" icon="ui-icon-arrowreturnthick-1-e"  rendered="#{auth.userLogged.tipoUsuario.gestionPares}" />
                 </p:submenu>

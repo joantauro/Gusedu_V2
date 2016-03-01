@@ -21,6 +21,7 @@ import com.gusedu.entidad.cabecera_factura;
 import com.gusedu.entidad.detalle_factura;
 import com.gusedu.estadistica.EUltimaVisitaxCliente;
 import com.gusedu.model.Cliente;
+import com.gusedu.model.Pago;
 import com.gusedu.model.Persona;
 import com.gusedu.model.Terapia;
 import com.gusedu.model.TipoCliente;
@@ -38,6 +39,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
 import org.primefaces.event.SelectEvent;
@@ -302,7 +304,7 @@ public class ScheduleView {
     {
         event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
         Date fecha = new Date();
-          
+
         
         if (cli.getCliCodigo() == null || cli.getCliCodigo() == 0) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Cuidado", "Seleccione un Paciente");
@@ -535,7 +537,6 @@ public class ScheduleView {
 
     public List<detalle_factura> getLista_detfact() {
   
-        lista_detfact=facturaService.SP_ListaDetalle(3);
         return lista_detfact;
     }
 
@@ -553,16 +554,36 @@ public class ScheduleView {
     
     public void BUSCARFACTURA()
     {
-        cab_fact= facturaService.SP_ObtenerCabecera(cli.getCliCodigo());
+        cab_fact= facturaService.SP_ObtenerCabecera(cli.getCliCodigo(),visita.getVisFecCreacion());
+        LISTAR();
     }
     
     public void BUSCARFACTURA_EXTERNO(int cli_codigo)
     {
-        cab_fact= facturaService.SP_ObtenerCabecera(cli_codigo);
+       cli.setCliCodigo(cli_codigo);
+       cab_fact= facturaService.SP_ObtenerCabecera(cli.getCliCodigo(),new Date());
+       lista_detfact=facturaService.SP_ListaDetalle(cli.getCliCodigo(),new Date());
+      
     }
     
     public void UPDATE_FACTURA()
     {
         facturaService.SP_UpdateCabecera(cli.getCliCodigo(), cab_fact.getFactura_real());
+        System.out.println("CLIENTE : "+cli.getCliCodigo()+"\nFctura Real : "+cab_fact.getFactura_real());
+    }
+    
+    public void LISTAR()
+    {
+               lista_detfact=facturaService.SP_ListaDetalle(cli.getCliCodigo(),visita.getVisFecCreacion());
+    }
+      public void onRowEdit(RowEditEvent event) {
+        detalle_factura detfact ;
+        detfact = (detalle_factura) event.getObject();
+        double val = terapia.getTerCosto();
+        terapia.setTerCosto(detfact.getPrecio_unitario());
+         terapiaService.updateTerapia(terapia);
+          System.out.println("TERAPIA : "+terapia.getTerCodigo()+"-VISITA : "+visita.getVisCodigo()+"-Valor :"+val);
+         terapiaService.SP_CambiarPrecioTerapia(terapia.getTerCodigo(), visita.getVisCodigo(), val);
+         BUSCARFACTURA();
     }
 }

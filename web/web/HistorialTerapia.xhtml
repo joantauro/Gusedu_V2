@@ -118,6 +118,22 @@
                                  update=":#{p:component('tablaSin')}"/>
                 <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog>
+            <p:dataTable var="rowNameST" value="#{sintomaTerapiaBean.rowNames}" id="tablitaST"
+                 rowIndexVar="rowIdxST" emptyMessage="No hay pares" >
+      
+            <p:column headerText="" styleClass="ui-widget-header" width="250px;" >
+        <h:outputText value="#{rowNameST}"/>
+    </p:column>
+
+    <p:columns var="columnNameST" value="#{sintomaTerapiaBean.colNames}" headerText="#{columnNameST}"
+               columnIndexVar="colIdxST">
+        <ui:repeat value="#{sintomaTerapiaBean.data3D[rowIdxST][colIdxST]}" var="dataST">
+       
+                <h:outputText value="#{dataST}"/>
+ 
+        </ui:repeat>
+    </p:columns>
+</p:dataTable>
         </h:form>
     </ui:composition>
 </html>

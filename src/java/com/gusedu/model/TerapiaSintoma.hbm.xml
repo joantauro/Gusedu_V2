@@ -17,5 +17,8 @@
         <property name="txsComentario" type="string">
             <column name="txs_comentario" length="200" />
         </property>
+        <property name="txsActivo" type="java.lang.Boolean">
+            <column name="txs_activo" />
+        </property>
     </class>
 </hibernate-mapping>

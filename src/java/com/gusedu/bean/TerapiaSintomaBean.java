@@ -262,6 +262,7 @@ public class TerapiaSintomaBean {
         tersin.setSintoma(sintoma);
         tersin.setTerapia(ter);
         tersin.setTxsComentario(comentario);
+        tersin.setTxsActivo(true);
         terapiasintomaService.saveTerapiaSintoma(tersin);
         System.out.println("Ingresando terapia sintoma...");
         System.out.println("Terapia: "+ datos.getTerapia().getTerCodigo());

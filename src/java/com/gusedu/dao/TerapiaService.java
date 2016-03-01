@@ -72,5 +72,5 @@ public interface TerapiaService {
 	
         public Terapia terapiaByVisita(Visita visita);
         
-
+        public boolean SP_CambiarPrecioTerapia(int ter,int vis,double monto);
 }

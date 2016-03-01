@@ -6,6 +6,7 @@
 package com.gusedu.dao.impl;
 
 import com.gusedu.dao.SintomaService;
+import com.gusedu.entidad.ESintomaTerapia;
 import com.gusedu.model.SintomaPar;
 import com.gusedu.model.Sintoma;
 import com.gusedu.model.SintomaTerapia;
@@ -313,4 +314,29 @@ public class SintomaServiceImpl implements SintomaService, Serializable {
         }
         return sintomaservice;
     }        
+
+    @Override
+    public List<ESintomaTerapia> SP_MatrizSintomaxTerapia(int cod_cli) {
+        List<ESintomaTerapia> lista= new ArrayList<>();
+                Session session = HibernateUtil.getSessionFactory().openSession();
+                 try {
+          
+             Query q = session.createSQLQuery("{ CALL SP_MatrizSintomaxTerapia(:cod_cli) }");
+             q.setParameter("cod_cli", cod_cli);
+			List<Object[]> d=q.list();
+			for (Object[] result : d) {
+				
+				String fecha = ((String) result[0]);
+				String sintoma = (String) result[1];
+                                Boolean estado = (Boolean) result[2];
+				lista.add(new ESintomaTerapia(fecha, sintoma, estado));
+			}
+        } catch (Exception e) {
+            System.out.println("Error : "+e.getMessage());
+        } finally {
+            session.flush();
+            session.close();
+        }
+          return lista;     
+    }
 }

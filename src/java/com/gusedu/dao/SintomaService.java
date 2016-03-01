@@ -1,5 +1,6 @@
 package com.gusedu.dao;
 
+import com.gusedu.entidad.ESintomaTerapia;
 import java.util.List;
 
 import com.gusedu.model.Sintoma;
@@ -38,5 +39,7 @@ public interface SintomaService {
 	public boolean saveSintomaTerapia(SintomaTerapia sintomaTerapia);
 	
 	public Sintoma lastSintoma();
+        
+        public List<ESintomaTerapia> SP_MatrizSintomaxTerapia(int cod_cli);
 	
 }

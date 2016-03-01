@@ -22,16 +22,24 @@
             </p:panelGrid>
             <br/>
             <br/>
-          <p:dataTable value="#{scheduleView.lista_detfact}" var="det_fact"
+            <p:dataTable value="#{scheduleView.lista_detfact}" var="det_fact" id="tablaFactura"
+                       paginatorAlwaysVisible="false" editable="true"
                        paginator="true" rows="15" 
 					emptyMessage="No hay items por el momento" >
+              
+                <p:ajax event="rowEdit" listener="#{scheduleView.onRowEdit}" update=":#{p:component('tablaFactura')}" />
+              <p:ajax event="rowEditCancel"  update=":#{p:component('tablaFactura')}" />
+              
                     <p:column headerText="Item" >
                         <p:outputLabel value="#{det_fact.item}" />
                     </p:column>
                     <p:column headerText="Precio Unitario" >
-                        <p:outputLabel value="#{det_fact.precio_unitario}" >
-                            <f:convertNumber currencySymbol="S/." type="currency"/>
-                        </p:outputLabel>
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{det_fact.precio_unitario}" >
+                                        <f:convertNumber currencySymbol="S/." type="currency"/>
+                                </h:outputText></f:facet>
+                            <f:facet name="input"><p:inputText id="montoInput" value="#{det_fact.precio_unitario}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
                     </p:column>
                     <p:column headerText="Cantidad" >
                         <p:outputLabel value="#{det_fact.cantidad}" />
@@ -40,6 +48,9 @@
                         <p:outputLabel value="#{det_fact.monto}" >
                                 <f:convertNumber currencySymbol="S/." type="currency"/>
                         </p:outputLabel>
+                    </p:column>
+                    <p:column style="width:32px">
+                         <p:rowEditor />
                     </p:column>
                                   <f:facet name="footer">
                   <p:outputLabel

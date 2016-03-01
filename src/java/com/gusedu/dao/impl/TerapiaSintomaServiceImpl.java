@@ -192,7 +192,7 @@ public class TerapiaSintomaServiceImpl implements TerapiaSintomaService {
             result = (TerapiaSintoma)q.uniqueResult();
             System.out.println(result.getSintoma().getSinCodigo());    
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("ERROR buscarTerapiaSintoma"+e.getMessage());
         } finally {
             sesion.flush();
             sesion.close();

@@ -537,4 +537,24 @@ public class TerapiaServiceImpl
         }
         return result;
     }
+
+    @Override
+    public boolean SP_CambiarPrecioTerapia(int ter, int vis, double monto) {
+            boolean resultado = false;
+         Session session = HibernateUtil.getSessionFactory().openSession();
+         try {
+             Query q = session.createSQLQuery("{ CALL SP_CambiarPrecioTerapia(:ter,:vis,:montoantiguo) }");
+             q.setParameter("ter", ter);
+             q.setParameter("vis", vis);
+             q.setParameter("montoantiguo", monto);
+             q.executeUpdate();
+             resultado = true;
+         }
+         catch(Exception e)
+         {
+             System.out.println("ERROR de SP_UpdateCabecera : "+e.getMessage());
+             resultado=false;
+         }
+         return resultado;
+    }
 }

@@ -239,10 +239,11 @@ edit=false;
 /* 228*/        FacesContext fc = FacesContext.getCurrentInstance();
 /* 229*/        VisitaBean objetoBean = (VisitaBean)fc.getExternalContext().getSessionMap().get("visitaBean");
 /* 230*/        HistorialTerapiaBean objetoHTBean = (HistorialTerapiaBean)fc.getExternalContext().getSessionMap().get("historialTerapiaBean");
+                SintomaTerapiaBean stBean = (SintomaTerapiaBean)fc.getExternalContext().getSessionMap().get("sintomaTerapiaBean");
 /* 231*/        TerapiaBean objetoTBean = (TerapiaBean)fc.getExternalContext().getSessionMap().get("terapiaBean");
 /* 232*/        Visita vis = visitaService.buscarVisita(client);
-                TerapiaSintoma tersin = terapiasintomaService.buscarTerapiaSintoma(client);
-                fc.getExternalContext().getSessionMap().put("tersin", tersin);
+               // TerapiaSintoma tersin = terapiasintomaService.buscarTerapiaSintoma(client);
+               // fc.getExternalContext().getSessionMap().put("tersin", tersin);
 /* 234*/        fc.getExternalContext().getSessionMap().put("vis", vis);
 /* 236*/        visita = new Visita();
 /* 237*/        if (vis == null) {
@@ -313,13 +314,14 @@ edit=false;
                                   }
                 if (opciones.equals("HT")) {
                    objetoHTBean.llenamatriz();
+                   stBean.llenamatriz();
                     RequestContext context = RequestContext.getCurrentInstance();
                     RequestContext.getCurrentInstance().update("dialoghistorialTerapia");
                     context.execute("PF('dlgHTe').show();");
                     TerapiaSintoma ultimaterapia = new TerapiaSintoma();
-                    ultimaterapia = tersin;
+                   // ultimaterapia = tersin;
                     terapiasintoma  = ultimaterapia;
-                    fc.getExternalContext().getSessionMap().put("ultimaterapia", ultimaterapia);
+                   // fc.getExternalContext().getSessionMap().put("ultimaterapia", ultimaterapia);
                     RequestContext.getCurrentInstance().update("frame5");
                 }
 /* 325*/        if (opciones.equals("HV")) {

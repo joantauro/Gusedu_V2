@@ -7,6 +7,7 @@ package com.gusedu.dao;
 
 import com.gusedu.entidad.cabecera_factura;
 import com.gusedu.entidad.detalle_factura;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,9 +16,9 @@ import java.util.List;
  */
 public interface FacturaService {
     
-    public cabecera_factura SP_ObtenerCabecera(int cli_codigo);
+    public cabecera_factura SP_ObtenerCabecera(int cli_codigo,Date fec);
     
     public boolean SP_UpdateCabecera(int cli_codigo,String fac_real);
     
-    public List<detalle_factura> SP_ListaDetalle(int pk_cabecera);
+    public List<detalle_factura> SP_ListaDetalle(int pk_cabecera,Date fec);
 }
