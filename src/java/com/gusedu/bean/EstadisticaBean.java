@@ -46,16 +46,19 @@ public class EstadisticaBean implements Serializable{
     
     public EstadisticaBean() {
         estadisticaservice= new EstadisticaImpl();
+        createAnimatedModels();    
+             createAnimatedModelsM();
+             createLineModels();
     }
     
     
-     @PostConstruct
+     /*@PostConstruct
      public void init() {
 		 
 	     createAnimatedModels();    
              createAnimatedModelsM();
              createLineModels();
-	 }
+	 }*/
     	private void createAnimatedModels() {
         
          

@@ -33,7 +33,7 @@ public interface ProductoService {
         
         public boolean SP_CrearCabeceraProducto(int cod_cli,int prod_cod,
                                                 String nom_item,
-                                                int cantidad,double costo);
+                                                int cantidad,double costo,int cod_vis);
 	public List<detalle_factura> SP_ListarProductosF(int cod_cli);
         
         public boolean SP_EliminarProductoFactura(int cod_cli);

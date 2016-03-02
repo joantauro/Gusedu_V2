@@ -261,7 +261,7 @@ public class ProductoBean {
     
     public void ADD_PRODUCTO()
     {
-        productoservice.SP_CrearCabeceraProducto(cod_cli, producto.getProCodigo(), producto.getProDescripcionM(), cantidadProducto, costoParcial);
+        productoservice.SP_CrearCabeceraProducto(cod_cli, producto.getProCodigo(), producto.getProDescripcionM(), cantidadProducto, costoParcial,0);
     }
     
     public void MOSTRAR()
