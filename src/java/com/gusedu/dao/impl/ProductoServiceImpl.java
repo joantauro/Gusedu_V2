@@ -294,16 +294,17 @@ public class ProductoServiceImpl
     }
 
     @Override
-    public boolean SP_CrearCabeceraProducto(int cod_cli, int prod_cod,  String nom_item, int cantidad, double costo) {
+    public boolean SP_CrearCabeceraProducto(int cod_cli, int prod_cod,  String nom_item, int cantidad, double costo,int cod_vis) {
           boolean resultado = false;
          Session session = HibernateUtil.getSessionFactory().openSession();
          try {
-             Query q = session.createSQLQuery("{ CALL SP_CrearCabeceraProducto(:codigo_cliente,:prod_cod,:nom_item,:cantidad,:costo) }");
+             Query q = session.createSQLQuery("{ CALL SP_CrearCabeceraProducto(:codigo_cliente,:prod_cod,:nom_item,:cantidad,:costo,:cod_vis) }");
              q.setParameter("codigo_cliente", cod_cli);
              q.setParameter("prod_cod",prod_cod);
              q.setParameter("nom_item", nom_item);
              q.setParameter("cantidad", cantidad);
              q.setParameter("costo", costo);
+             q.setParameter("cod_vis", cod_vis);
              q.executeUpdate();
              resultado = true;
          }

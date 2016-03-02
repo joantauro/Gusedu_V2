@@ -41,6 +41,7 @@ public class EnfermedadBean {
     public void inicializar()
     {
         datos = new Enfermedad();
+        listar = enfermedadservice.getAll();
     }
     
     public void listarEnfermedad()
@@ -48,11 +49,11 @@ public class EnfermedadBean {
          listar = enfermedadservice.getAll();
     }
     
-    @PostConstruct
+    /*@PostConstruct
     public void init()
     {
          listar = enfermedadservice.getAll();
-    }
+    }*/
     
     /**
      * @return the datos

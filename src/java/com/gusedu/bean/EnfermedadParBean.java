@@ -31,13 +31,14 @@ public class EnfermedadParBean {
     {
         enfermedadservice = new EnfermedadServiceImpl();
         inicializar();
+        listarPar();
     }
 
-    @PostConstruct
+   /* @PostConstruct
     public void init()
     {
         listarPar();
-    }
+    }*/
     
     
     public void inicializar()
