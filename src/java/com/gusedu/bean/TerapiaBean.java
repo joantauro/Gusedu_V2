@@ -47,7 +47,8 @@ public class TerapiaBean {
             SintomaService sintomaService;
             private List<SintomaVisita> listasintomaxvisita;
             private List<EnfermedadVisita> listaenfermedadvisita;
-
+            private TerapiaPar datos;
+            
             public TerapiaBean() {
 /*  70*/        terapiaService = new TerapiaServiceImpl();
 /*  71*/        terapiaparService = new TerapiaParServiceImpl();
@@ -491,5 +492,28 @@ public class TerapiaBean {
         /*for (int i = 0; i < listarTerapiaPar.size(); i++) {
             System.out.println(listarTerapiaPar.get(i).getPar().getPuntoByPunCodigoP1().getPunNombre()+"-"+listarTerapiaPar.get(i).getPar().getPuntoByPunCodigoP2().getPunNombre());
         }*/
+    }
+    
+    public void BUSCARXID(int terpar)
+    {
+        datos = terapiaparService.getByParameters(terpar);
+        System.out.println("Probando terapia par: JOjO: Terapia: " + datos.getTerapia().getTerDescripcion()+ "\n" +
+                           "Par:" + datos.getPar().getPuntoByPunCodigoP1().getPunNombre()+"-"+datos.getPar().getPuntoByPunCodigoP2().getPunNombre());
+    }
+    
+    public void BuscarEliminar(int codigo)
+    {
+        BUSCARXID(codigo);
+        ELIMINAR();
+    }
+    
+    public void ELIMINAR()
+    {
+        System.out.println("Eliminando enfermedad par...");
+        terapiaparService.deleteTerapiaPar(datos);
+        datos = new TerapiaPar();
+        datos.setTerapia(new Terapia());
+        datos.setPar(new Par());
+        listado();
     }
 }

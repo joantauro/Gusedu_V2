@@ -16,7 +16,7 @@ import javax.faces.bean.SessionScoped;
 
 /**
  *
- * @author NV55C
+ * @author NV55C Daniel el papu de Joel
  */
 @ManagedBean
 @SessionScoped

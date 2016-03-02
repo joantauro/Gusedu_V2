@@ -87,4 +87,51 @@ public class TerapiaParServiceImpl
          }
          return resultado;
     }
+    
+            @Override
+    public TerapiaPar getByParameters(Integer enfermedadpar) 
+    {      
+        TerapiaPar terapiaService = null;
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+
+        try {
+            sesion.beginTransaction();
+            terapiaService = (TerapiaPar) sesion.load(TerapiaPar.class, enfermedadpar);
+            System.out.println(terapiaService.getTerapia().getTerDescripcion() +"-"+terapiaService.getPar().getPuntoByPunCodigoP1().getPunNombre()+" " +
+                    terapiaService.getPar().getPuntoByPunCodigoP2().getPunNombre());
+
+        } catch (Exception e) {
+
+
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return terapiaService;
+    }        
+          
+            @Override
+    public boolean deleteTerapiaPar(TerapiaPar terapiaPar) 
+    {
+        boolean resultado = false;
+        Session sesion = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = sesion.beginTransaction();
+
+            sesion.delete(terapiaPar);
+            tx.commit();
+           
+        } catch (Exception e) {
+            if (tx != null) {
+                tx.rollback();
+                System.out.println("ERROR de deleteTerapiaPar : " + e.getMessage());
+            }
+            System.out.println(e.getMessage());
+        } finally {
+            sesion.flush();
+            sesion.close();
+        }
+        return resultado;
+    }
 }

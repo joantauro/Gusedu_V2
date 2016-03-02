@@ -16,4 +16,10 @@ public interface TerapiaParService {
     public  boolean deleteTerapia(TerapiaPar terapiapar);
     
     public boolean SPsaveTerapiaPar(TerapiaPar terapiapar);
+    
+    //Terapia Par
+    
+    public TerapiaPar getByParameters(Integer terapiapar) ;
+    
+    public boolean deleteTerapiaPar(TerapiaPar terapiapar); 
 }
