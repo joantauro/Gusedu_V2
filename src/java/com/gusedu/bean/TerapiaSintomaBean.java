@@ -11,6 +11,8 @@ import com.gusedu.dao.TerapiaSintomaService;
 import com.gusedu.dao.impl.SintomaServiceImpl;
 import com.gusedu.dao.impl.TerapiaServiceImpl;
 import com.gusedu.dao.impl.TerapiaSintomaServiceImpl;
+import com.gusedu.entidad.ESintomaTerapia;
+import com.gusedu.model.Cliente;
 import com.gusedu.model.Sintoma;
 import com.gusedu.model.SintomaVisita;
 import com.gusedu.model.Terapia;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -48,6 +51,14 @@ public class TerapiaSintomaBean {
     private boolean disable;
     private String comentario;
     
+    private List rowNames;
+    private List colNames;
+    private ArrayList data3D;
+    private List listaFechas;
+    private List listaSintomas;
+    private List listaESintomaTerapia;
+            
+    
     private List<TerapiaSintoma> listaterapiasintoma;
     
     public String toShort(Date fecha)
@@ -68,6 +79,9 @@ public class TerapiaSintomaBean {
         terapia.setTipoTerapia(new TipoTerapia());
         terapia.setVisita(new Visita());
         inicializar();
+        rowNames = new ArrayList();
+        colNames = new ArrayList();
+        data3D = new ArrayList();
 //        disable = true;
     }
 
@@ -145,6 +159,8 @@ public class TerapiaSintomaBean {
         datos.setSintoma(new Sintoma());
         listarSintoma();
         llenarLISTITA(terapia.getTerCodigo());
+        SintomaTerapiaBean stBean = new SintomaTerapiaBean();
+        stBean.llenamatriz();
     }
     
     public void ELIMINAR()
@@ -170,6 +186,8 @@ public class TerapiaSintomaBean {
     {
         BUSCARXID(codigo);
         ELIMINAR();
+        SintomaTerapiaBean stBean = new SintomaTerapiaBean();
+        stBean.llenamatriz();
     }
     
     public void GUARDARDATOS() 
@@ -268,6 +286,7 @@ public class TerapiaSintomaBean {
         System.out.println("Terapia: "+ datos.getTerapia().getTerCodigo());
         System.out.println("Sintoma: "+ datos.getSintoma().getSinCodigo());
         System.out.println("Comentario: " + datos.getTxsComentario());
+        System.out.println("Activo" + datos.getTxsActivo().toString());
 //        datos = new TerapiaSintoma();
 //        datos.setTerapia(new Terapia());
 //        datos.setSintoma(new Sintoma());
@@ -275,6 +294,8 @@ public class TerapiaSintomaBean {
         sintoma = new Sintoma();
         listaterapiasintoma = terapiasintomaService.getAllTerapiaSintoma(ter);
         listarSintoma();
+        SintomaTerapiaBean stBean = new SintomaTerapiaBean();
+        stBean.llenamatriz();
     }
     
     public void llenarLISTITA(int ter)
@@ -353,5 +374,119 @@ public class TerapiaSintomaBean {
         } else {
             disable = true;
         }
-    }    
+    }     
+
+    public void Update(TerapiaSintoma ts) 
+    {
+        terapiasintomaService.updateTerapiaSintoma(ts);
+        SintomaTerapiaBean stBean = new SintomaTerapiaBean();
+        stBean.llenamatriz();
+    }
+
+    public List getRowNames() {
+        return rowNames;
+    }
+
+    public void setRowNames(List rowNames) {
+        this.rowNames = rowNames;
+    }
+
+    public List getColNames() {
+        return colNames;
+    }
+
+    public void setColNames(List colNames) {
+        this.colNames = colNames;
+    }
+
+    public ArrayList getData3D() {
+        return data3D;
+    }
+
+    public void setData3D(ArrayList data3D) {
+        this.data3D = data3D;
+    }
+
+    public List getListaFechas() {
+        return listaFechas;
+    }
+
+    public void setListaFechas(List listaFechas) {
+        this.listaFechas = listaFechas;
+    }
+
+    public List getListaSintomas() {
+        return listaSintomas;
+    }
+
+    public void setListaSintomas(List listaSintomas) {
+        this.listaSintomas = listaSintomas;
+    }
+
+    public List getListaESintomaTerapia() {
+        return listaESintomaTerapia;
+    }
+
+    public void setListaESintomaTerapia(List listaESintomaTerapia) {
+        this.listaESintomaTerapia = listaESintomaTerapia;
+    }
+    
+    public void llenamatriz() {
+/*  96*/        data3D = new ArrayList();
+/*  97*/        rowNames = new ArrayList();
+/*  98*/        colNames = new ArrayList();
+/*  99*/        FacesContext fc = FacesContext.getCurrentInstance();
+/* 100*/        Cliente cli = (Cliente)fc.getExternalContext().getSessionMap().get("cliente");
+/* 103*/        listaFechas = new ArrayList();
+/* 104*/        listaSintomas = new ArrayList();
+/* 106*/        List all = new ArrayList();
+/* 107*/        all = sintomaService.SP_MatrizSintomaxTerapia(cli.getCliCodigo());
+/* 108*/        System.out.println((new StringBuilder()).append("Codigo de Cliente : ").append(cli.getCliCodigo()).append("\nAll : ").append(all.size()).toString());
+/* 109*/        for (int i = 0; i < all.size(); i++) {
+/* 111*/            if (!listaFechas.contains(((ESintomaTerapia)all.get(i)).getFecha())) {
+/* 113*/                listaFechas.add(((ESintomaTerapia)all.get(i)).getFecha());
+                    }
+                }
+
+/* 116*/        for (int j = 0; j < all.size(); j++) {
+/* 118*/            if (!listaSintomas.contains(((ESintomaTerapia)all.get(j)).getSin_descripcion())) {
+/* 120*/                listaSintomas.add(((ESintomaTerapia)all.get(j)).getSin_descripcion());
+                    }
+                }
+
+/* 124*/        for (int j = 0; j < listaSintomas.size(); j++) {
+/* 125*/            rowNames.add(listaSintomas.get(j));
+                }
+
+/* 128*/        System.out.println(listaFechas.size());
+/* 129*/        for (int i = 0; i < listaFechas.size(); i++) {
+/* 131*/            colNames.add(listaFechas.get(i));
+                }
+
+/* 134*/        for (int i = 0; i < rowNames.size(); i++) {
+/* 135*/            data3D.add(new ArrayList());
+/* 136*/            for (int j = 0; j < colNames.size(); j++) {
+/* 137*/                ((ArrayList)data3D.get(i)).add(new ArrayList());
+                    }
+
+                }
+
+/* 142*/        for (int i = 0; i < listaSintomas.size(); i++) {
+/* 144*/            for (int j = 0; j < listaFechas.size(); j++) {
+/* 146*/                for (int a = 0; a < all.size(); a++) {
+/* 148*/                    if (!Objects.equals(listaFechas.get(j), ((ESintomaTerapia)all.get(a)).getFecha()) || !Objects.equals(listaSintomas.get(i), ((ESintomaTerapia)all.get(a)).getSin_descripcion())) {
+/* 153*/                        continue;
+                            }
+/* 153*/                    if (((ESintomaTerapia)all.get(a)).isEstado()) {
+/* 155*/                        ((ArrayList)((ArrayList)data3D.get(i)).get(j)).add("Si");
+                            } else {
+/* 158*/                        ((ArrayList)((ArrayList)data3D.get(i)).get(j)).add("No");
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
 }

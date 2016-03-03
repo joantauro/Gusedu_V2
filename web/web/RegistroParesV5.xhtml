@@ -25,8 +25,9 @@
                     </p:inputSwitch>
                 </p:column>
                 <p:column style="width: 60px" >
-                    <p:commandButton id="cmdbtnEliminarJOJOq1" icon="ui-icon-trash" styleClass="ui-priority-primary" 
-                                     action="#{terapiaBean.BuscarEliminar(parpu.txpCodigo)}" update=":#{p:component('table')}">
+                    <p:commandButton id="cmdbtnEliminarHTE02" icon="ui-icon-trash" styleClass="ui-priority-primary" 
+                                     action="#{terapiaBean.BuscarEliminar(parpu.txpCodigo)}" update=":#{p:component('tablaParPunto12x')}">
+                        <f:actionListener binding="#{terapiaBean.listado()}" />
                         <p:confirm header="Confirmación" message="¿Eliminar este par de puntos?" icon="ui-icon-alert" />
                     </p:commandButton>               
                 </p:column>
@@ -134,6 +135,10 @@
                     </p:autoComplete> 
                     <p:outputLabel value="Comentario: " style="width:200px" />
                     <p:inputTextarea id="txtarea1" value="#{terapiaSintomaBean.comentario}" style="width:350px" />
+                    <h:outputLabel value="¿Presenta este síntoma?: " />
+                    <p:inputSwitch value="#{terapiaSintomaBean.datos.txsActivo}" offLabel="No" onLabel="Si" >
+                        <p:ajax listener="#{terapiaSintomaBean.Update(sxt)}" />
+                    </p:inputSwitch>                  
                 </h:panelGrid>
                 <p:commandButton value="Guardar" id="btnAgregar1"  process="@form" icon="ui-icon-disk"
                                  oncomplete="PF('pantallitaIngresoHistorial').hide();"
@@ -149,6 +154,11 @@
                 </p:column>
                 <p:column headerText="Comentario">
                     <p:outputLabel value="#{sxt.txsComentario}" />
+                </p:column>
+                <p:column>
+                    <p:inputSwitch value="#{sxt.txsActivo}" offLabel="No" onLabel="Si" >
+                        <p:ajax listener="#{terapiaSintomaBean.Update(sxt)}" />
+                    </p:inputSwitch>
                 </p:column>
                 <p:column headerText="Editar" style="width: 60px" styleClass="text-align:center" >
                     <p:commandButton id="ajax50" icon="ui-icon-pencil" oncomplete="PF('pantallitaEditarH').show();" 
@@ -174,6 +184,10 @@
                     <br></br>
                     <h:outputLabel value="Comentario: " />
                     <p:inputTextarea id="txtarea2" value="#{terapiaSintomaBean.datos.txsComentario}" style="width:350px" />
+                    <h:outputLabel value="¿Presenta este síntoma?: " />
+                    <p:inputSwitch value="#{terapiaSintomaBean.datos.txsActivo}" offLabel="No" onLabel="Si" >
+                        <p:ajax listener="#{terapiaSintomaBean.Update(sxt)}" />
+                    </p:inputSwitch>
                 </h:panelGrid>
                 <p:commandButton value="Modificar" id="ajax52" actionListener="#{terapiaSintomaBean.ACTUALIZAR}" 
                                  oncomplete="PF('pantallitaEditarH').hide();" update=":#{p:component('tablaSin')}" />

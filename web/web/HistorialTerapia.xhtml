@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition >
-        <h:form>
+        <h:form id="formHistorialTerapia03">
             <h:panelGrid>
                 <br/>
                 <p:dataTable var="rowName" value="#{historialTerapiaBean.rowNames}"
@@ -31,7 +31,7 @@
                                itemValue="#{listitaTerapia.terCodigo}" itemLabel="#{terapiaSintomaBean.toShort(listitaTerapia.terFecRealizada)}" >
                 </f:selectItems>
                 <p:ajax listener="#{terapiaSintomaBean.llenarLISTITA(terapiaSintomaBean.terapia.terCodigo)}" 
-                        update=":#{p:component('tablaSin')}, :#{p:component('PanelButton')}" />
+                        update=":#{p:component('tablaSin')}, :#{p:component('PanelButton')}, :#{p:component('tablitaST21')}" />
             </p:selectOneMenu>
             <p:panel id="PanelButton" >
                 <h:panelGrid>
@@ -53,12 +53,18 @@
                     </p:autoComplete> 
                     <p:outputLabel value="Comentario: " style="width:200px" />
                     <p:inputTextarea id="txtarea1" value="#{terapiaSintomaBean.comentario}" style="width:350px" />
+                    <h:outputLabel value="¿Presenta este síntoma?: " />
+                    <p:inputSwitch value="#{terapiaSintomaBean.datos.txsActivo}" offLabel="No" onLabel="Si" >
+                        <p:ajax listener="#{terapiaSintomaBean.Update(sxt)}" />
+                    </p:inputSwitch>
                 </h:panelGrid>
                 <br/>
                 <p:commandButton value="Guardar" id="btnAgregar1"  process="@form" icon="ui-icon-disk"
                                  oncomplete="PF('pantallitaIngresoHistorial').hide();"
                                  action="#{terapiaSintomaBean.addSintoma()}"
-                                 update=":#{p:component('tablaSin')}, :#{p:component('autoSintoma')}" />
+                                 update=":#{p:component('tablaSin')}, :#{p:component('autoSintoma')}, :#{p:component('tablitaST21')}" >
+                    <f:actionListener binding="#{sintomaTerapiaBean.llenamatriz()}" />
+                </p:commandButton>
                 <br/>
             </p:dialog>
             <h:panelGrid columns="3">
@@ -77,19 +83,28 @@
                         <p:column headerText="Editar" style="width: 60px" styleClass="text-align:center" >
                             <p:commandButton id="ajax50" icon="ui-icon-pencil" oncomplete="PF('pantallitaEditarH').show();" 
                                              actionListener="#{terapiaSintomaBean.BUSCARXID(sxt.txsCodigo)}"
-                                             update=":#{p:component('pnEditarTerSin')}" />
+                                             update=":#{p:component('pnEditarTerSin')}" >
+                            </p:commandButton>
                         </p:column>
                         <p:column headerText="Eliminar" style="width: 60px" styleClass="text-align:center" >
                             <p:commandButton id="ajax51" icon="ui-icon-trash"
                                              action="#{terapiaSintomaBean.BuscarEliminar(sxt.txsCodigo)}"
-                                             update=":#{p:component('tablaSin')}">
+                                             update=":#{p:component('tablaSin')},:#{p:component('tablitaST21')}">
+                                <f:actionListener binding="#{sintomaTerapiaBean.llenamatriz()}" rendered="true"/>
                                 <p:confirm header="Confirmación" message="¿Estás seguro de eliminar este síntoma?" icon="ui-icon-alert" />
                             </p:commandButton>               
                         </p:column>
                     </p:dataTable> 
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Aceptar" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
+                                         update=":#{p:component('tablaSin')},:#{p:component('tablitaST21')}, :#{p:component('formHistorialTerapia03')}">
+                            <f:actionListener binding="#{sintomaTerapiaBean.llenamatriz()}" />
+                        </p:commandButton>
+                        <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
                 </h:panelGrid>
                 <h:panelGrid>
-                    
+
                 </h:panelGrid>
             </h:panelGrid>
             <p:dialog header="Editar Síntomas" widgetVar="pantallitaEditarH" minHeight="100" width="500" id="formEditarSin">
@@ -104,36 +119,34 @@
                     <br></br>
                     <h:outputLabel value="Comentario: " />
                     <p:inputTextarea id="txtarea2" value="#{terapiaSintomaBean.datos.txsComentario}" style="width:350px" />
+                    <h:outputLabel value="¿Presenta este síntoma?: " />
+                    <p:inputSwitch value="#{terapiaSintomaBean.datos.txsActivo}" offLabel="No" onLabel="Si" >
+                        <p:ajax listener="#{terapiaSintomaBean.Update(sxt)}" />
+                    </p:inputSwitch>
                 </h:panelGrid>
                 <br></br>
                 <p:commandButton value="Modificar" id="ajax52" actionListener="#{terapiaSintomaBean.ACTUALIZAR}" 
-                                 oncomplete="PF('pantallitaEditarH').hide();" update=":#{p:component('tablaSin')}" />
+                                 oncomplete="PF('pantallitaEditarH').hide();" update=":#{p:component('tablaSin')},:#{p:component('tablitaST21')}" >
+                    <f:actionListener binding="#{sintomaTerapiaBean.llenamatriz()}" />
+                </p:commandButton>
                 <p:spacer width="20" height="10" />
                 <p:commandButton value="Cerrar" id="ajax53"  onclick="PF('pantallitaEditarH').hide();"
                                  styleClass="ui-priority-primary" />
             </p:dialog>      
             <br/>       
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Aceptar" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" 
-                                 update=":#{p:component('tablaSin')}"/>
-                <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-            </p:confirmDialog>
-            <p:dataTable var="rowNameST" value="#{sintomaTerapiaBean.rowNames}" id="tablitaST"
-                 rowIndexVar="rowIdxST" emptyMessage="No hay pares" >
-      
-            <p:column headerText="" styleClass="ui-widget-header" width="250px;" >
-        <h:outputText value="#{rowNameST}"/>
-    </p:column>
 
-    <p:columns var="columnNameST" value="#{sintomaTerapiaBean.colNames}" headerText="#{columnNameST}"
-               columnIndexVar="colIdxST">
-        <ui:repeat value="#{sintomaTerapiaBean.data3D[rowIdxST][colIdxST]}" var="dataST">
-       
-                <h:outputText value="#{dataST}"/>
- 
-        </ui:repeat>
-    </p:columns>
-</p:dataTable>
+            <p:dataTable var="rowNameST" value="#{sintomaTerapiaBean.rowNames}" id="tablitaST21"
+                         rowIndexVar="rowIdxST" emptyMessage="No hay pares" >
+                <p:column headerText="" styleClass="ui-widget-header" width="250px;" >
+                    <h:outputText value="#{rowNameST}"/>
+                </p:column>
+                <p:columns var="columnNameST" value="#{sintomaTerapiaBean.colNames}" headerText="#{columnNameST}"
+                           columnIndexVar="colIdxST" >
+                    <ui:repeat value="#{sintomaTerapiaBean.data3D[rowIdxST][colIdxST]}" var="dataST">
+                        <h:outputText value="#{dataST}"/>
+                    </ui:repeat>
+                </p:columns>
+            </p:dataTable>               
         </h:form>
     </ui:composition>
 </html>
